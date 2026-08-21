@@ -18,6 +18,7 @@ import '../domain/subscription_cost.dart';
 import '../subscription_detail_controller.dart';
 import '../subscriptions_providers.dart';
 import 'subscription_labels.dart';
+import 'subscription_usage_card.dart';
 
 class SubscriptionDetailScreen extends ConsumerWidget {
   const SubscriptionDetailScreen({required this.subscriptionId, super.key});
@@ -93,6 +94,8 @@ class _SubscriptionDetailBody extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.xl),
+          SubscriptionUsageCard(subscription: subscription),
+          const SizedBox(height: AppSpacing.xl),
           _DetailRow(label: AppStrings.fieldMerchant, value: subscription.merchant),
           _DetailRow(
             label: AppStrings.fieldAmount,
@@ -146,7 +149,9 @@ class _SubscriptionDetailBody extends ConsumerWidget {
           AppButton(
             label: AppStrings.cancellationGuide,
             variant: AppButtonVariant.secondary,
-            onPressed: () => _showCancellationPlaceholder(context),
+            onPressed: () => context.push(
+              AppRoutes.cancellationGuideLocation(subscription.id),
+            ),
           ),
           const SizedBox(height: AppSpacing.md),
           AppButton(
@@ -157,26 +162,6 @@ class _SubscriptionDetailBody extends ConsumerWidget {
         ],
         ),
       ),
-    );
-  }
-
-  Future<void> _showCancellationPlaceholder(BuildContext context) {
-    return showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text(AppStrings.cancellationGuide),
-          content: const Text(AppStrings.cancellationGuidePlaceholder),
-          actions: [
-            AppButton(
-              label: AppStrings.continueLabel,
-              expand: false,
-              variant: AppButtonVariant.tertiary,
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        );
-      },
     );
   }
 

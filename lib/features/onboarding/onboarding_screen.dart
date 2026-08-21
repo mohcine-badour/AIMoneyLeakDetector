@@ -111,6 +111,7 @@ class OnboardingScreen extends ConsumerWidget {
       case OnboardingEntryPath.addManually:
         context.go(AppRoutes.addSubscription);
       case OnboardingEntryPath.scanReceipt:
+        context.go(AppRoutes.scanReceipt);
       case OnboardingEntryPath.importLater:
         context.go(AppRoutes.dashboard);
     }

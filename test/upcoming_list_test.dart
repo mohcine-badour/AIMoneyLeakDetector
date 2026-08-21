@@ -102,8 +102,8 @@ void main() {
       now: _now,
     );
 
-    await tester.ensureVisible(find.text(AppStrings.viewAll));
-    await tester.tap(find.text(AppStrings.viewAll));
+    await tester.ensureVisible(find.text(AppStrings.viewAll).first);
+    await tester.tap(find.text(AppStrings.viewAll).first);
     await tester.pumpAndSettle();
 
     expect(find.text(AppStrings.upcomingPayments), findsWidgets);

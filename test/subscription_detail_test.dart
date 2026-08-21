@@ -101,7 +101,12 @@ void main() {
     expect(await DriftSubscriptionRepository(harness.$3).getAll(), isEmpty);
   });
 
-  testWidgets('cancellation guide shows a placeholder', (tester) async {
+  testWidgets('cancellation guide opens the assistant', (tester) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
     await pumpBillKillerApp(
       tester,
       location: AppRoutes.subscriptionDetailLocation('netflix'),
@@ -112,6 +117,53 @@ void main() {
     await tester.tap(find.text(AppStrings.cancellationGuide));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.cancellationGuidePlaceholder), findsOneWidget);
+    expect(find.text(AppStrings.cancellationDidNotHappen), findsOneWidget);
+    expect(find.text(AppStrings.openCancellationPage), findsOneWidget);
+    expect(find.text(AppStrings.generateCancellationMessage), findsOneWidget);
+  });
+
+  testWidgets('usage count shows deterministic cost per use', (tester) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await pumpBillKillerApp(
+      tester,
+      location: AppRoutes.subscriptionDetailLocation('netflix'),
+      seed: _saveNetflix,
+    );
+
+    expect(find.text(AppStrings.monthlyLabel), findsOneWidget);
+    expect(find.text(AppStrings.usesLabel), findsOneWidget);
+    expect(find.text(AppStrings.costPerUseLabel), findsOneWidget);
+    expect(find.text(AppStrings.costPerUseUnavailable), findsOneWidget);
+
+    await tester.ensureVisible(find.byKey(const Key('subscription-uses')));
+    await tester.enterText(find.byKey(const Key('subscription-uses')), '8');
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.costPerUseUnavailable), findsNothing);
+    expect(find.text(r'$2.87'), findsOneWidget);
+  });
+
+  testWidgets('log a use increments the recorded count', (tester) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await pumpBillKillerApp(
+      tester,
+      location: AppRoutes.subscriptionDetailLocation('netflix'),
+      seed: _saveNetflix,
+    );
+
+    await tester.ensureVisible(find.text(AppStrings.logAUse));
+    await tester.tap(find.text(AppStrings.logAUse));
+    await tester.pumpAndSettle();
+
+    expect(find.text('1'), findsWidgets);
+    expect(find.text(AppStrings.costPerUseUnavailable), findsNothing);
   });
 }

@@ -38,7 +38,7 @@ Future<void> _saveNetflixAndAdobe(AppDatabase database) async {
 }
 
 void main() {
-  testWidgets('empty dashboard shows zero totals and savings placeholder', (
+  testWidgets('empty dashboard shows zero totals and no leak suggestions', (
     tester,
   ) async {
     await pumpBillKillerApp(
@@ -56,7 +56,7 @@ void main() {
     expect(find.text(AppStrings.annualSpending), findsOneWidget);
     expect(find.text(AppStrings.upcomingPayments), findsOneWidget);
     expect(find.text(AppStrings.categoryBreakdown), findsOneWidget);
-    expect(find.text(AppStrings.potentialSavingsPlaceholder), findsOneWidget);
+    expect(find.text(AppStrings.emptyLeaksMessage), findsOneWidget);
     expect(find.text(AppStrings.addSubscriptionTitle), findsOneWidget);
   });
 
@@ -84,5 +84,9 @@ void main() {
     expect(find.text(AppStrings.categoryEntertainment), findsOneWidget);
     expect(find.text(AppStrings.categoryProductivity), findsOneWidget);
     expect(find.text(AppStrings.addSubscriptionTitle), findsNothing);
+    expect(find.text('Netflix renews tomorrow.'), findsOneWidget);
+    expect(find.text(r'Adobe is $59.99/month.'), findsOneWidget);
+    expect(find.text(AppStrings.leakExpensiveReason), findsOneWidget);
+    expect(find.text(AppStrings.leakRenewalReason), findsOneWidget);
   });
 }

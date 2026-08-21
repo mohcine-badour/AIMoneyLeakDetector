@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/utils/money_format.dart';
+import '../before_subscribe/domain/subscription_candidate.dart';
 import 'data/drift_subscription_repository.dart';
 import 'domain/subscription.dart';
 import 'domain/subscription_validator.dart';
@@ -105,6 +106,37 @@ class AddSubscriptionController extends Notifier<AddSubscriptionFormState> {
       billingCycle: subscription.billingCycle,
       nextBillingDate: subscription.nextBillingDate,
       category: subscription.category,
+    );
+  }
+
+  SubscriptionCandidate? review({
+    required String name,
+    required String merchant,
+    required String amount,
+  }) {
+    final input = SubscriptionFormInput(
+      name: name,
+      merchant: merchant,
+      amount: amount,
+      billingCycle: state.billingCycle,
+      nextBillingDate: state.nextBillingDate,
+      category: state.category,
+    );
+    final draft = SubscriptionValidator.validateAndBuild(input);
+    if (draft == null) {
+      state = state.copyWith(errors: SubscriptionValidator.validate(input));
+      return null;
+    }
+    state = state.copyWith(errors: const SubscriptionFormErrors());
+    return SubscriptionCandidate(
+      name: draft.name,
+      merchant: draft.merchant,
+      amount: draft.amount,
+      currency: state.currency,
+      billingCycle: draft.billingCycle,
+      nextBillingDate: draft.nextBillingDate,
+      category: draft.category,
+      source: SubscriptionSource.manual,
     );
   }
 

@@ -74,10 +74,11 @@ void main() {
     expect(result.map((item) => item.subscriptionId), ['netflix', 'adobe']);
   });
 
-  test('noop scheduler accepts a sync without sending notifications', () async {
-    await const NoOpPaymentReminderScheduler().syncUpcoming(
-      UpcomingPayments.fromSubscriptions([netflix]),
-    );
-    expect(PaymentReminderOffsets.beforeCharge, hasLength(3));
+  test('reminder offsets cover 3 days, 24 hours, and 2 hours', () {
+    expect(PaymentReminderOffsets.beforeCharge, [
+      PaymentReminderOffsets.threeDays,
+      PaymentReminderOffsets.twentyFourHours,
+      PaymentReminderOffsets.twoHours,
+    ]);
   });
 }

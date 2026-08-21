@@ -2,13 +2,21 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/constants/app_strings.dart';
 import '../../core/widgets/placeholder_screen.dart';
+import '../../features/before_subscribe/domain/subscription_candidate.dart';
+import '../../features/before_subscribe/presentation/before_you_subscribe_screen.dart';
+import '../../features/cancellation/presentation/cancellation_guide_screen.dart';
 import '../../features/dashboard/presentation/dashboard_screen.dart';
 import '../../features/launch/launch_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
 import '../../features/upcoming/presentation/upcoming_payments_screen.dart';
+import '../../features/savings/presentation/savings_screen.dart';
+import '../../features/scanner/presentation/scan_receipt_screen.dart';
 import '../../features/subscriptions/presentation/add_subscription_screen.dart';
 import '../../features/subscriptions/presentation/subscription_detail_screen.dart';
 import '../../features/subscriptions/presentation/subscriptions_list_screen.dart';
+import '../../features/trials/presentation/add_trial_screen.dart';
+import '../../features/trials/presentation/trial_detail_screen.dart';
+import '../../features/trials/presentation/trials_list_screen.dart';
 import 'app_routes.dart';
 
 /// Application router. Screens stay as placeholders until their feature step.
@@ -38,6 +46,19 @@ abstract final class AppRouter {
               builder: (context, state) => const AddSubscriptionScreen(),
             ),
             GoRoute(
+              path: 'scan',
+              builder: (context, state) => const ScanReceiptScreen(),
+            ),
+            GoRoute(
+              path: 'evaluate',
+              builder: (context, state) {
+                final extra = state.extra;
+                return BeforeYouSubscribeScreen(
+                  candidate: extra is SubscriptionCandidate ? extra : null,
+                );
+              },
+            ),
+            GoRoute(
               path: ':id',
               builder: (context, state) {
                 final id = state.pathParameters['id'] ?? '';
@@ -51,6 +72,13 @@ abstract final class AppRouter {
                     return AddSubscriptionScreen(subscriptionId: id);
                   },
                 ),
+                GoRoute(
+                  path: 'cancel',
+                  builder: (context, state) {
+                    final id = state.pathParameters['id'] ?? '';
+                    return CancellationGuideScreen(subscriptionId: id);
+                  },
+                ),
               ],
             ),
           ],
@@ -61,15 +89,24 @@ abstract final class AppRouter {
         ),
         GoRoute(
           path: AppRoutes.trials,
-          builder: (context, state) => const PlaceholderScreen(
-            title: AppStrings.trialsTitle,
-          ),
+          builder: (context, state) => const TrialsListScreen(),
+          routes: [
+            GoRoute(
+              path: 'add',
+              builder: (context, state) => const AddTrialScreen(),
+            ),
+            GoRoute(
+              path: ':id',
+              builder: (context, state) {
+                final id = state.pathParameters['id'] ?? '';
+                return TrialDetailScreen(trialId: id);
+              },
+            ),
+          ],
         ),
         GoRoute(
           path: AppRoutes.savings,
-          builder: (context, state) => const PlaceholderScreen(
-            title: AppStrings.savingsTitle,
-          ),
+          builder: (context, state) => const SavingsScreen(),
         ),
         GoRoute(
           path: AppRoutes.settings,

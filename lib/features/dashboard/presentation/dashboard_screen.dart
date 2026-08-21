@@ -16,11 +16,15 @@ import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
 import '../../../core/widgets/money_text.dart';
 import '../../../core/widgets/section_header.dart';
+import '../../savings/domain/leak_engine.dart';
+import '../../savings/domain/leak_recommendation.dart';
+import '../../savings/domain/potential_savings.dart';
+import '../../savings/presentation/leak_recommendation_card.dart';
+import '../../savings/savings_providers.dart';
 import '../../subscriptions/presentation/subscription_labels.dart';
 import '../../subscriptions/subscriptions_providers.dart';
 import '../../upcoming/domain/upcoming_payment.dart';
 import '../../upcoming/presentation/upcoming_payment_tile.dart';
-import '../../upcoming/upcoming_providers.dart';
 import '../domain/dashboard_snapshot.dart';
 import '../domain/day_period.dart';
 
@@ -30,8 +34,8 @@ class DashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final clock = ref.watch(appNowProvider);
-    ref.watch(upcomingReminderSyncProvider);
     final async = ref.watch(subscriptionsProvider);
+    final leaks = ref.watch(leakRecommendationsProvider);
 
     return AppScaffold(
       showAppBar: false,
@@ -49,7 +53,14 @@ class DashboardScreen extends ConsumerWidget {
         ),
         data: (subscriptions) {
           final snapshot = DashboardCalculator.fromSubscriptions(subscriptions);
-          return _DashboardBody(now: clock, snapshot: snapshot);
+          return _DashboardBody(
+            now: clock,
+            snapshot: snapshot,
+            leaks: leaks.value ?? const [],
+            potentialSavings: PotentialSavingsCalculator.fromSubscriptions(
+              subscriptions,
+            ),
+          );
         },
       ),
     );
@@ -57,10 +68,17 @@ class DashboardScreen extends ConsumerWidget {
 }
 
 class _DashboardBody extends StatelessWidget {
-  const _DashboardBody({required this.now, required this.snapshot});
+  const _DashboardBody({
+    required this.now,
+    required this.snapshot,
+    required this.leaks,
+    required this.potentialSavings,
+  });
 
   final DateTime now;
   final DashboardSnapshot snapshot;
+  final List<LeakRecommendation> leaks;
+  final double potentialSavings;
 
   @override
   Widget build(BuildContext context) {
@@ -105,11 +123,19 @@ class _DashboardBody extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           _CategorySection(snapshot: snapshot),
           const SizedBox(height: AppSpacing.xl),
-          const SectionHeader(title: AppStrings.potentialSavings),
-          const SizedBox(height: AppSpacing.md),
-          const AppCard(
-            child: Text(AppStrings.potentialSavingsPlaceholder),
+          SectionHeader(
+            title: AppStrings.potentialSavings,
+            actionLabel: AppStrings.viewAll,
+            onAction: () => context.push(AppRoutes.savings),
           ),
+          const SizedBox(height: AppSpacing.md),
+          _AmountCard(
+            amount: potentialSavings,
+            currencyCode: snapshot.currencyCode,
+            period: AppStrings.compactPerMonth,
+          ),
+          const SizedBox(height: AppSpacing.md),
+          _LeaksSection(leaks: leaks),
           if (snapshot.activeCount == 0) ...[
             const SizedBox(height: AppSpacing.xl),
             AppButton(
@@ -142,6 +168,16 @@ class _GreetingRow extends StatelessWidget {
           tooltip: AppStrings.subscriptionsTitle,
           onPressed: () => context.push(AppRoutes.subscriptions),
           icon: const Icon(AppIcons.subscriptions),
+        ),
+        IconButton(
+          tooltip: AppStrings.trialsTitle,
+          onPressed: () => context.push(AppRoutes.trials),
+          icon: const Icon(AppIcons.trials),
+        ),
+        IconButton(
+          tooltip: AppStrings.savingsTitle,
+          onPressed: () => context.push(AppRoutes.savings),
+          icon: const Icon(AppIcons.savings),
         ),
       ],
     );
@@ -205,6 +241,43 @@ class _AmountCard extends StatelessWidget {
           Text(period, style: Theme.of(context).textTheme.titleMedium),
         ],
       ),
+    );
+  }
+}
+
+class _LeaksSection extends StatelessWidget {
+  const _LeaksSection({required this.leaks});
+
+  final List<LeakRecommendation> leaks;
+
+  @override
+  Widget build(BuildContext context) {
+    if (leaks.isEmpty) {
+      return const AppCard(child: Text(AppStrings.emptyLeaksMessage));
+    }
+
+    final preview = LeakEngine.preview(leaks);
+    return Column(
+      children: [
+        for (var i = 0; i < preview.length; i++) ...[
+          if (i > 0) const SizedBox(height: AppSpacing.md),
+          LeakRecommendationCard(
+            recommendation: preview[i],
+            onTap: () {
+              final item = preview[i];
+              final subscriptionId = item.subscriptionId;
+              if (subscriptionId != null) {
+                context.push(AppRoutes.subscriptionDetailLocation(subscriptionId));
+                return;
+              }
+              final trialId = item.trialId;
+              if (trialId != null) {
+                context.push(AppRoutes.trialDetailLocation(trialId));
+              }
+            },
+          ),
+        ],
+      ],
     );
   }
 }

@@ -85,4 +85,26 @@ void main() {
 
     expect(find.text(AppStrings.yourSubscriptions), findsOneWidget);
   });
+
+  testWidgets('scan a receipt completes onboarding and opens the scanner', (
+    tester,
+  ) async {
+    await pumpBillKillerApp(tester, location: AppRoutes.onboarding);
+
+    await tester.tap(find.text(AppStrings.onboardingFindOut));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(AppStrings.spendingOver200));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(AppStrings.continueLabel));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(AppStrings.savings200));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(AppStrings.continueLabel));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text(AppStrings.entryScanReceipt));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.scanReceiptTitle), findsOneWidget);
+    expect(find.text(AppStrings.scanUseCamera), findsOneWidget);
+  });
 }

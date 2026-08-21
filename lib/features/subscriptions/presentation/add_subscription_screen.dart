@@ -169,8 +169,20 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
             onTap: () => _pickCategory(controller),
           ),
           const SizedBox(height: AppSpacing.xl),
+          if (!_isEditing) ...[
+            AppButton(
+              key: const Key('scan-receipt'),
+              label: AppStrings.entryScanReceipt,
+              variant: AppButtonVariant.secondary,
+              onPressed: () => context.push(AppRoutes.scanReceipt),
+            ),
+            const SizedBox(height: AppSpacing.md),
+          ],
           AppButton(
-            label: AppStrings.save,
+            key: Key(_isEditing ? 'save-subscription' : 'review-before-adding'),
+            label: _isEditing
+                ? AppStrings.save
+                : AppStrings.reviewBeforeAdding,
             isLoading: form.isSaving,
             onPressed: () => _save(controller),
           ),
@@ -181,19 +193,28 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   }
 
   Future<void> _save(AddSubscriptionController controller) async {
-    final saved = await controller.submit(
+    if (_isEditing) {
+      final saved = await controller.submit(
+        name: _nameController.text,
+        merchant: _merchantController.text,
+        amount: _amountController.text,
+      );
+      if (!saved || !mounted) {
+        return;
+      }
+      context.go(AppRoutes.subscriptionDetailLocation(widget.subscriptionId!));
+      return;
+    }
+
+    final candidate = controller.review(
       name: _nameController.text,
       merchant: _merchantController.text,
       amount: _amountController.text,
     );
-    if (!saved || !mounted) {
+    if (candidate == null || !mounted) {
       return;
     }
-    if (widget.subscriptionId != null) {
-      context.go(AppRoutes.subscriptionDetailLocation(widget.subscriptionId!));
-      return;
-    }
-    context.go(AppRoutes.subscriptions);
+    context.push(AppRoutes.beforeYouSubscribe, extra: candidate);
   }
 
   Future<void> _pickDate() async {

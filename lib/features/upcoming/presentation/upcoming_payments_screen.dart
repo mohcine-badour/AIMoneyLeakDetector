@@ -19,7 +19,6 @@ class UpcomingPaymentsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(upcomingReminderSyncProvider);
     final async = ref.watch(upcomingPaymentsProvider);
     final now = ref.watch(appNowProvider);
 

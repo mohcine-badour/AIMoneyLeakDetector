@@ -12,8 +12,8 @@ void main() {
   testWidgets('empty save shows validation errors', (tester) async {
     await pumpBillKillerApp(tester, location: AppRoutes.addSubscription);
 
-    await tester.ensureVisible(find.text(AppStrings.save));
-    await tester.tap(find.text(AppStrings.save));
+    await tester.ensureVisible(find.text(AppStrings.reviewBeforeAdding));
+    await tester.tap(find.text(AppStrings.reviewBeforeAdding));
     await tester.pumpAndSettle();
 
     expect(find.text(AppStrings.errorNameRequired), findsOneWidget);
@@ -53,8 +53,16 @@ void main() {
     await tester.tap(find.text(AppStrings.categoryEntertainment));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text(AppStrings.save));
-    await tester.tap(find.text(AppStrings.save));
+    await tester.ensureVisible(find.text(AppStrings.reviewBeforeAdding));
+    await tester.tap(find.text(AppStrings.reviewBeforeAdding));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.beforeYouSubscribeTitle), findsOneWidget);
+    expect(find.text(AppStrings.beforeSubscribeNotice), findsOneWidget);
+    expect(find.text(r'+$275.88'), findsOneWidget);
+
+    await tester.ensureVisible(find.text(AppStrings.addThisSubscription));
+    await tester.tap(find.text(AppStrings.addThisSubscription));
     await tester.pumpAndSettle();
 
     expect(find.text(AppStrings.subscriptionsTitle), findsOneWidget);

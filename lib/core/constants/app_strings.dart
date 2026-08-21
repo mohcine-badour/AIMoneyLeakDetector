@@ -113,6 +113,14 @@ abstract final class AppStrings {
   static const String fieldCreated = 'Created';
   static const String fieldSource = 'Source';
   static const String annualLabel = 'Annual:';
+  static const String monthlyLabel = 'Monthly:';
+  static const String usesLabel = 'Uses';
+  static const String costPerUseLabel = 'Cost per use';
+  static const String logAUse = 'Log a use';
+  static const String costPerUseUnavailable =
+      'Add uses to see cost per use.';
+  static const String usesHint = 'Not recorded';
+  static const String errorUsesInvalid = 'Enter a whole number of 0 or more.';
 
   static const String sourceManual = 'Manual';
   static const String sourceScan = 'Scan';
@@ -126,8 +134,21 @@ abstract final class AppStrings {
   static const String deleteSubscriptionMessage =
       'This removes it from BillKiller. It does not cancel the merchant.';
   static const String cancellationGuide = 'Cancellation guide';
-  static const String cancellationGuidePlaceholder =
-      'This guide is not available yet.';
+  static const String cancellationDidNotHappen =
+      'BillKiller does not cancel this for you.';
+  static const String cancellationEstimatedTime = 'Estimated time';
+  static const String cancellationInstructions = 'Instructions';
+  static const String cancellationNotes = 'Notes';
+  static const String openCancellationPage = 'Open cancellation page';
+  static const String generateCancellationMessage =
+      'Generate cancellation message';
+  static const String copyMessage = 'Copy message';
+  static const String cancellationOpenFailed =
+      'Could not open the cancellation page.';
+  static const String cancellationMessageDisclaimer =
+      'This is a draft for you to send. BillKiller does not send it or cancel the merchant.';
+  static const String cancellationMessageCopied =
+      'Copied. Send it yourself — BillKiller did not cancel this.';
   static const String subscriptionNotFound = 'This subscription was not found.';
   static const String backToList = 'Back to list';
 
@@ -140,8 +161,6 @@ abstract final class AppStrings {
   static const String upcomingPayments = 'Upcoming payments';
   static const String categoryBreakdown = 'Category breakdown';
   static const String potentialSavings = 'Potential savings';
-  static const String potentialSavingsPlaceholder =
-      'AI leak detection will appear here.';
   static const String viewAll = 'View all';
   static const String today = 'Today';
   static const String tomorrow = 'Tomorrow';
@@ -151,4 +170,172 @@ abstract final class AppStrings {
       'Active subscriptions will show here, sorted by the next payment date.';
   static const String emptyCategoryBreakdown =
       'Add a subscription to see where the money goes.';
+
+  static const String addTrialTitle = 'Add Trial';
+  static const String fieldAmountAfterTrial = 'Amount after trial';
+  static const String fieldTrialEndDate = 'Trial end date';
+  static const String errorTrialEndRequired = 'Choose the trial end date.';
+  static const String freeTrialBadge = 'FREE TRIAL';
+  static const String afterTrial = 'After trial:';
+  static const String trialEndsToday = 'Ends today';
+  static const String trialExpired = 'Expired';
+  static const String trialCancelled = 'Cancelled';
+  static const String trialDayRemaining = '1 day remaining';
+  static const String emptyTrialsTitle = 'No free trials yet';
+  static const String emptyTrialsMessage =
+      'Track a trial so you can cancel before it converts.';
+  static const String errorLoadTrials = 'Could not load trials.';
+  static const String markTrialCancelled = 'Mark as cancelled';
+  static const String trialNotFound = 'This trial was not found.';
+  static const String deleteTrialTitle = 'Delete this trial?';
+  static const String deleteTrialMessage =
+      'This removes it from BillKiller. It does not cancel the merchant.';
+
+  static String trialDaysRemaining(int days) => '$days days remaining';
+
+  static const String reminderLeadIn3Days = 'in 3 days';
+  static const String reminderLeadTomorrow = 'tomorrow';
+  static const String reminderLeadIn2Hours = 'in 2 hours';
+  static const String reminderLeadSoon = 'soon';
+
+  static String renewalReminderTitle(String name, String lead) =>
+      '$name renews $lead';
+  static String renewalReminderBody(String amount) =>
+      '$amount will be charged.';
+  static String trialReminderTitle(String name, String lead) =>
+      '$name trial ends $lead';
+  static String trialReminderBody(String amount) =>
+      'Cancel before it converts to $amount.';
+
+  static const String scanReceiptTitle = 'Scan Receipt';
+  static const String scanExtractedTitle = 'Extracted Data';
+  static const String scanSourceMessage =
+      'Take a photo or choose one from your library.';
+  static const String scanUseCamera = 'Camera';
+  static const String scanUseGallery = 'Gallery';
+  static const String scanUseThisPhoto = 'Use this photo';
+  static const String scanRetake = 'Retake';
+  static const String scanProcessing = 'Reading the receipt…';
+  static const String scanConfirm = 'Confirm';
+  static const String scanFailed =
+      'Could not read this receipt. Try another photo.';
+  static const String scanFieldDate = 'Date';
+  static const String scanFieldBilling = 'Billing';
+  static const String scanConfidence = 'Confidence';
+
+  static const String emptyLeaksTitle = 'No review suggestions yet';
+  static const String emptyLeaksMessage =
+      'Add subscriptions and trials to see overlap, renewals, and trial conversions.';
+  static const String leakOverlappingReason =
+      'You may want to review overlapping services.';
+  static const String leakExpensiveReason =
+      'This active subscription is at or above \$50/month.';
+  static const String leakDuplicateReason =
+      'This can be a duplicate charge. Confirm you still need both.';
+  static const String leakRenewalReason =
+      'Upcoming renewals are a good time to review this subscription.';
+  static const String errorLoadLeaks = 'Could not load savings suggestions.';
+
+  static String leakOverlappingTitle(String amount, String category) =>
+      'You spend $amount/month on $category subscriptions.';
+  static String leakExpensiveTitle(String name, String amount) =>
+      '$name is $amount/month.';
+  static String leakDuplicateTitle(int count, String merchant) =>
+      'You have $count active $merchant subscriptions.';
+  static String leakRenewsToday(String name) => '$name renews today.';
+  static String leakRenewsTomorrow(String name) => '$name renews tomorrow.';
+  static String leakRenewsInDays(String name, int days) =>
+      '$name renews in $days days.';
+  static String leakTrialEndsToday(String name) => '$name trial ends today.';
+  static String leakTrialEndsTomorrow(String name) =>
+      '$name trial ends tomorrow.';
+  static String leakTrialEndsInDays(String name, int days) =>
+      '$name trial ends in $days days.';
+  static String leakTrialReason(String amount) =>
+      'After the trial it converts to $amount.';
+  static String leakLowUsageTitle(String name, int uses) {
+    if (uses == 1) {
+      return '$name was used 1 time.';
+    }
+    return '$name was used $uses times.';
+  }
+
+  static const String leakLowUsageReason =
+      'Low declared usage can mean this subscription is worth reviewing.';
+
+  static const String moneyLeakReportTitle = 'Your Money Leak Report';
+  static const String youSpend = 'You spend:';
+  static const String potentialSavingsLabel = 'Potential savings:';
+  static const String weFound = 'We found';
+  static const String analysisReadOnlyNotice =
+      'This report does not change your subscriptions.';
+  static const String analysisProcessing = 'Analyzing your money leaks…';
+  static const String errorLoadAnalysis = 'Could not load the money leak report.';
+  static const String analysisOverlapExplanation =
+      'These services sit in the same category. Confirm you still need each one before the next renewal.';
+  static const String analysisExpensiveExplanation =
+      'This monthly price is at or above the \$50 review line. Check that the value still matches what you pay.';
+  static const String analysisDuplicateExplanation =
+      'More than one active subscription shares this merchant. Confirm you still need each one.';
+  static const String analysisRenewalExplanation =
+      'This renewal is close. Review whether you still want it before you are billed again.';
+  static const String analysisTrialExplanation =
+      'This trial will convert to a paid plan unless you cancel. The amount below is what it costs after the trial.';
+  static const String analysisLowUsageExplanation =
+      'Declared usage is low. Check whether this subscription still earns its monthly cost.';
+
+  static String subscriptionsToReview(int count) {
+    if (count == 1) {
+      return '1 subscription to review';
+    }
+    return '$count subscriptions to review';
+  }
+
+  static String possibleOverlaps(int count) {
+    if (count == 1) {
+      return '1 possible overlap';
+    }
+    return '$count possible overlaps';
+  }
+
+  static String upcomingExpensiveRenewals(int count) {
+    if (count == 1) {
+      return '1 upcoming expensive renewal';
+    }
+    return '$count upcoming expensive renewals';
+  }
+
+  static const String beforeYouSubscribeTitle = 'Before you subscribe';
+  static const String reviewBeforeAdding = 'Review before adding';
+  static const String addThisSubscription = 'Add this subscription';
+  static const String afterAdding = 'After adding:';
+  static const String annualImpact = 'Annual impact:';
+  static const String beforeSubscribeNotice =
+      'This is advice only. Nothing is saved until you add the subscription.';
+  static const String beforeSubscribeMissing =
+      'There is no subscription to review.';
+  static const String errorLoadAdvice = 'Could not load this recommendation.';
+
+  static String currentCategorySpending(String category) =>
+      'Current ${category.toLowerCase()} spending:';
+
+  static String beforeSubscribeDuplicate(String merchant) =>
+      'You already have an active $merchant subscription. Adding another can be a duplicate charge.';
+
+  static String beforeSubscribeOverlap({
+    required String current,
+    required String after,
+    required String category,
+  }) =>
+      'You already spend $current/month on $category. Adding this would make $after/month in that category. Review overlap before you add it.';
+
+  static String beforeSubscribeExpensive(String monthly) =>
+      'This is at or above \$50/month ($monthly/month). Check that the value matches what you will pay.';
+
+  static String beforeSubscribeClear({
+    required String monthly,
+    required String annual,
+    required String category,
+  }) =>
+      'This would add $monthly/month ($annual/year). No overlapping $category subscriptions are on file.';
 }

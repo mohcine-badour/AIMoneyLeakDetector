@@ -19,6 +19,8 @@ abstract final class AppIcons {
   static const IconData empty = Icons.inbox_outlined;
   static const IconData error = Icons.error_outline_rounded;
   static const IconData search = Icons.search_rounded;
+  static const IconData camera = Icons.photo_camera_outlined;
+  static const IconData gallery = Icons.photo_library_outlined;
   static const IconData edit = Icons.edit_outlined;
   static const IconData delete = Icons.delete_outline_rounded;
 }
