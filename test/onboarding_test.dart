@@ -83,6 +83,6 @@ void main() {
     await tester.tap(find.text(AppStrings.entryImportLater));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.dashboardTitle), findsOneWidget);
+    expect(find.text(AppStrings.yourSubscriptions), findsOneWidget);
   });
 }

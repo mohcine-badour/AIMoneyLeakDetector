@@ -59,6 +59,8 @@ void main() {
 
     expect(find.text(AppStrings.subscriptionsTitle), findsOneWidget);
     expect(find.text(AppStrings.addSubscriptionTitle), findsNothing);
+    expect(find.text('Netflix'), findsOneWidget);
+    expect(find.text(r'$22.99 / month'), findsOneWidget);
 
     final stored = await DriftSubscriptionRepository(harness.$3).getAll();
     expect(stored, hasLength(1));

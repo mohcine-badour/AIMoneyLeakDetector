@@ -11,12 +11,17 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/app_text_field.dart';
+import '../../../core/widgets/error_state.dart';
+import '../../../core/widgets/loading_state.dart';
 import '../add_subscription_controller.dart';
 import '../domain/subscription.dart';
+import '../subscriptions_providers.dart';
 import 'subscription_labels.dart';
 
 class AddSubscriptionScreen extends ConsumerStatefulWidget {
-  const AddSubscriptionScreen({super.key});
+  const AddSubscriptionScreen({this.subscriptionId, super.key});
+
+  final String? subscriptionId;
 
   @override
   ConsumerState<AddSubscriptionScreen> createState() =>
@@ -27,6 +32,9 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   final _nameController = TextEditingController();
   final _merchantController = TextEditingController();
   final _amountController = TextEditingController();
+  var _hydrated = false;
+
+  bool get _isEditing => widget.subscriptionId != null;
 
   @override
   void dispose() {
@@ -36,13 +44,66 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
     super.dispose();
   }
 
+  void _hydrate(Subscription subscription) {
+    if (_hydrated) {
+      return;
+    }
+    _nameController.text = subscription.name;
+    _merchantController.text = subscription.merchant;
+    _amountController.text = subscription.amount.toStringAsFixed(2);
+    ref.read(addSubscriptionControllerProvider.notifier).hydrate(subscription);
+    setState(() => _hydrated = true);
+  }
+
   @override
   Widget build(BuildContext context) {
     final form = ref.watch(addSubscriptionControllerProvider);
     final controller = ref.read(addSubscriptionControllerProvider.notifier);
 
+    if (_isEditing && !_hydrated) {
+      final async = ref.watch(subscriptionByIdProvider(widget.subscriptionId!));
+      return async.when(
+        loading: () => AppScaffold(
+          title: AppStrings.editSubscriptionTitle,
+          body: const LoadingState(),
+        ),
+        error: (error, stackTrace) => AppScaffold(
+          title: AppStrings.editSubscriptionTitle,
+          body: ErrorState(
+            message: AppStrings.errorLoadSubscriptions,
+            onRetry: () => ref.invalidate(
+              subscriptionByIdProvider(widget.subscriptionId!),
+            ),
+          ),
+        ),
+        data: (subscription) {
+          if (subscription == null) {
+            return AppScaffold(
+              title: AppStrings.editSubscriptionTitle,
+              body: ErrorState(
+                message: AppStrings.subscriptionNotFound,
+                retryLabel: AppStrings.backToList,
+                onRetry: () => context.go(AppRoutes.subscriptions),
+              ),
+            );
+          }
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) {
+              _hydrate(subscription);
+            }
+          });
+          return const AppScaffold(
+            title: AppStrings.editSubscriptionTitle,
+            body: LoadingState(),
+          );
+        },
+      );
+    }
+
     return AppScaffold(
-      title: AppStrings.addSubscriptionTitle,
+      title: _isEditing
+          ? AppStrings.editSubscriptionTitle
+          : AppStrings.addSubscriptionTitle,
       padding: const EdgeInsets.all(AppSpacing.page),
       body: SingleChildScrollView(
         child: Column(
@@ -126,6 +187,10 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
       amount: _amountController.text,
     );
     if (!saved || !mounted) {
+      return;
+    }
+    if (widget.subscriptionId != null) {
+      context.go(AppRoutes.subscriptionDetailLocation(widget.subscriptionId!));
       return;
     }
     context.go(AppRoutes.subscriptions);

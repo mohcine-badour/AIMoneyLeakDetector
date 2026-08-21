@@ -9,6 +9,22 @@ extension BillingCycleLabel on BillingCycle {
         BillingCycle.yearly => AppStrings.billingYearly,
         BillingCycle.custom => AppStrings.billingCustom,
       };
+
+  String get periodSuffix => switch (this) {
+        BillingCycle.weekly => AppStrings.perWeek,
+        BillingCycle.monthly => AppStrings.perMonth,
+        BillingCycle.quarterly => AppStrings.perQuarter,
+        BillingCycle.yearly => AppStrings.perYear,
+        BillingCycle.custom => AppStrings.perCustom,
+      };
+
+  String get compactPeriod => switch (this) {
+        BillingCycle.weekly => AppStrings.compactPerWeek,
+        BillingCycle.monthly => AppStrings.compactPerMonth,
+        BillingCycle.quarterly => AppStrings.compactPerQuarter,
+        BillingCycle.yearly => AppStrings.compactPerYear,
+        BillingCycle.custom => AppStrings.compactPerCustom,
+      };
 }
 
 extension SubscriptionCategoryLabel on SubscriptionCategory {
@@ -23,5 +39,13 @@ extension SubscriptionCategoryLabel on SubscriptionCategory {
         SubscriptionCategory.gaming => AppStrings.categoryGaming,
         SubscriptionCategory.finance => AppStrings.categoryFinance,
         SubscriptionCategory.other => AppStrings.categoryOther,
+      };
+}
+
+extension SubscriptionSourceLabel on SubscriptionSource {
+  String get label => switch (this) {
+        SubscriptionSource.manual => AppStrings.sourceManual,
+        SubscriptionSource.scan => AppStrings.sourceScan,
+        SubscriptionSource.import => AppStrings.sourceImport,
       };
 }

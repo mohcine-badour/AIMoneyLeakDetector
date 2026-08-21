@@ -27,7 +27,8 @@ void main() {
 
   testWidgets('placeholder routes render their titles', (tester) async {
     const routes = <String, String>{
-      AppRoutes.dashboard: AppStrings.dashboardTitle,
+      AppRoutes.dashboard: AppStrings.yourSubscriptions,
+      AppRoutes.upcoming: AppStrings.upcomingPayments,
       AppRoutes.subscriptions: AppStrings.subscriptionsTitle,
       AppRoutes.addSubscription: AppStrings.addSubscriptionTitle,
       AppRoutes.trials: AppStrings.trialsTitle,
@@ -42,14 +43,14 @@ void main() {
     }
   });
 
-  testWidgets('subscription detail reads the path parameter', (tester) async {
+  testWidgets('missing subscription shows not found', (tester) async {
     await pumpBillKillerApp(
       tester,
       location: AppRoutes.subscriptionDetailLocation('netflix'),
     );
 
-    expect(find.text(AppStrings.subscriptionDetailTitle), findsOneWidget);
-    expect(find.text('netflix'), findsOneWidget);
+    expect(find.text(AppStrings.subscriptionNotFound), findsOneWidget);
+    expect(find.text(AppStrings.backToList), findsOneWidget);
   });
 
   testWidgets('unknown route shows not found and can return home', (

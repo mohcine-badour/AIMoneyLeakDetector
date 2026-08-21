@@ -4,6 +4,7 @@ import '../../core/utils/money_format.dart';
 import 'data/drift_subscription_repository.dart';
 import 'domain/subscription.dart';
 import 'domain/subscription_validator.dart';
+import 'subscriptions_providers.dart';
 
 final addSubscriptionControllerProvider =
     NotifierProvider<AddSubscriptionController, AddSubscriptionFormState>(
@@ -13,6 +14,7 @@ final addSubscriptionControllerProvider =
 
 class AddSubscriptionFormState {
   const AddSubscriptionFormState({
+    this.editingId,
     this.currency = MoneyFormat.defaultCurrencyCode,
     this.billingCycle,
     this.nextBillingDate,
@@ -21,6 +23,7 @@ class AddSubscriptionFormState {
     this.isSaving = false,
   });
 
+  final String? editingId;
   final String currency;
   final BillingCycle? billingCycle;
   final DateTime? nextBillingDate;
@@ -28,7 +31,10 @@ class AddSubscriptionFormState {
   final SubscriptionFormErrors errors;
   final bool isSaving;
 
+  bool get isEditing => editingId != null;
+
   AddSubscriptionFormState copyWith({
+    String? editingId,
     String? currency,
     BillingCycle? billingCycle,
     DateTime? nextBillingDate,
@@ -37,6 +43,7 @@ class AddSubscriptionFormState {
     bool? isSaving,
   }) {
     return AddSubscriptionFormState(
+      editingId: editingId ?? this.editingId,
       currency: currency ?? this.currency,
       billingCycle: billingCycle ?? this.billingCycle,
       nextBillingDate: nextBillingDate ?? this.nextBillingDate,
@@ -91,6 +98,16 @@ class AddSubscriptionController extends Notifier<AddSubscriptionFormState> {
     );
   }
 
+  void hydrate(Subscription subscription) {
+    state = AddSubscriptionFormState(
+      editingId: subscription.id,
+      currency: subscription.currency,
+      billingCycle: subscription.billingCycle,
+      nextBillingDate: subscription.nextBillingDate,
+      category: subscription.category,
+    );
+  }
+
   Future<bool> submit({
     required String name,
     required String merchant,
@@ -111,18 +128,42 @@ class AddSubscriptionController extends Notifier<AddSubscriptionFormState> {
     }
 
     state = state.copyWith(isSaving: true, errors: const SubscriptionFormErrors());
-    await ref.read(subscriptionRepositoryProvider).save(
-          Subscription.create(
-            name: draft.name,
-            merchant: draft.merchant,
-            amount: draft.amount,
-            currency: state.currency,
-            billingCycle: draft.billingCycle,
-            nextBillingDate: draft.nextBillingDate,
-            category: draft.category,
-            source: SubscriptionSource.manual,
-          ),
-        );
+    final repository = ref.read(subscriptionRepositoryProvider);
+    final editingId = state.editingId;
+    if (editingId != null) {
+      final existing = await repository.getById(editingId);
+      if (existing == null) {
+        state = state.copyWith(isSaving: false);
+        return false;
+      }
+      await repository.save(
+        existing.copyWith(
+          name: draft.name,
+          merchant: draft.merchant,
+          amount: draft.amount,
+          currency: state.currency,
+          billingCycle: draft.billingCycle,
+          nextBillingDate: draft.nextBillingDate,
+          category: draft.category,
+          updatedAt: DateTime.now().toUtc(),
+        ),
+      );
+      ref.invalidate(subscriptionByIdProvider(editingId));
+    } else {
+      await repository.save(
+        Subscription.create(
+          name: draft.name,
+          merchant: draft.merchant,
+          amount: draft.amount,
+          currency: state.currency,
+          billingCycle: draft.billingCycle,
+          nextBillingDate: draft.nextBillingDate,
+          category: draft.category,
+          source: SubscriptionSource.manual,
+        ),
+      );
+    }
+    ref.invalidate(subscriptionsProvider);
     state = state.copyWith(isSaving: false);
     return true;
   }

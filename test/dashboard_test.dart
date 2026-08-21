@@ -1,0 +1,88 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:billkiller_ai/app/router/app_routes.dart';
+import 'package:billkiller_ai/core/constants/app_strings.dart';
+import 'package:billkiller_ai/core/database/app_database.dart';
+import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+
+import 'helpers/pump_app.dart';
+
+final _now = DateTime.utc(2026, 8, 21, 20);
+
+Future<void> _saveNetflixAndAdobe(AppDatabase database) async {
+  final repository = DriftSubscriptionRepository(database);
+  await repository.save(
+    Subscription.create(
+      id: 'netflix',
+      name: 'Netflix',
+      merchant: 'Netflix',
+      amount: 22.99,
+      billingCycle: BillingCycle.monthly,
+      nextBillingDate: DateTime.utc(2026, 8, 22),
+      category: SubscriptionCategory.entertainment,
+    ),
+  );
+  await repository.save(
+    Subscription.create(
+      id: 'adobe',
+      name: 'Adobe',
+      merchant: 'Adobe',
+      amount: 59.99,
+      billingCycle: BillingCycle.monthly,
+      nextBillingDate: DateTime.utc(2026, 9, 7),
+      category: SubscriptionCategory.productivity,
+    ),
+  );
+}
+
+void main() {
+  testWidgets('empty dashboard shows zero totals and savings placeholder', (
+    tester,
+  ) async {
+    await pumpBillKillerApp(
+      tester,
+      location: AppRoutes.dashboard,
+      now: _now,
+    );
+
+    expect(find.text(AppStrings.goodEvening), findsOneWidget);
+    expect(find.text(AppStrings.yourSubscriptions), findsOneWidget);
+    expect(find.text(r'$0.00'), findsWidgets);
+    expect(find.text(AppStrings.compactPerMonth), findsWidgets);
+    expect(find.text(AppStrings.compactPerYear), findsWidgets);
+    expect(find.text(AppStrings.monthlySpending), findsOneWidget);
+    expect(find.text(AppStrings.annualSpending), findsOneWidget);
+    expect(find.text(AppStrings.upcomingPayments), findsOneWidget);
+    expect(find.text(AppStrings.categoryBreakdown), findsOneWidget);
+    expect(find.text(AppStrings.potentialSavingsPlaceholder), findsOneWidget);
+    expect(find.text(AppStrings.addSubscriptionTitle), findsOneWidget);
+  });
+
+  testWidgets('dashboard totals and upcoming payments use local data', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await pumpBillKillerApp(
+      tester,
+      location: AppRoutes.dashboard,
+      now: _now,
+      seed: _saveNetflixAndAdobe,
+    );
+
+    expect(find.text(r'$82.98'), findsWidgets);
+    expect(find.text(r'$995.76'), findsWidgets);
+    expect(find.text(AppStrings.tomorrow), findsOneWidget);
+    expect(find.text('Netflix'), findsOneWidget);
+    expect(find.text('Adobe'), findsOneWidget);
+    expect(find.text('Sep 07'), findsOneWidget);
+    expect(find.text(AppStrings.categoryEntertainment), findsOneWidget);
+    expect(find.text(AppStrings.categoryProductivity), findsOneWidget);
+    expect(find.text(AppStrings.addSubscriptionTitle), findsNothing);
+  });
+}

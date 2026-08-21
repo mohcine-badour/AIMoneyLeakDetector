@@ -26,6 +26,7 @@ void main() {
     expect(MoneyFormat.format(22.99), r'$22.99');
     expect(MoneyFormat.format(22.9, currencyCode: 'GBP'), '£22.90');
     expect(MoneyFormat.format(-5, currencyCode: 'EUR'), '-€5.00');
+    expect(MoneyFormat.format(2249.16), r'$2,249.16');
   });
 
   testWidgets('AppButton invokes onPressed', (tester) async {

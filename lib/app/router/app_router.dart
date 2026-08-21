@@ -2,9 +2,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/constants/app_strings.dart';
 import '../../core/widgets/placeholder_screen.dart';
+import '../../features/dashboard/presentation/dashboard_screen.dart';
 import '../../features/launch/launch_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
+import '../../features/upcoming/presentation/upcoming_payments_screen.dart';
 import '../../features/subscriptions/presentation/add_subscription_screen.dart';
+import '../../features/subscriptions/presentation/subscription_detail_screen.dart';
+import '../../features/subscriptions/presentation/subscriptions_list_screen.dart';
 import 'app_routes.dart';
 
 /// Application router. Screens stay as placeholders until their feature step.
@@ -23,15 +27,11 @@ abstract final class AppRouter {
         ),
         GoRoute(
           path: AppRoutes.dashboard,
-          builder: (context, state) => const PlaceholderScreen(
-            title: AppStrings.dashboardTitle,
-          ),
+          builder: (context, state) => const DashboardScreen(),
         ),
         GoRoute(
           path: AppRoutes.subscriptions,
-          builder: (context, state) => const PlaceholderScreen(
-            title: AppStrings.subscriptionsTitle,
-          ),
+          builder: (context, state) => const SubscriptionsListScreen(),
           routes: [
             GoRoute(
               path: 'add',
@@ -41,13 +41,23 @@ abstract final class AppRouter {
               path: ':id',
               builder: (context, state) {
                 final id = state.pathParameters['id'] ?? '';
-                return PlaceholderScreen(
-                  title: AppStrings.subscriptionDetailTitle,
-                  subtitle: id,
-                );
+                return SubscriptionDetailScreen(subscriptionId: id);
               },
+              routes: [
+                GoRoute(
+                  path: 'edit',
+                  builder: (context, state) {
+                    final id = state.pathParameters['id'];
+                    return AddSubscriptionScreen(subscriptionId: id);
+                  },
+                ),
+              ],
             ),
           ],
+        ),
+        GoRoute(
+          path: AppRoutes.upcoming,
+          builder: (context, state) => const UpcomingPaymentsScreen(),
         ),
         GoRoute(
           path: AppRoutes.trials,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../constants/app_icons.dart';
 
-enum AppButtonVariant { primary, secondary, tertiary }
+enum AppButtonVariant { primary, secondary, tertiary, danger }
 
 class AppButton extends StatelessWidget {
   const AppButton({
@@ -37,6 +37,7 @@ class AppButton extends StatelessWidget {
 
     final callback = isLoading ? null : onPressed;
 
+    final colorScheme = Theme.of(context).colorScheme;
     final button = switch (variant) {
       AppButtonVariant.primary => FilledButton(
           onPressed: callback,
@@ -48,6 +49,14 @@ class AppButton extends StatelessWidget {
         ),
       AppButtonVariant.tertiary => TextButton(
           onPressed: callback,
+          child: child,
+        ),
+      AppButtonVariant.danger => FilledButton(
+          onPressed: callback,
+          style: FilledButton.styleFrom(
+            backgroundColor: colorScheme.error,
+            foregroundColor: colorScheme.onError,
+          ),
           child: child,
         ),
     };

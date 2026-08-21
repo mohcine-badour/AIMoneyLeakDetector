@@ -81,4 +81,74 @@ abstract final class AppStrings {
   static const String errorBillingCycleRequired = 'Choose a billing cycle.';
   static const String errorDateRequired = 'Choose the next billing date.';
   static const String errorCategoryRequired = 'Choose a category.';
+
+  static const String searchSubscriptions = 'Search';
+  static const String filterAll = 'All';
+  static const String sortNextDate = 'Next date';
+  static const String sortMonthlyCost = 'Monthly cost';
+  static const String nextPayment = 'Next payment:';
+  static const String emptySubscriptionsTitle = 'No subscriptions yet';
+  static const String emptySubscriptionsMessage =
+      'Add a recurring payment to see where your money goes.';
+  static const String noMatchingSubscriptionsTitle = 'No matches';
+  static const String noMatchingSubscriptionsMessage =
+      'Try a different search or category.';
+  static const String errorLoadSubscriptions =
+      'Could not load subscriptions.';
+
+  static const String perWeek = '/ week';
+  static const String perMonth = '/ month';
+  static const String perQuarter = '/ quarter';
+  static const String perYear = '/ year';
+  static const String perCustom = '/ custom';
+
+  static const String compactPerWeek = '/week';
+  static const String compactPerMonth = '/month';
+  static const String compactPerQuarter = '/quarter';
+  static const String compactPerYear = '/year';
+  static const String compactPerCustom = '/custom';
+
+  static const String fieldMonthlyEquivalent = 'Monthly equivalent';
+  static const String fieldAnnualEquivalent = 'Annual equivalent';
+  static const String fieldCreated = 'Created';
+  static const String fieldSource = 'Source';
+  static const String annualLabel = 'Annual:';
+
+  static const String sourceManual = 'Manual';
+  static const String sourceScan = 'Scan';
+  static const String sourceImport = 'Import';
+
+  static const String edit = 'Edit';
+  static const String editSubscriptionTitle = 'Edit Subscription';
+  static const String delete = 'Delete';
+  static const String cancel = 'Cancel';
+  static const String deleteSubscriptionTitle = 'Delete this subscription?';
+  static const String deleteSubscriptionMessage =
+      'This removes it from BillKiller. It does not cancel the merchant.';
+  static const String cancellationGuide = 'Cancellation guide';
+  static const String cancellationGuidePlaceholder =
+      'This guide is not available yet.';
+  static const String subscriptionNotFound = 'This subscription was not found.';
+  static const String backToList = 'Back to list';
+
+  static const String goodMorning = 'Good morning';
+  static const String goodAfternoon = 'Good afternoon';
+  static const String goodEvening = 'Good evening';
+  static const String yourSubscriptions = 'Your subscriptions';
+  static const String monthlySpending = 'Monthly spending';
+  static const String annualSpending = 'Annual spending';
+  static const String upcomingPayments = 'Upcoming payments';
+  static const String categoryBreakdown = 'Category breakdown';
+  static const String potentialSavings = 'Potential savings';
+  static const String potentialSavingsPlaceholder =
+      'AI leak detection will appear here.';
+  static const String viewAll = 'View all';
+  static const String today = 'Today';
+  static const String tomorrow = 'Tomorrow';
+  static const String noUpcomingPayments = 'No upcoming payments.';
+  static const String emptyUpcomingTitle = 'Nothing coming up';
+  static const String emptyUpcomingMessage =
+      'Active subscriptions will show here, sorted by the next payment date.';
+  static const String emptyCategoryBreakdown =
+      'Add a subscription to see where the money goes.';
 }

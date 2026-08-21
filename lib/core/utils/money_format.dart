@@ -8,7 +8,22 @@ abstract final class MoneyFormat {
   }) {
     final symbol = _symbols[currencyCode] ?? '$currencyCode ';
     final sign = amount < 0 ? '-' : '';
-    return '$sign$symbol${amount.abs().toStringAsFixed(2)}';
+    final parts = amount.abs().toStringAsFixed(2).split('.');
+    return '$sign$symbol${_groupThousands(parts[0])}.${parts[1]}';
+  }
+
+  static String _groupThousands(String whole) {
+    if (whole.length <= 3) {
+      return whole;
+    }
+    final buffer = StringBuffer();
+    for (var i = 0; i < whole.length; i++) {
+      if (i > 0 && (whole.length - i) % 3 == 0) {
+        buffer.write(',');
+      }
+      buffer.write(whole[i]);
+    }
+    return buffer.toString();
   }
 
   static const Map<String, String> _symbols = {

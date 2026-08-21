@@ -11,16 +11,22 @@ import 'package:billkiller_ai/app/router/app_routes.dart';
 import 'package:billkiller_ai/core/database/app_database.dart';
 import 'package:billkiller_ai/core/providers/app_database_provider.dart';
 import 'package:billkiller_ai/core/providers/shared_preferences_provider.dart';
+import 'package:billkiller_ai/core/providers/clock_provider.dart';
 
 Future<(GoRouter, SharedPreferences, AppDatabase)> pumpBillKillerApp(
   WidgetTester tester, {
   String location = AppRoutes.launch,
   Map<String, Object> prefs = const {},
+  Future<void> Function(AppDatabase database)? seed,
+  DateTime? now,
 }) async {
   SharedPreferences.setMockInitialValues(Map<String, Object>.from(prefs));
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
   final sharedPreferences = await SharedPreferences.getInstance();
   final database = AppDatabase(NativeDatabase.memory());
+  if (seed != null) {
+    await seed(database);
+  }
   final router = AppRouter.create(initialLocation: location);
 
   await tester.pumpWidget(
@@ -28,6 +34,7 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpBillKillerApp(
       overrides: [
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
         appDatabaseProvider.overrideWithValue(database),
+        if (now != null) appNowProvider.overrideWithValue(now),
       ],
       child: BillKillerApp(router: router),
     ),
