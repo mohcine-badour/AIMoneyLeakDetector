@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../core/constants/app_strings.dart';
 import 'config/app_config.dart';
-import 'router/app_router.dart';
-import 'router/app_routes.dart';
 import 'theme/app_theme.dart';
 
 class BillKillerApp extends StatelessWidget {
-  const BillKillerApp({super.key});
+  const BillKillerApp({required this.router, super.key});
+
+  final GoRouter router;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light(),
@@ -19,8 +20,7 @@ class BillKillerApp extends StatelessWidget {
       themeMode: ThemeMode.system,
       locale: const Locale(AppConfig.defaultLanguageCode),
       supportedLocales: const [Locale(AppConfig.defaultLanguageCode)],
-      initialRoute: AppRoutes.launch,
-      onGenerateRoute: AppRouter.onGenerateRoute,
+      routerConfig: router,
     );
   }
 }

@@ -1,0 +1,69 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'package:billkiller_ai/app/router/app_routes.dart';
+import 'package:billkiller_ai/core/constants/app_strings.dart';
+
+import 'helpers/pump_app.dart';
+
+void main() {
+  testWidgets('Get Started opens onboarding and back returns home', (
+    tester,
+  ) async {
+    await pumpBillKillerApp(tester);
+
+    await tester.tap(find.text(AppStrings.getStarted));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.onboardingHeadline), findsOneWidget);
+    expect(find.text(AppStrings.onboardingFindOut), findsOneWidget);
+
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.appName), findsOneWidget);
+    expect(find.text(AppStrings.getStarted), findsOneWidget);
+  });
+
+  testWidgets('placeholder routes render their titles', (tester) async {
+    const routes = <String, String>{
+      AppRoutes.dashboard: AppStrings.dashboardTitle,
+      AppRoutes.subscriptions: AppStrings.subscriptionsTitle,
+      AppRoutes.addSubscription: AppStrings.addSubscriptionTitle,
+      AppRoutes.trials: AppStrings.trialsTitle,
+      AppRoutes.savings: AppStrings.savingsTitle,
+      AppRoutes.settings: AppStrings.settingsTitle,
+      AppRoutes.paywall: AppStrings.paywallTitle,
+    };
+
+    for (final entry in routes.entries) {
+      await pumpBillKillerApp(tester, location: entry.key);
+      expect(find.text(entry.value), findsWidgets);
+    }
+  });
+
+  testWidgets('subscription detail reads the path parameter', (tester) async {
+    await pumpBillKillerApp(
+      tester,
+      location: AppRoutes.subscriptionDetailLocation('netflix'),
+    );
+
+    expect(find.text(AppStrings.subscriptionDetailTitle), findsOneWidget);
+    expect(find.text('netflix'), findsOneWidget);
+  });
+
+  testWidgets('unknown route shows not found and can return home', (
+    tester,
+  ) async {
+    await pumpBillKillerApp(tester, location: '/this-route-does-not-exist');
+
+    expect(find.text(AppStrings.notFoundTitle), findsOneWidget);
+    expect(find.text('/this-route-does-not-exist'), findsOneWidget);
+
+    await tester.tap(find.text(AppStrings.goHome));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.appName), findsOneWidget);
+    expect(find.text(AppStrings.getStarted), findsOneWidget);
+  });
+}

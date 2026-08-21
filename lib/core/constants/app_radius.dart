@@ -7,5 +7,7 @@ abstract final class AppRadius {
   static const double lg = 16;
 
   static const BorderRadius button = BorderRadius.all(Radius.circular(md));
+  static const BorderRadius card = BorderRadius.all(Radius.circular(lg));
+  static const BorderRadius field = BorderRadius.all(Radius.circular(md));
   static const BorderRadius mark = BorderRadius.all(Radius.circular(lg));
 }
