@@ -52,7 +52,22 @@ class BrandIcon extends StatelessWidget {
     final pathKey = _pathAliases[brand.slug] ?? brand.slug;
     final path = BrandIconPaths.bySlug[pathKey];
     if (path == null) {
-      return _Tile(size: size, radius: radius, color: brand.tileBg);
+      final mark = brand.slug == 'disneyplus' ? 'D+' : brand.displayName[0];
+      return _Tile(
+        size: size,
+        radius: radius,
+        color: brand.tileBg,
+        child: Text(
+          mark,
+          style: TextStyle(
+            fontSize: size * (mark.length > 1 ? 0.32 : 0.4),
+            fontWeight: FontWeight.w500,
+            color: brand.iconColor,
+            letterSpacing: -0.3,
+            height: 1,
+          ),
+        ),
+      );
     }
 
     final iconPx = size * 0.55;

@@ -7,7 +7,7 @@ import 'package:billkiller_ai/core/constants/app_strings.dart';
 import 'helpers/pump_app.dart';
 
 void main() {
-  testWidgets('launch screen shows brand, tagline, and CTA', (tester) async {
+  testWidgets('welcome screen shows brand, tagline, and CTA', (tester) async {
     await pumpBillKillerApp(tester);
 
     expect(find.text(AppStrings.appName), findsOneWidget);

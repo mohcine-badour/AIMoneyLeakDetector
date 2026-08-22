@@ -19,6 +19,8 @@ import 'package:billkiller_ai/features/notifications/notifications_providers.dar
 import 'package:billkiller_ai/features/ads/ads_providers.dart';
 import 'package:billkiller_ai/features/ads/domain/ad_config.dart';
 import 'package:billkiller_ai/features/ads/domain/ad_service.dart';
+import 'package:billkiller_ai/features/auth/auth_providers.dart';
+import 'package:billkiller_ai/features/auth/domain/anonymous_auth.dart';
 import 'package:billkiller_ai/features/analytics/analytics_providers.dart';
 import 'package:billkiller_ai/features/analytics/data/disabled_analytics.dart';
 import 'package:billkiller_ai/features/analytics/domain/analytics.dart';
@@ -47,6 +49,8 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpBillKillerApp(
   AdConfig? adConfig,
   AdService? adService,
   Analytics? analytics,
+  AnonymousAuth? anonymousAuth,
+  bool settle = true,
 }) async {
   SharedPreferences.setMockInitialValues(Map<String, Object>.from(prefs));
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
@@ -79,6 +83,8 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpBillKillerApp(
           ),
         billingClientProvider.overrideWithValue(billing),
         analyticsProvider.overrideWithValue(analyticsClient),
+        if (anonymousAuth != null)
+          anonymousAuthProvider.overrideWithValue(anonymousAuth),
         if (entitlement != null)
           entitlementProvider.overrideWithValue(entitlement),
         if (monetizationConfig != null)
@@ -89,7 +95,11 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpBillKillerApp(
       child: BillKillerApp(router: router),
     ),
   );
-  await tester.pumpAndSettle();
+  if (settle) {
+    await tester.pumpAndSettle();
+  } else {
+    await tester.pump();
+  }
   addTearDown(router.dispose);
   addTearDown(database.close);
   return (router, sharedPreferences, database);

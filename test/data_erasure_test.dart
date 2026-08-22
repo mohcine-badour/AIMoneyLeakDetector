@@ -10,6 +10,7 @@ import 'package:billkiller_ai/core/security/in_memory_secure_store.dart';
 import 'package:billkiller_ai/features/notifications/domain/reminder_scheduler.dart';
 import 'package:billkiller_ai/features/notifications/domain/scheduled_reminder.dart';
 import 'package:billkiller_ai/features/onboarding/data/onboarding_repository.dart';
+import 'package:billkiller_ai/features/auth/data/guest_session_repository.dart';
 import 'package:billkiller_ai/features/onboarding/domain/onboarding_answers.dart';
 import 'package:billkiller_ai/features/settings/domain/local_data_eraser.dart';
 import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
@@ -61,6 +62,8 @@ void main() {
         completedAt: DateTime.utc(2026, 8, 21),
       ),
     );
+    final guestSession = GuestSessionRepository(prefs);
+    await guestSession.create();
     final store = InMemorySecureStore();
     await store.write(key: 'token.session', value: 'abc');
     final documents = EphemeralDocumentStore();
@@ -70,6 +73,7 @@ void main() {
     final eraser = LocalDataEraser(
       database: database,
       onboarding: onboarding,
+      guestSession: guestSession,
       reminders: reminders,
       secureStore: store,
       documents: documents,
@@ -83,6 +87,7 @@ void main() {
     expect(await DriftSubscriptionRepository(database).getAll(), isEmpty);
     expect(await DriftTrialRepository(database).getAll(), isEmpty);
     expect(onboarding.isCompleted, isFalse);
+    expect(guestSession.hasSession, isFalse);
     expect(await store.read('token.session'), isNull);
     expect(documents.currentBytes, isNull);
     expect(reminders.last, isEmpty);

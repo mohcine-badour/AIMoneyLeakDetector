@@ -7,8 +7,9 @@ import '../../features/before_subscribe/domain/subscription_candidate.dart';
 import '../../features/before_subscribe/presentation/before_you_subscribe_screen.dart';
 import '../../features/cancellation/presentation/cancellation_guide_screen.dart';
 import '../../features/dashboard/presentation/dashboard_screen.dart';
-import '../../features/launch/launch_screen.dart';
+import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
+import '../../features/welcome/presentation/welcome_screen.dart';
 import '../../features/paywall/domain/paywall_source.dart';
 import '../../features/paywall/presentation/paywall_screen.dart';
 import '../../features/upcoming/presentation/upcoming_payments_screen.dart';
@@ -32,11 +33,15 @@ abstract final class AppRouter {
       routes: [
         GoRoute(
           path: AppRoutes.launch,
-          builder: (context, state) => const LaunchScreen(),
+          builder: (context, state) => const WelcomeScreen(),
         ),
         GoRoute(
           path: AppRoutes.onboarding,
           builder: (context, state) => const OnboardingScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.signIn,
+          builder: (context, state) => const SignInScreen(),
         ),
         GoRoute(
           path: AppRoutes.dashboard,

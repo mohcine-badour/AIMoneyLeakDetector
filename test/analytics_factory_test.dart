@@ -7,6 +7,17 @@ import 'package:billkiller_ai/features/analytics/domain/analytics_event.dart';
 void main() {
   test('event names match the product analytics catalog', () {
     expect(AnalyticsEvent.appOpened.name, 'app_opened');
+    expect(AnalyticsEvent.welcomeView.name, 'welcome_view');
+    expect(AnalyticsEvent.getStartedPress.name, 'get_started_press');
+    expect(
+      AnalyticsEvent.anonymousSignInSuccess.name,
+      'anonymous_signin_success',
+    );
+    expect(AnalyticsEvent.anonymousSignInError.name, 'anonymous_signin_error');
+    expect(AnalyticsEvent.signInPress.name, 'sign_in_press');
+    expect(AnalyticsEvent.termsPress.name, 'terms_press');
+    expect(AnalyticsEvent.privacyPress.name, 'privacy_press');
+    expect(AnalyticsEvent.featuredBrandTap.name, 'featured_brand_tap');
     expect(AnalyticsEvent.onboardingStarted.name, 'onboarding_started');
     expect(AnalyticsEvent.onboardingCompleted.name, 'onboarding_completed');
     expect(AnalyticsEvent.subscriptionCreated.name, 'subscription_created');

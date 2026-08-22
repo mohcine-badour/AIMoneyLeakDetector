@@ -1,6 +1,14 @@
 /// Product events. Names stay stable; do not attach financial documents.
 enum AnalyticsEvent {
   appOpened('app_opened'),
+  welcomeView('welcome_view'),
+  getStartedPress('get_started_press'),
+  anonymousSignInSuccess('anonymous_signin_success'),
+  anonymousSignInError('anonymous_signin_error'),
+  signInPress('sign_in_press'),
+  termsPress('terms_press'),
+  privacyPress('privacy_press'),
+  featuredBrandTap('featured_brand_tap'),
   onboardingStarted('onboarding_started'),
   onboardingCompleted('onboarding_completed'),
   subscriptionCreated('subscription_created'),

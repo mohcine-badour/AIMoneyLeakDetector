@@ -1,11 +1,26 @@
+import '../copy/welcome_copy.dart';
+
 /// User-facing copy for BillKiller AI.
 ///
 /// English-only for V1. Centralizing strings here prepares the app
 /// for localization without introducing a localization package yet.
 abstract final class AppStrings {
   static const String appName = 'BillKiller AI';
-  static const String tagline = "Find the money you're wasting.";
-  static const String getStarted = 'Get Started';
+  static const String tagline = WelcomeCopy.tagline;
+  static const String getStarted = 'Get started — free';
+  static const String worksWith = 'Works with';
+  static const String bankLevelSecurity = 'Bank-level security';
+  static const String privateByDefault = 'Private by default';
+  static const String alreadyHaveAccount = 'Already have an account?';
+  static const String signIn = 'Sign in';
+  static const String legalContinuingPrefix = 'By continuing, you agree to our';
+  static const String legalAnd = 'and';
+  static const String couldNotContinueTitle = 'Could not continue';
+  static const String couldNotContinueMessage =
+      'Something went wrong setting up your account. Check your connection and try again.';
+  static const String signInUnavailable =
+      'Sign in is not available yet. Your data stays on this phone.';
+  static String moreBrandsCount(int count) => '+$count';
 
   static const String onboardingTitle = 'Onboarding';
   static const String dashboardTitle = 'Dashboard';

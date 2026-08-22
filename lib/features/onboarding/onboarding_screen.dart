@@ -25,9 +25,14 @@ class OnboardingScreen extends ConsumerWidget {
     final controller = ref.read(onboardingControllerProvider.notifier);
 
     return PopScope(
-      canPop: draft.step == 0,
+      canPop: draft.step == 0 && context.canPop(),
       onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) {
+        if (didPop) {
+          return;
+        }
+        if (draft.step == 0) {
+          context.go(AppRoutes.launch);
+        } else {
           controller.goBack();
         }
       },
@@ -36,7 +41,11 @@ class OnboardingScreen extends ConsumerWidget {
         leading: BackButton(
           onPressed: () {
             if (draft.step == 0) {
-              context.pop();
+              if (context.canPop()) {
+                context.pop();
+              } else {
+                context.go(AppRoutes.launch);
+              }
             } else {
               controller.goBack();
             }

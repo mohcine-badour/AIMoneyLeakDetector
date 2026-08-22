@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/providers/app_database_provider.dart';
 import '../../../core/security/security_providers.dart';
+import '../auth/auth_providers.dart';
 import '../notifications/notifications_providers.dart';
 import '../onboarding/data/onboarding_repository.dart';
 import '../subscriptions/subscriptions_providers.dart';
@@ -14,6 +15,7 @@ final dataEraserProvider = Provider<LocalDataEraser>((ref) {
   return LocalDataEraser(
     database: ref.watch(appDatabaseProvider),
     onboarding: ref.watch(onboardingRepositoryProvider),
+    guestSession: ref.watch(guestSessionRepositoryProvider),
     reminders: ref.watch(reminderSchedulerProvider),
     secureStore: ref.watch(secureStoreProvider),
     documents: ref.watch(documentStoreProvider),

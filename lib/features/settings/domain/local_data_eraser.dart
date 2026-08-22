@@ -1,6 +1,7 @@
 import '../../../core/database/app_database.dart';
 import '../../../core/security/document_store.dart';
 import '../../../core/security/secure_store.dart';
+import '../../auth/data/guest_session_repository.dart';
 import '../../notifications/domain/reminder_scheduler.dart';
 import '../../onboarding/data/onboarding_repository.dart';
 
@@ -25,6 +26,7 @@ class LocalDataEraser {
   const LocalDataEraser({
     required this.database,
     required this.onboarding,
+    required this.guestSession,
     required this.reminders,
     required this.secureStore,
     required this.documents,
@@ -32,6 +34,7 @@ class LocalDataEraser {
 
   final AppDatabase database;
   final OnboardingRepository onboarding;
+  final GuestSessionRepository guestSession;
   final ReminderScheduler reminders;
   final SecureStore secureStore;
   final DocumentStore documents;
@@ -39,6 +42,7 @@ class LocalDataEraser {
   Future<ErasureResult> erase(ErasureKind kind) async {
     await database.eraseAllUserData();
     await onboarding.clear();
+    await guestSession.clear();
     await reminders.sync(const []);
     await secureStore.clear();
     await documents.discard();

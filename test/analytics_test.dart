@@ -151,6 +151,18 @@ void main() {
     _expectNoFinancialData(analytics);
   });
 
+  testWidgets('welcome events omit financial properties', (tester) async {
+    final analytics = RecordingAnalytics();
+    await pumpBillKillerApp(tester, analytics: analytics);
+
+    expect(analytics.has(AnalyticsEvent.welcomeView), isTrue);
+    await tester.tap(find.byKey(const Key('get-started')));
+    await tester.pumpAndSettle();
+    expect(analytics.has(AnalyticsEvent.getStartedPress), isTrue);
+    expect(analytics.has(AnalyticsEvent.anonymousSignInSuccess), isTrue);
+    _expectNoFinancialData(analytics);
+  });
+
   testWidgets('onboarding started and completed omit spending amounts', (
     tester,
   ) async {
