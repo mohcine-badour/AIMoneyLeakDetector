@@ -10,7 +10,7 @@ import '../../features/launch/launch_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
 import '../../features/paywall/presentation/paywall_screen.dart';
 import '../../features/upcoming/presentation/upcoming_payments_screen.dart';
-import '../../features/savings/presentation/savings_screen.dart';
+import '../../features/insights/presentation/insights_screen.dart';
 import '../../features/scanner/presentation/scan_receipt_screen.dart';
 import '../../features/settings/presentation/privacy_policy_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
@@ -109,7 +109,7 @@ abstract final class AppRouter {
         ),
         GoRoute(
           path: AppRoutes.savings,
-          builder: (context, state) => const SavingsScreen(),
+          builder: (context, state) => const InsightsScreen(),
         ),
         GoRoute(
           path: AppRoutes.settings,

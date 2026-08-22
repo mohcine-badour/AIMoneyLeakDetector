@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../app/router/app_routes.dart';
 import '../../app/theme/app_tokens.dart';
 import '../../features/dashboard/home_scroll.dart';
+import '../../features/insights/insights_scroll.dart';
 import '../../features/subscriptions/subs_scroll.dart';
 import '../constants/app_icons.dart';
 import '../constants/app_strings.dart';
@@ -59,6 +60,8 @@ class AppTabBar extends ConsumerWidget {
         ref.read(homeScrollToTopProvider.notifier).request();
       } else if (selected == 1) {
         ref.read(subscriptionsScrollToTopProvider.notifier).request();
+      } else if (selected == 2) {
+        ref.read(insightsScrollToTopProvider.notifier).request();
       }
       return;
     }
@@ -129,7 +132,7 @@ class _TabItem extends StatelessWidget {
           horizontal: active ? 14 : 12,
         ),
         decoration: BoxDecoration(
-          color: active ? tokens.bgSubtle : Colors.transparent,
+          color: active ? tokens.bgHover : Colors.transparent,
           borderRadius: BorderRadius.circular(14),
         ),
         child: Column(

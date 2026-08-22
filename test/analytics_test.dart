@@ -310,7 +310,7 @@ void main() {
     _expectNoFinancialData(analytics);
   });
 
-  testWidgets('AI analysis started and completed omit spend figures', (
+  testWidgets('insights tab does not send financial data or start AI analysis', (
     tester,
   ) async {
     final analytics = RecordingAnalytics();
@@ -321,11 +321,8 @@ void main() {
       analytics: analytics,
     );
 
-    expect(analytics.has(AnalyticsEvent.aiAnalysisStarted), isTrue);
-    expect(analytics.has(AnalyticsEvent.aiAnalysisCompleted), isTrue);
-    expect(analytics.propertiesFor(AnalyticsEvent.aiAnalysisCompleted), {
-      'success': true,
-    });
+    expect(analytics.has(AnalyticsEvent.aiAnalysisStarted), isFalse);
+    expect(analytics.has(AnalyticsEvent.aiAnalysisCompleted), isFalse);
     _expectNoFinancialData(analytics);
   });
 

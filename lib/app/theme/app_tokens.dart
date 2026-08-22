@@ -20,6 +20,11 @@ class AppTokens {
     required this.warningText,
     required this.dangerBg,
     required this.dangerText,
+    required this.indigoBg,
+    required this.indigoText,
+    required this.borderWarning,
+    required this.borderDanger,
+    required this.borderIndigo,
     required this.filterDot,
   });
 
@@ -41,6 +46,11 @@ class AppTokens {
   final Color warningText;
   final Color dangerBg;
   final Color dangerText;
+  final Color indigoBg;
+  final Color indigoText;
+  final Color borderWarning;
+  final Color borderDanger;
+  final Color borderIndigo;
   final Color filterDot;
 
   static AppTokens of(BuildContext context) {
@@ -66,6 +76,11 @@ class AppTokens {
     warningText: Color(0xFF854F0B),
     dangerBg: Color(0xFFFCEBEB),
     dangerText: Color(0xFFA32D2D),
+    indigoBg: Color(0xFFE8E6F8),
+    indigoText: Color(0xFF3D348B),
+    borderWarning: Color(0x40854F0B),
+    borderDanger: Color(0x40A32D2D),
+    borderIndigo: Color(0x405B5BD6),
     filterDot: Color(0xFF5B5BD6),
   );
 
@@ -88,6 +103,11 @@ class AppTokens {
     warningText: Color(0xFFFAC775),
     dangerBg: Color(0x2EE24B4A),
     dangerText: Color(0xFFF7C1C1),
+    indigoBg: Color(0x2E7F77DD),
+    indigoText: Color(0xFFC4BDF0),
+    borderWarning: Color(0x40FAC775),
+    borderDanger: Color(0x40F7C1C1),
+    borderIndigo: Color(0x407F77DD),
     filterDot: Color(0xFF5B5BD6),
   );
 }

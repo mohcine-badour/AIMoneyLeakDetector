@@ -20,6 +20,36 @@ abstract final class AppStrings {
   static const String tabInsights = 'Insights';
   static const String tabSettings = 'Settings';
   static const String insightsTitle = 'Insights';
+  static const String spendLabel = 'Spend';
+  static const String whereItGoes = 'Where it goes';
+  static const String topByCost = 'Top by cost';
+  static const String forYou = 'For you';
+  static const String sixMoAvgLabel = '6-mo avg';
+  static const String renewalsLabel = 'Renewals';
+  static const String timeframeTitle = 'Timeframe';
+  static const String insightsComing = 'Insights coming';
+  static const String insightsEmptyMessage =
+      'Add a few subscriptions to see where your money goes.';
+  static const String addSubscriptionCta = 'Add subscription';
+  static const String review = 'Review';
+  static const String dismiss = 'Dismiss';
+  static const String resetDismissedInsights = 'Reset dismissed insights';
+  static String categoryCount(int count) {
+    if (count == 1) {
+      return '1 category';
+    }
+    return '$count categories';
+  }
+
+  static String percentOfTotal(int percent) => '$percent% of total';
+  static String suggestionCount(int count) {
+    if (count == 1) {
+      return '1 suggestion';
+    }
+    return '$count suggestions';
+  }
+
+  static String renewalsThisWeek(int count) => '$count this wk';
   static const String attentionSubtitle =
       "Here's what deserves your attention today.";
   static const String youCouldSave = 'You could save';

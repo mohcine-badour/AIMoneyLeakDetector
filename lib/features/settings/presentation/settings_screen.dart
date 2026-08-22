@@ -8,6 +8,7 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/section_header.dart';
+import '../../insights/insights_providers.dart';
 import '../domain/local_data_eraser.dart';
 import '../settings_providers.dart';
 
@@ -53,6 +54,14 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ],
           const SizedBox(height: AppSpacing.lg),
+          AppButton(
+            key: const Key('reset-dismissed-insights'),
+            label: AppStrings.resetDismissedInsights,
+            variant: AppButtonVariant.tertiary,
+            onPressed: () =>
+                ref.read(dismissedInsightsProvider.notifier).reset(),
+          ),
+          const SizedBox(height: AppSpacing.md),
           AppButton(
             key: const Key('delete-local-data'),
             label: AppStrings.deleteMyData,
