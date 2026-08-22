@@ -8,8 +8,22 @@ abstract final class PopularApps {
     'hbo',
     'applemusic',
     'hulu',
+    'amazonprimevideo',
     'dropbox',
+    'googledrive',
     'slack',
+    'discord',
+    'github',
+    'twitch',
+    'paramount',
+    'audible',
+    'nytimes',
+    'headspace',
+    'peloton',
+    'strava',
+    'linear',
+    'patreon',
+    'substack',
   ];
 
   static String tileLabel(Brand brand) {
@@ -20,6 +34,9 @@ abstract final class PopularApps {
       'amazonprimevideo' => 'Prime',
       'applemusic' => 'Music',
       'googledrive' => 'Drive',
+      'discord' => 'Discord',
+      'nytimes' => 'NYT',
+      'paramountplus' => 'Paramount+',
       _ => brand.displayName,
     };
   }

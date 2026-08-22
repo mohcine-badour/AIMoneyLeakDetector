@@ -199,18 +199,18 @@ abstract final class OnboardingPages {
     const OnboardingPage(
       id: OnboardingPageId.intelligence,
       categoryBadge: OnboardingCategoryBadgeData(
-        label: 'Smart insights',
+        label: 'Insights',
         icon: OnboardingIcon.sparkles,
       ),
-      setupLine:
-          'Your money app tells you what you already know. Ours tells you what you missed.',
+      setupLine: 'Most people pay for overlapping apps in the same category.',
       hero: HeroAiPayload(
         brandSlug: 'netflix',
-        title: "Haven't opened Netflix in 42 days",
-        subtitle: 'Cancel to save \$185.88/year.',
+        title: 'Netflix and Hulu in the same month',
+        subtitle:
+            'Overlapping entertainment is common. Review before both renew.',
       ),
       body:
-          'AI reviews your usage patterns weekly and flags what you can safely cancel.',
+          'Kichta flags overlapping services and large yearly renewals from what you entered. It does not watch whether you opened an app.',
       ctaLabel: 'Next',
       ctaIcon: OnboardingIcon.arrowRight,
     ),
@@ -228,7 +228,7 @@ abstract final class OnboardingPages {
         exampleTrialAmountCents: 1099,
       ),
       body:
-          'Get reminded 2 days before any free trial ends. Cancel with one tap, or keep it — your call.',
+          'Get a reminder before a free trial ends. Kichta does not cancel for you — you finish on their site.',
       ctaLabel: "I'm in",
       ctaIcon: OnboardingIcon.check,
     ),

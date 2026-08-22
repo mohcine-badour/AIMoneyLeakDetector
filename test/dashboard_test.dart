@@ -116,4 +116,21 @@ void main() {
     expect(find.byKey(const Key('dashboard-unlock-pro')), findsNothing);
     expect(find.text(AppStrings.unlockPro), findsNothing);
   });
+
+  testWidgets('home trials row opens the trials list', (tester) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await pumpKichtaApp(tester, location: AppRoutes.dashboard, now: _now);
+
+    expect(find.text(AppStrings.trialsTitle), findsOneWidget);
+    expect(find.text(AppStrings.trackAFreeTrial), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('open-trials')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.emptyTrialsTitle), findsOneWidget);
+  });
 }

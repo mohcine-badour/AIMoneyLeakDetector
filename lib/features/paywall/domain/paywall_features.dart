@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_icons.dart';
+import '../../../core/constants/app_strings.dart';
 
 enum PaywallFeatureColor { indigo, green, pink, blue, amber, gray }
 
@@ -63,46 +64,25 @@ abstract final class PaywallFeatureColors {
 abstract final class PaywallFeatures {
   static const List<PaywallFeature> all = [
     PaywallFeature(
-      id: 'ai_analysis',
-      icon: AppIcons.sparkles,
-      color: PaywallFeatureColor.indigo,
-      title: 'AI money analysis',
-      description: 'Ask questions, get personalized recommendations.',
-    ),
-    PaywallFeature(
       id: 'trial_protection',
       icon: AppIcons.shieldCheck,
       color: PaywallFeatureColor.green,
-      title: 'Trial protection',
-      description: 'Get reminded before free trials auto-charge.',
-    ),
-    PaywallFeature(
-      id: 'price_monitoring',
-      icon: AppIcons.bellRinging,
-      color: PaywallFeatureColor.pink,
-      title: 'Price monitoring',
-      description: 'Know the moment Netflix ups the price again.',
-    ),
-    PaywallFeature(
-      id: 'advanced_insights',
-      icon: AppIcons.chartLine,
-      color: PaywallFeatureColor.blue,
-      title: 'Advanced insights',
-      description: 'Year-over-year trends, category forecasts, export to CSV.',
-    ),
-    PaywallFeature(
-      id: 'receipt_scanner',
-      icon: AppIcons.scan,
-      color: PaywallFeatureColor.amber,
-      title: 'Receipt scanner',
-      description: 'Snap a receipt or email — auto-add the subscription.',
+      title: AppStrings.perkTrialProtection,
+      description: AppStrings.perkTrialProtectionDetail,
     ),
     PaywallFeature(
       id: 'unlimited_subs',
       icon: AppIcons.infinity,
       color: PaywallFeatureColor.gray,
-      title: 'Unlimited subscriptions',
-      description: 'Track as many as you have — no cap, no ads.',
+      title: AppStrings.perkUnlimitedSubscriptions,
+      description: AppStrings.perkUnlimitedDetail,
+    ),
+    PaywallFeature(
+      id: 'no_ads',
+      icon: AppIcons.check,
+      color: PaywallFeatureColor.indigo,
+      title: AppStrings.perkNoAds,
+      description: AppStrings.perkNoAdsDetail,
     ),
   ];
 }

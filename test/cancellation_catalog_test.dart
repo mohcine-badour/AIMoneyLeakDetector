@@ -15,6 +15,18 @@ void main() {
     expect(guide.officialUrl, Uri.parse('https://www.netflix.com/cancelplan'));
     expect(guide.includeMessage, isTrue);
     expect(guide.notes.toLowerCase(), contains('does not cancel'));
+    expect(guide.extraNotes, isNull);
+  });
+
+  test('keeps merchant-specific caveats that are not the disclaimer', () {
+    final adobe = CancellationCatalog.lookup(merchant: 'Adobe', name: 'Adobe');
+    expect(adobe.extraNotes, contains('paid period'));
+
+    final gym = CancellationCatalog.lookup(
+      merchant: 'Local Gym',
+      name: 'Gym membership',
+    );
+    expect(gym.extraNotes, contains('no official cancellation link'));
   });
 
   test('unknown merchants do not get an invented URL', () {

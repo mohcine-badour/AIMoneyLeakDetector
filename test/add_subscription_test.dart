@@ -6,11 +6,20 @@ import 'package:kichta/core/brand/brand_registry.dart';
 import 'package:kichta/core/constants/app_strings.dart';
 import 'package:kichta/core/widgets/app_text_field.dart';
 import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/popular_apps.dart';
 import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
 void main() {
+  test('popular app slugs stay unique and in the registry', () {
+    expect(PopularApps.slugs.toSet().length, PopularApps.slugs.length);
+    expect(PopularApps.slugs.length, greaterThan(20));
+    for (final slug in PopularApps.slugs) {
+      expect(BrandRegistry.getBrand(slug), isNotNull, reason: slug);
+    }
+  });
+
   testWidgets('empty save shows validation errors', (tester) async {
     await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
 

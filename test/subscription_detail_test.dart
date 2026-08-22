@@ -44,6 +44,7 @@ void main() {
     expect(find.text('Aug 1, 2026'), findsOneWidget);
     expect(find.text(AppStrings.sourceManual), findsOneWidget);
     expect(find.text(AppStrings.edit), findsOneWidget);
+    expect(find.text(AppStrings.pause), findsOneWidget);
     expect(find.text(AppStrings.delete), findsOneWidget);
     expect(find.text(AppStrings.cancellationGuide), findsOneWidget);
   });
@@ -165,5 +166,27 @@ void main() {
 
     expect(find.text('1'), findsWidgets);
     expect(find.text(AppStrings.costPerUseUnavailable), findsNothing);
+  });
+
+  testWidgets('pause from detail marks the subscription paused', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await pumpKichtaApp(
+      tester,
+      location: AppRoutes.subscriptionDetailLocation('netflix'),
+      seed: _saveNetflix,
+    );
+
+    await tester.ensureVisible(find.byKey(const Key('pause-subscription')));
+    await tester.tap(find.byKey(const Key('pause-subscription')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.pausedLabel), findsOneWidget);
+    expect(find.text(AppStrings.resume), findsOneWidget);
   });
 }

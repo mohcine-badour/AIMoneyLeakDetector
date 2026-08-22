@@ -93,6 +93,8 @@ void main() {
     for (final page in OnboardingPages.all) {
       expect(page.setupLine.toLowerCase(), isNot(contains('you are wasting')));
       expect(page.body.toLowerCase(), isNot(contains("you're wasting")));
+      expect(page.body.toLowerCase(), isNot(contains('one tap')));
+      expect(page.body.toLowerCase(), isNot(contains('ai reviews')));
     }
     expect(_awareness.ctaLabel, 'See mine');
     expect(_capability.ctaLabel, 'Next');
@@ -151,7 +153,7 @@ void main() {
     expect(find.text(_capability.ctaLabel), findsOneWidget);
 
     await _advance(tester);
-    expect(find.text('SMART INSIGHTS'), findsOneWidget);
+    expect(find.text('INSIGHTS'), findsOneWidget);
     expect(
       find.text(OnboardingPages.exampleInsight.toUpperCase()),
       findsOneWidget,

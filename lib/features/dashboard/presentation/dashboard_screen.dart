@@ -19,9 +19,11 @@ import '../../subscriptions/subscriptions_providers.dart';
 import '../domain/home_insight.dart';
 import '../domain/spending_summary.dart';
 import '../home_scroll.dart';
+import '../../trials/trials_providers.dart';
 import 'home_greeting.dart';
 import 'home_insight_card.dart';
 import 'home_list_sections.dart';
+import 'home_trials_section.dart';
 import 'monthly_hero_card.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
@@ -105,6 +107,7 @@ class _HomeBody extends ConsumerWidget {
       subscriptions,
       now: now,
     );
+    final trials = ref.watch(visibleTrialsProvider).asData?.value ?? [];
 
     return ListView(
       controller: controller,
@@ -136,6 +139,7 @@ class _HomeBody extends ConsumerWidget {
             onSeeAll: () => context.go(AppRoutes.subscriptions),
           ),
         ],
+        HomeTrialsSection(trials: trials, now: now),
       ],
     );
   }

@@ -74,6 +74,9 @@ abstract final class AppStrings {
   static const String privacyPolicy = 'Privacy Policy';
   static const String privacySection = 'Privacy';
   static const String yourDataSection = 'Your data';
+  static const String planSection = 'Plan';
+  static const String dismissedInsightsReset =
+      'Dismissed insights are visible again.';
   static const String privacyLastUpdated = 'Last updated';
   static const String privacyMinimalCollection =
       'We keep collection small. Analytics never receive amounts, merchants, or receipts.';
@@ -192,6 +195,8 @@ abstract final class AppStrings {
   static const String comingSoon = 'Coming soon';
   static const String pause = 'Pause';
   static const String resume = 'Resume';
+  static const String pausedLabel = 'Paused';
+  static const String details = 'Details';
   static const String totalLabel = 'Total';
   static const String perYearFooterLabel = 'Per year';
   static const String weeklyTypicalWarning =
@@ -240,9 +245,12 @@ abstract final class AppStrings {
   static const String cancellationEstimatedTime = 'Estimated time';
   static const String cancellationInstructions = 'Instructions';
   static const String cancellationNotes = 'Notes';
+  static const String howToCancel = 'How to cancel';
+  static const String goodToKnow = 'Good to know';
   static const String openCancellationPage = 'Open cancellation page';
   static const String generateCancellationMessage =
       'Generate cancellation message';
+  static const String draftMessage = 'Draft message';
   static const String copyMessage = 'Copy message';
   static const String cancellationOpenFailed =
       'Could not open the cancellation page.';
@@ -496,12 +504,12 @@ abstract final class AppStrings {
 
   static const String paywallHeadline = 'Everything, in one place.';
   static const String paywallSubheadline =
-      'AI insights, trial alerts, and unlimited tracking — for less than most subscriptions you track.';
+      'Trial alerts, unlimited tracking, and no ads — for less than most subscriptions you track.';
   static const String paywallProBadge = 'Pro';
   static const String paywallUnlock = 'Unlock:';
   static const String unlockPro = 'Unlock Pro';
   static const String unlockProSubtitle =
-      'Trial alerts, AI insights, and no ads.';
+      'Trial alerts, unlimited tracking, and no ads.';
   static const String yearlyPlan = 'Yearly';
   static const String monthlyPlan = 'Monthly';
   static const String billedAnnually = 'billed annually';
@@ -511,12 +519,14 @@ abstract final class AppStrings {
   static const String terms = 'Terms';
   static const String privacyShort = 'Privacy';
   static const String perkUnlimitedSubscriptions = 'Unlimited subscriptions';
-  static const String perkAiMoneyAnalysis = 'AI money analysis';
-  static const String perkReceiptScanner = 'Receipt scanner';
   static const String perkTrialProtection = 'Trial protection';
-  static const String perkAdvancedSavings = 'Advanced savings insights';
-  static const String perkPriceMonitoring = 'Price monitoring';
   static const String perkNoAds = 'No ads';
+  static const String perkTrialProtectionDetail =
+      'Get reminded before free trials auto-charge. Track more than one.';
+  static const String perkUnlimitedDetail =
+      'Track as many as you have — no cap.';
+  static const String perkNoAdsDetail = 'Browsing screens stay clear.';
+  static const String trackAFreeTrial = 'Track a free trial';
   static const String restorePurchases = 'Restore purchases';
   static const String restoreSuccessTitle = 'Purchases restored';
   static const String restoreSuccessMessage = 'You now have Pro access.';

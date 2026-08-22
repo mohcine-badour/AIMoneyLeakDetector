@@ -68,6 +68,11 @@ void main() {
     expect(find.text(AppStrings.cancellationDidNotHappen), findsOneWidget);
     expect(find.text(AppStrings.cancellationEstimatedTime), findsOneWidget);
     expect(find.text('About 5 minutes'), findsOneWidget);
+    expect(find.text(AppStrings.howToCancel.toUpperCase()), findsOneWidget);
+    expect(
+      find.textContaining('You must finish on the Netflix site'),
+      findsNothing,
+    );
     expect(find.text(AppStrings.openCancellationPage), findsOneWidget);
     expect(find.text(AppStrings.generateCancellationMessage), findsOneWidget);
 
@@ -99,6 +104,10 @@ void main() {
     expect(find.text(AppStrings.openCancellationPage), findsNothing);
     expect(find.text(AppStrings.generateCancellationMessage), findsOneWidget);
     expect(find.textContaining('cannot cancel this merchant'), findsOneWidget);
+    expect(
+      find.textContaining('no official cancellation link'),
+      findsOneWidget,
+    );
 
     await tester.tap(find.byKey(const Key('generate-cancellation-message')));
     await tester.pumpAndSettle();

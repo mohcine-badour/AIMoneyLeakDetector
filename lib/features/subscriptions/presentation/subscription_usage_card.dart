@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../app/theme/app_tokens.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/money_format.dart';
-import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
-import '../../../core/widgets/money_text.dart';
 import '../domain/cost_per_use.dart';
 import '../domain/subscription.dart';
 import '../domain/subscription_cost.dart';
@@ -41,7 +40,7 @@ class _SubscriptionUsageCardState extends ConsumerState<SubscriptionUsageCard> {
     final async = ref.watch(
       usageBySubscriptionProvider(widget.subscription.id),
     );
-    final textTheme = Theme.of(context).textTheme;
+    final tokens = AppTokens.of(context);
 
     return async.when(
       loading: () => const LoadingState(),
@@ -65,48 +64,120 @@ class _SubscriptionUsageCardState extends ConsumerState<SubscriptionUsageCard> {
           ),
           uses: usesForPreview,
         );
+        final monthly = MoneyFormat.format(
+          snapshot.monthlyAmount,
+          currencyCode: widget.subscription.currency,
+        );
+        final perUse = snapshot.costPerUse == null
+            ? null
+            : MoneyFormat.format(
+                snapshot.costPerUse!,
+                currencyCode: widget.subscription.currency,
+              );
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(AppStrings.monthlyLabel, style: textTheme.labelMedium),
-            const SizedBox(height: AppSpacing.xs),
-            MoneyText(
-              amount: snapshot.monthlyAmount,
-              currencyCode: widget.subscription.currency,
-              compact: true,
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            AppTextField(
-              key: const Key('subscription-uses'),
-              label: AppStrings.usesLabel,
-              hint: AppStrings.usesHint,
-              controller: _usesController,
-              keyboardType: TextInputType.number,
-              textInputAction: TextInputAction.done,
-              errorText: _usesError,
-              onChanged: _onUsesChanged,
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            Text(AppStrings.costPerUseLabel, style: textTheme.labelMedium),
-            const SizedBox(height: AppSpacing.xs),
-            if (snapshot.costPerUse == null)
-              Text(AppStrings.costPerUseUnavailable, style: textTheme.bodyLarge)
-            else
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
+          decoration: BoxDecoration(
+            color: tokens.bgCard,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: tokens.border, width: 0.5),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Text(
-                MoneyFormat.format(
-                  snapshot.costPerUse!,
-                  currencyCode: widget.subscription.currency,
+                AppStrings.costPerUseLabel.toUpperCase(),
+                style: TextStyle(
+                  fontSize: 10.5,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0.5,
+                  color: tokens.textMuted,
                 ),
-                style: textTheme.bodyLarge,
               ),
-            const SizedBox(height: AppSpacing.lg),
-            AppButton(
-              label: AppStrings.logAUse,
-              variant: AppButtonVariant.secondary,
-              onPressed: _logUse,
-            ),
-          ],
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  Text(
+                    AppStrings.monthlyLabel,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: tokens.textMuted,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    monthly,
+                    style: TextStyle(
+                      fontSize: 13.5,
+                      fontWeight: FontWeight.w500,
+                      color: tokens.textPrimary,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.md),
+              AppTextField(
+                key: const Key('subscription-uses'),
+                label: AppStrings.usesLabel,
+                hint: AppStrings.usesHint,
+                controller: _usesController,
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.done,
+                errorText: _usesError,
+                onChanged: _onUsesChanged,
+              ),
+              const SizedBox(height: AppSpacing.md),
+              Text(
+                AppStrings.costPerUseLabel,
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: tokens.textMuted,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                perUse ?? AppStrings.costPerUseUnavailable,
+                style: TextStyle(
+                  fontSize: 15,
+                  height: 1.35,
+                  fontWeight: FontWeight.w400,
+                  color: perUse == null
+                      ? tokens.textSecondary
+                      : tokens.textPrimary,
+                  fontFeatures: const [FontFeature.tabularFigures()],
+                ),
+              ),
+              const SizedBox(height: AppSpacing.md),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: _logUse,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: tokens.textPrimary,
+                    backgroundColor: tokens.bgMuted,
+                    side: BorderSide(color: tokens.borderStrong),
+                    minimumSize: const Size.fromHeight(AppSpacing.buttonHeight),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                  ),
+                  child: Text(
+                    AppStrings.logAUse,
+                    style: TextStyle(
+                      fontSize: 14.5,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -0.1,
+                      color: tokens.textPrimary,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         );
       },
     );

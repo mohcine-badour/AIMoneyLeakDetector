@@ -124,7 +124,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(AppStrings.paywallHeadline), findsOneWidget);
-    expect(find.text(AppStrings.perkReceiptScanner), findsOneWidget);
+    expect(find.text(AppStrings.perkTrialProtection), findsOneWidget);
   });
 
   testWidgets('preview then processing then extracted mock data', (

@@ -40,6 +40,7 @@ abstract final class AppIcons {
   static const IconData edit = Icons.edit_outlined;
   static const IconData delete = Icons.delete_outline_rounded;
   static const IconData check = Icons.check_rounded;
+  static const IconData copy = Icons.content_copy_rounded;
   static const IconData sparkles = Icons.auto_awesome_outlined;
   static const IconData chartLine = Icons.show_chart_rounded;
   static const IconData shieldCheck = Icons.verified_user_outlined;
