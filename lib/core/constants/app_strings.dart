@@ -10,6 +10,7 @@ abstract final class AppStrings {
   static const String getStarted = 'Get started — free';
   static const String worksWith = 'Works with';
   static const String bankLevelSecurity = 'Bank-level security';
+  static const String dataStaysOnThisPhone = 'Data stays on this phone';
   static const String privateByDefault = 'Private by default';
   static const String alreadyHaveAccount = 'Already have an account?';
   static const String signIn = 'Sign in';
@@ -38,7 +39,7 @@ abstract final class AppStrings {
   static const String legalAnd = 'and';
   static const String couldNotContinueTitle = 'Could not continue';
   static const String couldNotContinueMessage =
-      'Something went wrong setting up your account. Check your connection and try again.';
+      'Something went wrong getting started. Try again.';
   static String moreBrandsCount(int count) => '+$count';
 
   static const String onboardingTitle = 'Onboarding';
@@ -91,6 +92,11 @@ abstract final class AppStrings {
   static const String sortByPrefix = 'Sort:';
   static const String sortBy = 'Sort by';
   static const String privacyPolicy = 'Privacy Policy';
+  static const String termsOfUseTitle = 'Terms of Use';
+  static const String termsIntro =
+      'Kichta is a local subscription tracker. There is no Kichta account in this version.';
+  static const String manageSubscription = 'Manage subscription';
+  static const String support = 'Support';
   static const String privacySection = 'Privacy';
   static const String yourDataSection = 'Your data';
   static const String planSection = 'Plan';
@@ -118,7 +124,7 @@ abstract final class AppStrings {
       'Subscriptions, trials, usage, and onboarding answers on this phone will be removed. App Store billing does not change.';
   static const String deleteAccountTitle = 'Delete your account?';
   static const String deleteAccountMessage =
-      'This removes data on this device. There is no cloud account yet. A server deletion request will be sent when cloud sync exists. App Store subscriptions stay with Apple until you cancel them there.';
+      'There is no Kichta account. This removes data on this phone only. App Store subscriptions stay with Apple until you cancel them there.';
   static const String deleteDataExplanation =
       'You can remove the information stored on this phone at any time.';
   static const String appStoreBillingNotice =
@@ -382,14 +388,11 @@ abstract final class AppStrings {
   static const String reminderLeadIn2Hours = 'in 2 hours';
   static const String reminderLeadSoon = 'soon';
 
-  static String renewalReminderTitle(String name, String lead) =>
-      '$name renews $lead';
-  static String renewalReminderBody(String amount) =>
-      '$amount will be charged.';
-  static String trialReminderTitle(String name, String lead) =>
-      '$name trial ends $lead';
-  static String trialReminderBody(String amount) =>
-      'Cancel before it converts to $amount.';
+  static String renewalReminderTitle(String lead) =>
+      'A subscription renews $lead';
+  static const String renewalReminderBody = 'Open Kichta to review it.';
+  static String trialReminderTitle(String lead) => 'A trial ends $lead';
+  static const String trialReminderBody = 'Open Kichta to review it.';
 
   static const String scanReceiptTitle = 'Scan Receipt';
   static const String scanExtractedTitle = 'Extracted Data';
@@ -542,14 +545,15 @@ abstract final class AppStrings {
 
   static const String paywallHeadline = 'Everything, in one place.';
   static const String paywallSubheadline =
-      'Trial alerts, unlimited tracking, and no ads — for less than most subscriptions you track.';
+      'Trial alerts and unlimited tracking — for less than most subscriptions you track.';
   static const String paywallProBadge = 'Pro';
   static const String paywallUnlock = 'Unlock:';
   static const String unlockPro = 'Unlock Pro';
   static const String unlockProSubtitle =
-      'Trial alerts, unlimited tracking, and no ads.';
+      'Trial alerts, unlimited tracking, and renewal reminders.';
   static const String yearlyPlan = 'Yearly';
   static const String monthlyPlan = 'Monthly';
+  static const String weeklyPlan = 'Weekly';
   static const String billedAnnually = 'billed annually';
   static const String cancelAnytime = 'Cancel anytime';
   static const String securedByAppStore = 'Secured by App Store';
@@ -559,11 +563,16 @@ abstract final class AppStrings {
   static const String perkUnlimitedSubscriptions = 'Unlimited subscriptions';
   static const String perkTrialProtection = 'Trial protection';
   static const String perkNoAds = 'No ads';
+  static const String perkRenewalReminders = 'Renewal reminders';
   static const String perkTrialProtectionDetail =
       'Get reminded before free trials auto-charge. Track more than one.';
   static const String perkUnlimitedDetail =
       'Track as many as you have — no cap.';
   static const String perkNoAdsDetail = 'Browsing screens stay clear.';
+  static const String perkRenewalRemindersDetail =
+      'Get pinged 3 days, 1 day, and 2 hours before a date.';
+  static const String paywallAutoRenewLegal =
+      'Payment is charged to your Apple ID at confirmation of purchase. Kichta Pro renews unless you turn off auto-renew at least 24 hours before the current period ends. Apple may charge the renewal within 24 hours before the period ends. Manage or cancel in your Apple ID subscription settings. Deleting data in Kichta does not cancel Pro.';
   static const String trackAFreeTrial = 'Track a free trial';
   static const String restorePurchases = 'Restore purchases';
   static const String restoreSuccessTitle = 'Purchases restored';

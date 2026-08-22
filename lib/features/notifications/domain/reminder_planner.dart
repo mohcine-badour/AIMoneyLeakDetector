@@ -42,14 +42,9 @@ abstract final class ReminderPlanner {
             fireAt: fireAt,
             title: ReminderCopy.title(
               kind: event.kind,
-              name: event.name,
               offset: offset,
             ),
-            body: ReminderCopy.body(
-              kind: event.kind,
-              amount: event.amount,
-              currencyCode: event.currencyCode,
-            ),
+            body: ReminderCopy.body(kind: event.kind),
           ),
         );
       }

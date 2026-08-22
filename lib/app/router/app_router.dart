@@ -7,17 +7,16 @@ import '../../features/before_subscribe/domain/subscription_candidate.dart';
 import '../../features/before_subscribe/presentation/before_you_subscribe_screen.dart';
 import '../../features/cancellation/presentation/cancellation_guide_screen.dart';
 import '../../features/dashboard/presentation/dashboard_screen.dart';
-import '../../features/auth/presentation/register_screen.dart';
-import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
 import '../../features/welcome/presentation/welcome_screen.dart';
 import '../../features/paywall/domain/paywall_source.dart';
 import '../../features/paywall/presentation/paywall_screen.dart';
 import '../../features/upcoming/presentation/upcoming_payments_screen.dart';
 import '../../features/insights/presentation/insights_screen.dart';
-import '../../features/scanner/presentation/scan_receipt_screen.dart';
-import '../../features/settings/presentation/privacy_policy_screen.dart';
+import '../../features/settings/presentation/legal_document_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/settings/domain/privacy_policy.dart';
+import '../../features/settings/domain/terms_of_use.dart';
 import '../../features/subscriptions/presentation/add_subscription_screen.dart';
 import '../../features/subscriptions/presentation/subscription_detail_screen.dart';
 import '../../features/subscriptions/presentation/subscriptions_list_screen.dart';
@@ -41,14 +40,6 @@ abstract final class AppRouter {
           builder: (context, state) => const OnboardingScreen(),
         ),
         GoRoute(
-          path: AppRoutes.signIn,
-          builder: (context, state) => const SignInScreen(),
-        ),
-        GoRoute(
-          path: AppRoutes.register,
-          builder: (context, state) => const RegisterScreen(),
-        ),
-        GoRoute(
           path: AppRoutes.dashboard,
           builder: (context, state) => const DashboardScreen(),
         ),
@@ -59,10 +50,6 @@ abstract final class AppRouter {
             GoRoute(
               path: 'add',
               builder: (context, state) => const AddSubscriptionScreen(),
-            ),
-            GoRoute(
-              path: 'scan',
-              builder: (context, state) => const ScanReceiptScreen(),
             ),
             GoRoute(
               path: 'evaluate',
@@ -129,7 +116,21 @@ abstract final class AppRouter {
           routes: [
             GoRoute(
               path: 'privacy',
-              builder: (context, state) => const PrivacyPolicyScreen(),
+              builder: (context, state) => const LegalDocumentScreen(
+                title: AppStrings.privacyPolicy,
+                lastUpdated: PrivacyPolicy.lastUpdated,
+                intro: AppStrings.privacyMinimalCollection,
+                sections: PrivacyPolicy.sections,
+              ),
+            ),
+            GoRoute(
+              path: 'terms',
+              builder: (context, state) => const LegalDocumentScreen(
+                title: AppStrings.termsOfUseTitle,
+                lastUpdated: TermsOfUse.lastUpdated,
+                intro: AppStrings.termsIntro,
+                sections: TermsOfUse.sections,
+              ),
             ),
           ],
         ),

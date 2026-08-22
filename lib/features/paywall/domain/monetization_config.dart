@@ -8,8 +8,9 @@ import 'paywall_plan.dart';
 /// be stored here — only the public Apple SDK key via dart-define.
 class MonetizationConfig {
   const MonetizationConfig({
-    this.monthlyPrice = 5.99,
-    this.yearlyPrice = 39.99,
+    this.weeklyPrice = 0.99,
+    this.monthlyPrice = 2.99,
+    this.yearlyPrice = 19.99,
     this.currencyCode = MoneyFormat.defaultCurrencyCode,
     this.freeSubscriptionLimit = 5,
     this.freeTrialLimit = 1,
@@ -17,6 +18,7 @@ class MonetizationConfig {
     this.aiAnalysisRequiresPro = true,
     this.trialProtectionRequiresPro = true,
     this.yearlyIntroTrialDays,
+    this.weeklyProductId = 'billkiller_pro_weekly',
     this.monthlyProductId = 'billkiller_pro_monthly',
     this.yearlyProductId = 'billkiller_pro_yearly',
     this.proEntitlementId = 'pro',
@@ -27,6 +29,7 @@ class MonetizationConfig {
     revenueCatAppleApiKey: String.fromEnvironment('REVENUECAT_APPLE_API_KEY'),
   );
 
+  final double weeklyPrice;
   final double monthlyPrice;
   final double yearlyPrice;
   final String currencyCode;
@@ -40,6 +43,7 @@ class MonetizationConfig {
   final int? yearlyIntroTrialDays;
 
   /// App Store product identifiers. Keep these out of widgets.
+  final String weeklyProductId;
   final String monthlyProductId;
   final String yearlyProductId;
 
@@ -53,6 +57,7 @@ class MonetizationConfig {
 
   String productIdFor(PaywallPlan plan) {
     return switch (plan) {
+      PaywallPlan.weekly => weeklyProductId,
       PaywallPlan.monthly => monthlyProductId,
       PaywallPlan.yearly => yearlyProductId,
     };
@@ -62,6 +67,9 @@ class MonetizationConfig {
     if (productId == null || productId.isEmpty) {
       return null;
     }
+    if (productId == weeklyProductId) {
+      return PaywallPlan.weekly;
+    }
     if (productId == monthlyProductId) {
       return PaywallPlan.monthly;
     }
@@ -70,6 +78,10 @@ class MonetizationConfig {
     }
     return null;
   }
+
+  String get weeklyPriceLabel =>
+      '${MoneyFormat.format(weeklyPrice, currencyCode: currencyCode)}'
+      '${AppStrings.compactPerWeek}';
 
   String get monthlyPriceLabel =>
       '${MoneyFormat.format(monthlyPrice, currencyCode: currencyCode)}'
@@ -81,6 +93,7 @@ class MonetizationConfig {
 
   String priceLabel(PaywallPlan plan) {
     return switch (plan) {
+      PaywallPlan.weekly => weeklyPriceLabel,
       PaywallPlan.monthly => monthlyPriceLabel,
       PaywallPlan.yearly => yearlyPriceLabel,
     };

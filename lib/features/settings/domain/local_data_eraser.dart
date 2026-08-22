@@ -49,7 +49,7 @@ class LocalDataEraser {
     return ErasureResult(
       kind: kind,
       localDataRemoved: true,
-      cloudDeletionPending: kind == ErasureKind.account,
+      cloudDeletionPending: false,
       appStoreSubscriptionUnchanged: true,
     );
   }

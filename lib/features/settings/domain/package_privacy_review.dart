@@ -52,12 +52,6 @@ abstract final class PackagePrivacyReview {
       leavesDevice: false,
     ),
     PackagePrivacyNote(
-      package: 'image_picker',
-      purpose: 'Camera or photo library for a receipt scan',
-      data: 'Temporary image bytes for the current scan',
-      leavesDevice: false,
-    ),
-    PackagePrivacyNote(
       package: 'shared_preferences',
       purpose: 'Onboarding flags and simple settings',
       data: 'Non-secret preferences. Never used for tokens or receipts',
@@ -83,7 +77,7 @@ abstract final class PackagePrivacyReview {
     ),
     PackagePrivacyNote(
       package: 'url_launcher',
-      purpose: 'Open official cancellation pages and future policy URLs',
+      purpose: 'Open cancellation pages, Support, and Manage subscription',
       data: 'HTTPS URLs only; no request body',
       leavesDevice: true,
     ),

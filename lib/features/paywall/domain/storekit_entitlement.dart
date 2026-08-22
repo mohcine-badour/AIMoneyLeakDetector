@@ -10,17 +10,20 @@ abstract final class StoreKitEntitlement {
   }) {
     String? yearly;
     String? monthly;
+    String? weekly;
     for (final id in productIds) {
       switch (config.planForProductId(id)) {
         case PaywallPlan.yearly:
           yearly = id;
         case PaywallPlan.monthly:
           monthly = id;
+        case PaywallPlan.weekly:
+          weekly = id;
         case null:
           break;
       }
     }
-    final productId = yearly ?? monthly;
+    final productId = yearly ?? monthly ?? weekly;
     if (productId == null) {
       return const BillingSnapshot();
     }

@@ -26,8 +26,16 @@ class PaywallCta extends StatelessWidget {
     final label = yearly && offerings.hasYearlyTrial
         ? AppStrings.startFreeTrial(offerings.yearlyIntroTrialDays!)
         : AppStrings.continueWithPrice(
-            yearly ? offerings.yearlyPriceString : offerings.monthlyPriceString,
-            yearly ? AppStrings.compactPerYear : AppStrings.compactPerMonth,
+            switch (plan) {
+              PaywallPlan.weekly => offerings.weeklyPriceString,
+              PaywallPlan.monthly => offerings.monthlyPriceString,
+              PaywallPlan.yearly => offerings.yearlyPriceString,
+            },
+            switch (plan) {
+              PaywallPlan.weekly => AppStrings.compactPerWeek,
+              PaywallPlan.monthly => AppStrings.compactPerMonth,
+              PaywallPlan.yearly => AppStrings.compactPerYear,
+            },
           );
 
     return Padding(

@@ -1,5 +1,5 @@
 name: kichta
-description: "Kichta — an AI money leak detector. Find the subscriptions draining your money and help you stop them."
+description: "Kichta — a local subscription tracker for renewals, trials, and spend on this phone."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -36,7 +36,6 @@ dependencies:
   flutter_riverpod: ^3.4.2
   flutter_timezone: ^5.1.0
   go_router: ^17.5.0
-  image_picker: ^1.2.3
   shared_preferences: ^2.5.5
   timezone: ^0.11.1
   purchases_flutter: ^8.10.1

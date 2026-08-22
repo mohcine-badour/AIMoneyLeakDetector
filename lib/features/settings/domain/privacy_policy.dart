@@ -31,43 +31,43 @@ abstract final class PrivacyPolicy {
       title: 'Data stored on this device',
       group: groupDevice,
       body:
-          'Subscriptions, trials, usage counts, and onboarding answers stay in local storage on your phone. They are used to calculate spend, upcoming payments, and savings suggestions.',
+          'Subscriptions, trials, usage counts, and onboarding answers stay in local storage on your phone. They are used to calculate spend, upcoming payments, and reminders.',
     ),
     PrivacyPolicySection(
       title: 'Data we do not collect',
       group: groupNotCollected,
       body:
-          'We do not ask for bank logins. We do not keep raw receipt images after a scan. We do not put financial amounts, merchant names, or documents into analytics.',
+          'We do not ask for bank logins. We do not create a Kichta account. We do not put financial amounts, merchant names, or documents into analytics.',
     ),
     PrivacyPolicySection(
       title: 'Receipts and documents',
       group: groupNotCollected,
       body:
-          'The camera and photo library are used only to scan a receipt. The image is held in memory for that scan, then discarded. Receipt files are not saved in the app database.',
+          'This version does not offer receipt scanning. Kichta does not keep receipt images in the app database.',
     ),
     PrivacyPolicySection(
       title: 'Analytics',
       group: groupProduct,
       body:
-          'Product analytics may record event names such as app opened or paywall viewed. Allowed details are limited to plan, source, success, and reminder kind. Amounts, merchants, and documents are stripped before anything is recorded.',
+          'Product analytics may record event names such as app opened or paywall viewed. Allowed details are limited to plan, source, success, and reminder kind. Amounts, merchants, and documents are stripped before anything is recorded. This build logs those event names on the device only.',
     ),
     PrivacyPolicySection(
       title: 'Purchases',
       group: groupProduct,
       body:
-          'Pro is sold through the App Store. Apple and the billing provider validate the purchase. This app never stores an AI API key or a RevenueCat secret key. Public store identifiers may be used to restore purchases.',
+          'Pro is sold through the App Store. Apple validates the purchase. If a RevenueCat public SDK key is configured later, RevenueCat may also see store account and product identifiers to restore entitlement. This app never stores an AI API key or a RevenueCat secret key.',
     ),
     PrivacyPolicySection(
       title: 'Ads',
       group: groupProduct,
       body:
-          'Free users may see a labeled banner on browsing screens. Ads are not shown during add, edit, scan, cancellation, paywall, or other sensitive money flows.',
+          'This version does not show advertisements and does not load an advertising SDK.',
     ),
     PrivacyPolicySection(
       title: 'AI processing',
       group: groupProduct,
       body:
-          'Money math stays in the app. When a server is connected later, OCR and AI explanations will run there. Flutter will not contain AI API secrets.',
+          'Spend math stays in the app. This version does not send your data to an AI provider. Flutter does not contain AI API secrets.',
     ),
     PrivacyPolicySection(
       title: 'Sharing',
@@ -79,13 +79,13 @@ abstract final class PrivacyPolicy {
       title: 'Deletion',
       group: groupControl,
       body:
-          'You can delete the data on this device in Settings. Delete account removes the same local data. There is no cloud account yet, so a server deletion request is queued for when cloud sync exists. App Store subscriptions are billed by Apple and are not cancelled by deleting app data.',
+          'You can delete the data on this device in Settings. There is no cloud account, so deletion is local only. App Store subscriptions are billed by Apple and are not cancelled by deleting app data.',
     ),
     PrivacyPolicySection(
       title: 'Contact',
       group: groupControl,
       body:
-          'Until a public support email is published, use App Store support for this app. A hosted privacy policy URL will be added before App Store submission.',
+          'Use the Support row in Settings (GitHub issues), or App Store support for this app. Privacy Policy and Terms of Use are also available in the app.',
     ),
   ];
 }

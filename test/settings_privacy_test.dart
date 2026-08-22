@@ -41,10 +41,13 @@ void main() {
 
     expect(find.text(AppStrings.settingsTitle), findsWidgets);
     expect(find.text(AppStrings.privacyPolicy), findsOneWidget);
+    expect(find.text(AppStrings.termsOfUseTitle), findsOneWidget);
+    expect(find.text(AppStrings.manageSubscription), findsOneWidget);
+    expect(find.text(AppStrings.support), findsOneWidget);
     expect(find.text(AppStrings.remindersToggle), findsOneWidget);
     expect(find.text(AppStrings.remindersExplanation), findsOneWidget);
     expect(find.text(AppStrings.deleteMyData), findsOneWidget);
-    expect(find.text(AppStrings.deleteAccount), findsOneWidget);
+    expect(find.text(AppStrings.deleteAccount), findsNothing);
     expect(find.text(AppStrings.appStoreBillingNotice), findsOneWidget);
     expect(find.text(AppStrings.adLabel), findsNothing);
   });
@@ -69,6 +72,18 @@ void main() {
       expect(find.text(AppStrings.adLabel), findsNothing);
     },
   );
+
+  testWidgets('terms of use is a real document, not the privacy policy', (
+    tester,
+  ) async {
+    _largeScreen(tester);
+    await pumpKichtaApp(tester, location: AppRoutes.termsOfUse);
+
+    expect(find.text(AppStrings.termsOfUseTitle), findsWidgets);
+    expect(find.textContaining('auto-renewable'), findsOneWidget);
+    expect(find.textContaining('does not cancel'), findsWidgets);
+    expect(find.text(PrivacyPolicy.sections.first.title), findsNothing);
+  });
 
   testWidgets('dashboard opens settings', (tester) async {
     _largeScreen(tester);
@@ -106,25 +121,4 @@ void main() {
     expect(OnboardingRepository(harness.$2).isCompleted, isFalse);
   });
 
-  testWidgets(
-    'deleting account wipes local data without claiming Apple cancel',
-    (tester) async {
-      _largeScreen(tester);
-      final harness = await pumpKichtaApp(
-        tester,
-        location: AppRoutes.settings,
-        seed: _saveNetflix,
-      );
-
-      await tester.tap(find.byKey(const Key('delete-account')));
-      await tester.pumpAndSettle();
-      expect(find.text(AppStrings.deleteAccountMessage), findsOneWidget);
-
-      await tester.tap(find.byKey(const Key('confirm-erasure')));
-      await tester.pumpAndSettle();
-
-      expect(find.text(AppStrings.getStarted), findsOneWidget);
-      expect(await DriftSubscriptionRepository(harness.$3).getAll(), isEmpty);
-    },
-  );
 }

@@ -53,16 +53,33 @@ void main() {
       expect(find.text(feature.title), findsOneWidget);
       expect(find.text(feature.description), findsOneWidget);
     }
-    expect(find.text(r'$39.99'), findsWidgets);
-    expect(find.text(r'$5.99'), findsOneWidget);
+    expect(find.text(r'$19.99'), findsWidgets);
+    expect(find.text(r'$2.99'), findsOneWidget);
+    expect(find.text(r'$0.99'), findsOneWidget);
     expect(find.text('SAVE 44%'), findsOneWidget);
     expect(
-      find.text(AppStrings.continueWithPrice(r'$39.99', '/year')),
+      find.text(AppStrings.continueWithPrice(r'$19.99', '/year')),
       findsOneWidget,
     );
     expect(find.text(AppStrings.unlockPro), findsNothing);
     expect(find.text(AppStrings.restorePurchases), findsOneWidget);
     expect(find.text(AppStrings.cancelAnytime), findsOneWidget);
+    expect(find.text(AppStrings.paywallAutoRenewLegal), findsOneWidget);
+    expect(find.text(AppStrings.perkNoAds), findsNothing);
+  });
+
+  testWidgets('paywall Terms opens Terms of Use, not Privacy Policy', (
+    tester,
+  ) async {
+    _largeScreen(tester);
+    await pumpKichtaApp(tester, location: AppRoutes.paywall);
+
+    await tester.ensureVisible(find.byKey(const Key('paywall-terms')));
+    await tester.tap(find.byKey(const Key('paywall-terms')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.termsOfUseTitle), findsWidgets);
+    expect(find.text(AppStrings.paywallHeadline), findsNothing);
   });
 
   testWidgets('unlock purchases the selected plan and grants Pro', (
@@ -200,7 +217,20 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(
-      find.text(AppStrings.continueWithPrice(r'$5.99', '/month')),
+      find.text(AppStrings.continueWithPrice(r'$2.99', '/month')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('selecting weekly updates the CTA amount', (tester) async {
+    _largeScreen(tester);
+    await pumpKichtaApp(tester, location: AppRoutes.paywall);
+
+    await tester.tap(find.byKey(const Key('paywall-plan-weekly')));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text(AppStrings.continueWithPrice(r'$0.99', '/week')),
       findsOneWidget,
     );
   });

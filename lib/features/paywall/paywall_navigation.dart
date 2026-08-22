@@ -36,20 +36,6 @@ abstract final class PaywallNavigation {
     );
   }
 
-  static void scanReceipt(
-    BuildContext context,
-    WidgetRef ref, {
-    bool replace = false,
-  }) {
-    _open(
-      context,
-      AppRoutes.scanReceipt,
-      ref.read(featureAccessProvider).canUseScanner,
-      source: PaywallSource.scannerGate,
-      replace: replace,
-    );
-  }
-
   static void savings(
     BuildContext context,
     WidgetRef ref, {

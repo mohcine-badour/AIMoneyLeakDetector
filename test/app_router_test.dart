@@ -39,7 +39,6 @@ void main() {
       AppRoutes.upcoming: AppStrings.upcomingPayments,
       AppRoutes.subscriptions: AppStrings.subscriptionsTitle,
       AppRoutes.addSubscription: AppStrings.addSubscriptionTitle,
-      AppRoutes.scanReceipt: AppStrings.scanReceiptTitle,
       AppRoutes.trials: AppStrings.trialsTitle,
       AppRoutes.addTrial: AppStrings.addTrialTitle,
       AppRoutes.savings: AppStrings.insightsTitle,
@@ -61,6 +60,13 @@ void main() {
 
     expect(find.text(AppStrings.subscriptionNotFound), findsOneWidget);
     expect(find.text(AppStrings.backToList), findsOneWidget);
+  });
+
+  testWidgets('receipt scan is not a shipped route', (tester) async {
+    await pumpKichtaApp(tester, location: AppRoutes.scanReceipt);
+
+    expect(find.text(AppStrings.scanReceiptTitle), findsNothing);
+    expect(find.text(AppStrings.subscriptionNotFound), findsOneWidget);
   });
 
   testWidgets('unknown route shows not found and can return home', (

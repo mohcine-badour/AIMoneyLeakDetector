@@ -7,19 +7,30 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../domain/privacy_policy.dart';
 
-class PrivacyPolicyScreen extends StatelessWidget {
-  const PrivacyPolicyScreen({super.key});
+class LegalDocumentScreen extends StatelessWidget {
+  const LegalDocumentScreen({
+    required this.title,
+    required this.lastUpdated,
+    required this.intro,
+    required this.sections,
+    super.key,
+  });
+
+  final String title;
+  final String lastUpdated;
+  final String intro;
+  final List<PrivacyPolicySection> sections;
 
   @override
   Widget build(BuildContext context) {
     final tokens = AppTokens.of(context);
     final groups = <String, List<PrivacyPolicySection>>{};
-    for (final section in PrivacyPolicy.sections) {
+    for (final section in sections) {
       groups.putIfAbsent(section.group, () => []).add(section);
     }
 
     return AppScaffold(
-      title: AppStrings.privacyPolicy,
+      title: title,
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.page,
         AppSpacing.sm,
@@ -28,10 +39,10 @@ class PrivacyPolicyScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          const _DateChip(),
+          _DateChip(lastUpdated: lastUpdated),
           const SizedBox(height: 10),
           Text(
-            AppStrings.privacyMinimalCollection,
+            intro,
             style: TextStyle(
               fontSize: 13.5,
               height: 1.4,
@@ -52,7 +63,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
 }
 
 class _DateChip extends StatelessWidget {
-  const _DateChip();
+  const _DateChip({required this.lastUpdated});
+
+  final String lastUpdated;
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +97,7 @@ class _DateChip extends StatelessWidget {
               style: TextStyle(fontSize: 12, color: tokens.indigoText),
             ),
             Text(
-              PrivacyPolicy.lastUpdated,
+              lastUpdated,
               style: TextStyle(
                 fontSize: 12.5,
                 fontWeight: FontWeight.w500,
@@ -168,7 +181,7 @@ class _SectionRow extends StatelessWidget {
               borderRadius: BorderRadius.circular(9),
             ),
             child: Icon(
-              _iconFor(section.title),
+              AppIcons.info,
               size: 16,
               color: tokens.textSecondary,
             ),
@@ -203,21 +216,4 @@ class _SectionRow extends StatelessWidget {
       ),
     );
   }
-}
-
-IconData _iconFor(String title) {
-  return switch (title) {
-    'Overview' => AppIcons.lock,
-    'Data stored on this device' => AppIcons.empty,
-    'Data we do not collect' => AppIcons.shieldCheck,
-    'Receipts and documents' => AppIcons.scan,
-    'Analytics' => AppIcons.chartBar,
-    'Purchases' => AppIcons.apple,
-    'Ads' => AppIcons.ads,
-    'AI processing' => AppIcons.sparkles,
-    'Sharing' => AppIcons.share,
-    'Deletion' => AppIcons.delete,
-    'Contact' => AppIcons.mail,
-    _ => AppIcons.info,
-  };
 }

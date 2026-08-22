@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,102 +10,10 @@ import 'package:kichta/features/analytics/domain/analytics_event.dart';
 import 'package:kichta/features/paywall/data/fake_billing_client.dart';
 import 'package:kichta/features/paywall/domain/entitlement.dart';
 import 'package:kichta/features/paywall/domain/paywall_plan.dart';
-import 'package:kichta/features/scanner/domain/extracted_receipt.dart';
-import 'package:kichta/features/scanner/domain/receipt_extractor.dart';
-import 'package:kichta/features/scanner/domain/receipt_image.dart';
 import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
 import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
-
-final _png = Uint8List.fromList([
-  0x89,
-  0x50,
-  0x4E,
-  0x47,
-  0x0D,
-  0x0A,
-  0x1A,
-  0x0A,
-  0x00,
-  0x00,
-  0x00,
-  0x0D,
-  0x49,
-  0x48,
-  0x44,
-  0x52,
-  0x00,
-  0x00,
-  0x00,
-  0x01,
-  0x00,
-  0x00,
-  0x00,
-  0x01,
-  0x08,
-  0x06,
-  0x00,
-  0x00,
-  0x00,
-  0x1F,
-  0x15,
-  0xC4,
-  0x89,
-  0x00,
-  0x00,
-  0x00,
-  0x0A,
-  0x49,
-  0x44,
-  0x41,
-  0x54,
-  0x78,
-  0x9C,
-  0x63,
-  0x00,
-  0x01,
-  0x00,
-  0x00,
-  0x05,
-  0x00,
-  0x01,
-  0x0D,
-  0x0A,
-  0x2D,
-  0xB4,
-  0x00,
-  0x00,
-  0x00,
-  0x00,
-  0x49,
-  0x45,
-  0x4E,
-  0x44,
-  0xAE,
-  0x42,
-  0x60,
-  0x82,
-]);
-
-class _FakePicker implements ReceiptImagePicker {
-  _FakePicker(this.image);
-
-  final ReceiptImage image;
-
-  @override
-  Future<ReceiptImage?> pickFromCamera() async => image;
-
-  @override
-  Future<ReceiptImage?> pickFromGallery() async => image;
-}
-
-class _FailingExtractor implements ReceiptExtractor {
-  @override
-  Future<ExtractedReceipt> extract(ReceiptImage image) async {
-    throw StateError('ocr failed');
-  }
-}
 
 Future<void> _saveNetflix(AppDatabase database) {
   return DriftSubscriptionRepository(database).save(
@@ -272,52 +178,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(analytics.has(AnalyticsEvent.subscriptionDeleted), isTrue);
-    _expectNoFinancialData(analytics);
-  });
-
-  testWidgets('receipt scan started and completed omit extracted amounts', (
-    tester,
-  ) async {
-    final analytics = RecordingAnalytics();
-    await pumpKichtaApp(
-      tester,
-      location: AppRoutes.scanReceipt,
-      imagePicker: _FakePicker(ReceiptImage(bytes: _png)),
-      analytics: analytics,
-    );
-
-    expect(analytics.has(AnalyticsEvent.receiptScanStarted), isTrue);
-
-    await tester.tap(find.byKey(const Key('scan-camera')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text(AppStrings.scanUseThisPhoto));
-    await tester.pumpAndSettle();
-
-    expect(analytics.has(AnalyticsEvent.receiptScanCompleted), isTrue);
-    expect(analytics.propertiesFor(AnalyticsEvent.receiptScanCompleted), {
-      'success': true,
-    });
-    _expectNoFinancialData(analytics);
-  });
-
-  testWidgets('failed scans do not send receipt text', (tester) async {
-    final analytics = RecordingAnalytics();
-    await pumpKichtaApp(
-      tester,
-      location: AppRoutes.scanReceipt,
-      imagePicker: _FakePicker(ReceiptImage(bytes: _png)),
-      extractor: _FailingExtractor(),
-      analytics: analytics,
-    );
-
-    await tester.tap(find.byKey(const Key('scan-camera')));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text(AppStrings.scanUseThisPhoto));
-    await tester.pumpAndSettle();
-
-    expect(analytics.propertiesFor(AnalyticsEvent.receiptScanCompleted), {
-      'success': false,
-    });
     _expectNoFinancialData(analytics);
   });
 

@@ -78,11 +78,11 @@ abstract final class PaywallFeatures {
       description: AppStrings.perkUnlimitedDetail,
     ),
     PaywallFeature(
-      id: 'no_ads',
-      icon: AppIcons.check,
+      id: 'renewal_reminders',
+      icon: AppIcons.bellRinging,
       color: PaywallFeatureColor.indigo,
-      title: AppStrings.perkNoAds,
-      description: AppStrings.perkNoAdsDetail,
+      title: AppStrings.perkRenewalReminders,
+      description: AppStrings.perkRenewalRemindersDetail,
     ),
   ];
 }

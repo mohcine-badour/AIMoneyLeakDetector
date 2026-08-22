@@ -51,10 +51,16 @@ void main() {
   });
 
   test('prices and product IDs live in config, not widgets', () {
-    expect(MonetizationConfig.defaults.monthlyPrice, 5.99);
-    expect(MonetizationConfig.defaults.yearlyPrice, 39.99);
-    expect(MonetizationConfig.defaults.monthlyPriceLabel, r'$5.99/month');
-    expect(MonetizationConfig.defaults.yearlyPriceLabel, r'$39.99/year');
+    expect(MonetizationConfig.defaults.weeklyPrice, 0.99);
+    expect(MonetizationConfig.defaults.monthlyPrice, 2.99);
+    expect(MonetizationConfig.defaults.yearlyPrice, 19.99);
+    expect(MonetizationConfig.defaults.weeklyPriceLabel, r'$0.99/week');
+    expect(MonetizationConfig.defaults.monthlyPriceLabel, r'$2.99/month');
+    expect(MonetizationConfig.defaults.yearlyPriceLabel, r'$19.99/year');
+    expect(
+      MonetizationConfig.defaults.weeklyProductId,
+      'billkiller_pro_weekly',
+    );
     expect(
       MonetizationConfig.defaults.monthlyProductId,
       'billkiller_pro_monthly',

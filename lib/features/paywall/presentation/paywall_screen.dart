@@ -111,6 +111,13 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                     selected: selected == PaywallPlan.monthly,
                     onPress: () => _select(PaywallPlan.monthly),
                   ),
+                  const SizedBox(height: 8),
+                  PaywallPricingCard(
+                    plan: PaywallPlan.weekly,
+                    offerings: offerings,
+                    selected: selected == PaywallPlan.weekly,
+                    onPress: () => _select(PaywallPlan.weekly),
+                  ),
                 ],
               ),
             ),
@@ -212,7 +219,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       return;
     }
     if (mounted) {
-      context.push(AppRoutes.privacyPolicy);
+      context.push(privacy ? AppRoutes.privacyPolicy : AppRoutes.termsOfUse);
     }
   }
 

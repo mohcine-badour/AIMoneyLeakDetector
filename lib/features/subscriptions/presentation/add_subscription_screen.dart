@@ -18,7 +18,6 @@ import '../../../core/widgets/loading_state.dart';
 import '../../analytics/analytics_providers.dart';
 import '../../analytics/domain/analytics_event.dart';
 import '../../paywall/domain/paywall_source.dart';
-import '../../paywall/paywall_navigation.dart';
 import '../../paywall/paywall_providers.dart';
 import '../add_subscription_controller.dart';
 import '../domain/subscription.dart';
@@ -219,12 +218,6 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
                     errorText: form.errors.category,
                     onTap: () => _pickCategory(form.category),
                   ),
-                  if (!_isEditing) ...[
-                    const SizedBox(height: 20),
-                    _ScanReceiptRow(
-                      onTap: () => PaywallNavigation.scanReceipt(context, ref),
-                    ),
-                  ],
                 ],
               ),
             ),
@@ -349,40 +342,5 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
           .read(addSubscriptionControllerProvider.notifier)
           .setCategory(selected);
     }
-  }
-}
-
-class _ScanReceiptRow extends StatelessWidget {
-  const _ScanReceiptRow({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final tokens = AppTokens.of(context);
-    return InkWell(
-      key: const Key('scan-receipt'),
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-        child: Row(
-          children: [
-            Icon(AppIcons.scan, size: 18, color: tokens.textMuted),
-            const SizedBox(width: 10),
-            Text(
-              AppStrings.entryScanReceipt,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: tokens.textSecondary,
-              ),
-            ),
-            const Spacer(),
-            Icon(AppIcons.chevronRight, size: 16, color: tokens.textMuted),
-          ],
-        ),
-      ),
-    );
   }
 }

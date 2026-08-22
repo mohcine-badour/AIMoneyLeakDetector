@@ -6,8 +6,12 @@ abstract final class AppConfig {
   static const String defaultLanguageCode = 'en';
   static const bool analyticsEnabled = true;
   static const bool monetizationEnabled = true;
-  static const bool adsEnabled = true;
+  static const bool adsEnabled = false;
   static const bool allowCleartextTraffic = false;
   static const String privacyPolicyUrl = '';
   static const String termsUrl = '';
+  static const String supportUrl =
+      'https://github.com/mohcine-badour/AIMoneyLeakDetector/issues';
+  static const String manageSubscriptionUrl =
+      'https://apps.apple.com/account/subscriptions';
 }

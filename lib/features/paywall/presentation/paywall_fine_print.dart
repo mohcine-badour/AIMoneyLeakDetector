@@ -22,31 +22,45 @@ class PaywallFinePrint extends StatelessWidget {
     final tokens = AppTokens.of(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(20, 4, 20, 22),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        crossAxisAlignment: WrapCrossAlignment.center,
+      child: Column(
         children: [
-          _Link(
-            key: const Key('restore-purchases'),
-            label: AppStrings.restorePurchases,
-            loading: restoring,
-            weight: FontWeight.w500,
-            color: tokens.textSecondary,
-            onTap: restoring ? null : onRestore,
+          Text(
+            AppStrings.paywallAutoRenewLegal,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 10.5,
+              height: 1.4,
+              color: tokens.textMuted,
+            ),
           ),
-          _Dot(color: tokens.textMuted),
-          _Link(
-            key: const Key('paywall-terms'),
-            label: AppStrings.terms,
-            color: tokens.textMuted,
-            onTap: onTerms,
-          ),
-          _Dot(color: tokens.textMuted),
-          _Link(
-            key: const Key('paywall-privacy'),
-            label: AppStrings.privacyShort,
-            color: tokens.textMuted,
-            onTap: onPrivacy,
+          const SizedBox(height: 12),
+          Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              _Link(
+                key: const Key('restore-purchases'),
+                label: AppStrings.restorePurchases,
+                loading: restoring,
+                weight: FontWeight.w500,
+                color: tokens.textSecondary,
+                onTap: restoring ? null : onRestore,
+              ),
+              _Dot(color: tokens.textMuted),
+              _Link(
+                key: const Key('paywall-terms'),
+                label: AppStrings.terms,
+                color: tokens.textMuted,
+                onTap: onTerms,
+              ),
+              _Dot(color: tokens.textMuted),
+              _Link(
+                key: const Key('paywall-privacy'),
+                label: AppStrings.privacyShort,
+                color: tokens.textMuted,
+                onTap: onPrivacy,
+              ),
+            ],
           ),
         ],
       ),

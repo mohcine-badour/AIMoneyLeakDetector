@@ -78,10 +78,10 @@ void main() {
       expect(reminders[0].fireAt, DateTime(2026, 8, 31, 9));
       expect(reminders[1].fireAt, DateTime(2026, 9, 2, 9));
       expect(reminders[2].fireAt, DateTime(2026, 9, 3, 7));
-      expect(reminders[0].title, 'Netflix renews in 3 days');
-      expect(reminders[1].title, 'Netflix renews tomorrow');
-      expect(reminders[2].title, 'Netflix renews in 2 hours');
-      expect(reminders.first.body, r'$22.99 will be charged.');
+      expect(reminders[0].title, 'A subscription renews in 3 days');
+      expect(reminders[1].title, 'A subscription renews tomorrow');
+      expect(reminders[2].title, 'A subscription renews in 2 hours');
+      expect(reminders.first.body, 'Open Kichta to review it.');
       expect(reminders.first.kind, ReminderKind.renewal);
     },
   );
@@ -128,11 +128,8 @@ void main() {
         trials: [trial(id: 'chatgpt', end: DateTime.utc(2026, 8, 26))],
       );
       expect(original, hasLength(3));
-      expect(original.first.title, 'ChatGPT trial ends in 3 days');
-      expect(
-        original.first.body,
-        r'Cancel before it converts to $20.00/month.',
-      );
+      expect(original.first.title, 'A trial ends in 3 days');
+      expect(original.first.body, 'Open Kichta to review it.');
 
       final edited = plan(
         trials: [trial(id: 'chatgpt', end: DateTime.utc(2026, 8, 22))],

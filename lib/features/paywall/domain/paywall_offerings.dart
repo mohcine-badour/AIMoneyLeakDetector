@@ -4,12 +4,14 @@ import 'yearly_savings.dart';
 
 class PaywallOfferings {
   const PaywallOfferings({
+    required this.weeklyPrice,
     required this.monthlyPrice,
     required this.yearlyPrice,
     required this.currencyCode,
     this.yearlyIntroTrialDays,
   });
 
+  final double weeklyPrice;
   final double monthlyPrice;
   final double yearlyPrice;
   final String currencyCode;
@@ -17,12 +19,16 @@ class PaywallOfferings {
 
   factory PaywallOfferings.fromConfig(MonetizationConfig config) {
     return PaywallOfferings(
+      weeklyPrice: config.weeklyPrice,
       monthlyPrice: config.monthlyPrice,
       yearlyPrice: config.yearlyPrice,
       currencyCode: config.currencyCode,
       yearlyIntroTrialDays: config.yearlyIntroTrialDays,
     );
   }
+
+  String get weeklyPriceString =>
+      MoneyFormat.format(weeklyPrice, currencyCode: currencyCode);
 
   String get monthlyPriceString =>
       MoneyFormat.format(monthlyPrice, currencyCode: currencyCode);

@@ -32,13 +32,13 @@ void main() {
     expect(find.text(AppStrings.adLabel), findsNothing);
   });
 
-  testWidgets('free users see a labeled trials banner', (tester) async {
+  testWidgets('free users do not see a labeled trials banner', (tester) async {
     _largeScreen(tester);
     await pumpKichtaApp(tester, location: AppRoutes.trials);
 
-    expect(find.byKey(const Key('ad-banner-trials')), findsOneWidget);
-    expect(find.text(AppStrings.adLabel), findsOneWidget);
-    expect(find.text(AppStrings.adRemoveHint), findsOneWidget);
+    expect(find.byKey(const Key('ad-banner-trials')), findsNothing);
+    expect(find.text(AppStrings.adLabel), findsNothing);
+    expect(find.text(AppStrings.adRemoveHint), findsNothing);
   });
 
   testWidgets('pro users do not see ads', (tester) async {
@@ -77,12 +77,4 @@ void main() {
     expect(find.byKey(const Key('ad-banner-trials')), findsNothing);
   });
 
-  testWidgets('tapping a banner opens the paywall', (tester) async {
-    _largeScreen(tester);
-    await pumpKichtaApp(tester, location: AppRoutes.trials);
-    await tester.tap(find.byKey(const Key('ad-banner-trials')));
-    await tester.pumpAndSettle();
-
-    expect(find.text(AppStrings.paywallHeadline), findsOneWidget);
-  });
 }

@@ -5,13 +5,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../app/config/app_config.dart';
 import '../../../app/router/app_routes.dart';
 import '../../../app/theme/app_tokens.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../analytics/analytics_providers.dart';
 import '../../analytics/domain/analytics_event.dart';
-import '../../cancellation/cancellation_providers.dart';
 import '../../onboarding/data/onboarding_repository.dart';
 import '../welcome_providers.dart';
 import 'welcome_cta.dart';
@@ -110,7 +108,6 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                     onPressed: action.pending ? null : _getStarted,
                   ),
                   WelcomeFooter(
-                    onSignIn: _signIn,
                     onTerms: () => _openLegal(privacy: false),
                     onPrivacy: () => _openLegal(privacy: true),
                   ),
@@ -157,27 +154,13 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
     );
   }
 
-  void _signIn() {
-    _flash?.cancel();
-    ref.read(analyticsProvider).track(AnalyticsEvent.signInPress);
-    if (ref.read(onboardingRepositoryProvider).isCompleted) {
-      context.go(AppRoutes.dashboard);
-      return;
-    }
-    context.push(AppRoutes.signIn);
-  }
-
   Future<void> _openLegal({required bool privacy}) async {
     ref.read(analyticsProvider).track(
       privacy ? AnalyticsEvent.privacyPress : AnalyticsEvent.termsPress,
     );
-    final raw = privacy ? AppConfig.privacyPolicyUrl : AppConfig.termsUrl;
-    if (raw.isNotEmpty) {
-      await ref.read(cancellationLinkOpenerProvider).open(Uri.parse(raw));
+    if (!mounted) {
       return;
     }
-    if (mounted) {
-      context.push(AppRoutes.privacyPolicy);
-    }
+    context.push(privacy ? AppRoutes.privacyPolicy : AppRoutes.termsOfUse);
   }
 }

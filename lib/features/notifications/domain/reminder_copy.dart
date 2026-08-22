@@ -1,9 +1,8 @@
 import '../../../core/constants/app_strings.dart';
-import '../../../core/utils/money_format.dart';
 import '../../upcoming/domain/payment_reminder_scheduler.dart';
 import 'scheduled_reminder.dart';
 
-/// Notification copy. Keep this deterministic and out of widgets.
+/// Notification copy. Keep lock-screen text generic — no merchant or amount.
 abstract final class ReminderCopy {
   static String lead(Duration offset) {
     if (offset == PaymentReminderOffsets.threeDays) {
@@ -20,27 +19,19 @@ abstract final class ReminderCopy {
 
   static String title({
     required ReminderKind kind,
-    required String name,
     required Duration offset,
   }) {
     final leadText = lead(offset);
     return switch (kind) {
-      ReminderKind.renewal => AppStrings.renewalReminderTitle(name, leadText),
-      ReminderKind.trialEnding => AppStrings.trialReminderTitle(name, leadText),
+      ReminderKind.renewal => AppStrings.renewalReminderTitle(leadText),
+      ReminderKind.trialEnding => AppStrings.trialReminderTitle(leadText),
     };
   }
 
-  static String body({
-    required ReminderKind kind,
-    required double amount,
-    required String currencyCode,
-  }) {
-    final formatted = MoneyFormat.format(amount, currencyCode: currencyCode);
+  static String body({required ReminderKind kind}) {
     return switch (kind) {
-      ReminderKind.renewal => AppStrings.renewalReminderBody(formatted),
-      ReminderKind.trialEnding => AppStrings.trialReminderBody(
-        '$formatted${AppStrings.compactPerMonth}',
-      ),
+      ReminderKind.renewal => AppStrings.renewalReminderBody,
+      ReminderKind.trialEnding => AppStrings.trialReminderBody,
     };
   }
 }

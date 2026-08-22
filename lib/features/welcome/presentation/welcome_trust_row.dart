@@ -21,7 +21,7 @@ class WelcomeTrustRow extends StatelessWidget {
           _Item(
             icon: AppIcons.shieldCheck,
             iconColor: tokens.positiveText,
-            label: AppStrings.bankLevelSecurity,
+            label: AppStrings.dataStaysOnThisPhone,
             textColor: tokens.textMuted,
           ),
           Container(

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/config/app_config.dart';
 import '../../../app/router/app_routes.dart';
 import '../../../app/theme/app_tokens.dart';
 import '../../../core/constants/app_icons.dart';
@@ -10,6 +11,7 @@ import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/confirm_dialog.dart';
+import '../../cancellation/cancellation_providers.dart';
 import '../../insights/insights_providers.dart';
 import '../../notifications/notifications_providers.dart';
 import '../../paywall/domain/entitlement_copy.dart';
@@ -52,6 +54,23 @@ class SettingsScreen extends ConsumerWidget {
               );
             },
           ),
+          const SizedBox(height: AppSpacing.sm),
+          _SettingsCard(
+            children: [
+              _SettingsRow(
+                key: const Key('manage-subscription'),
+                icon: AppIcons.apple,
+                title: AppStrings.manageSubscription,
+                chevron: true,
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  ref
+                      .read(cancellationLinkOpenerProvider)
+                      .open(Uri.parse(AppConfig.manageSubscriptionUrl));
+                },
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.xl),
           _SectionLabel(AppStrings.remindersSection),
           const SizedBox(height: AppSpacing.sm),
@@ -84,6 +103,29 @@ class SettingsScreen extends ConsumerWidget {
                 onTap: () {
                   HapticFeedback.selectionClick();
                   context.push(AppRoutes.privacyPolicy);
+                },
+              ),
+              Divider(height: 1, color: tokens.border),
+              _SettingsRow(
+                icon: AppIcons.info,
+                title: AppStrings.termsOfUseTitle,
+                chevron: true,
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  context.push(AppRoutes.termsOfUse);
+                },
+              ),
+              Divider(height: 1, color: tokens.border),
+              _SettingsRow(
+                key: const Key('settings-support'),
+                icon: AppIcons.mail,
+                title: AppStrings.support,
+                chevron: true,
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  ref
+                      .read(cancellationLinkOpenerProvider)
+                      .open(Uri.parse(AppConfig.supportUrl));
                 },
               ),
               Divider(height: 1, color: tokens.border),
@@ -148,6 +190,7 @@ class SettingsScreen extends ConsumerWidget {
                 key: const Key('delete-local-data'),
                 icon: AppIcons.delete,
                 title: AppStrings.deleteMyData,
+                tone: _RowTone.danger,
                 enabled: !action.isErasing,
                 loading: action.isErasing,
                 onTap: () => _confirm(
@@ -156,22 +199,6 @@ class SettingsScreen extends ConsumerWidget {
                   kind: ErasureKind.localData,
                   title: AppStrings.deleteMyDataTitle,
                   message: AppStrings.deleteMyDataMessage,
-                ),
-              ),
-              Divider(height: 1, color: tokens.border),
-              _SettingsRow(
-                key: const Key('delete-account'),
-                icon: AppIcons.delete,
-                title: AppStrings.deleteAccount,
-                tone: _RowTone.danger,
-                enabled: !action.isErasing,
-                loading: action.isErasing,
-                onTap: () => _confirm(
-                  context,
-                  ref,
-                  kind: ErasureKind.account,
-                  title: AppStrings.deleteAccountTitle,
-                  message: AppStrings.deleteAccountMessage,
                 ),
               ),
               Divider(height: 1, color: tokens.border),

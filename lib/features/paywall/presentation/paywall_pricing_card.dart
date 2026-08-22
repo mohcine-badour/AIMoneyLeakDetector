@@ -45,7 +45,11 @@ class PaywallPricingCard extends StatelessWidget {
               ),
             ),
             child: InkWell(
-              key: Key(yearly ? 'paywall-plan-yearly' : 'paywall-plan-monthly'),
+              key: Key(switch (plan) {
+                PaywallPlan.yearly => 'paywall-plan-yearly',
+                PaywallPlan.monthly => 'paywall-plan-monthly',
+                PaywallPlan.weekly => 'paywall-plan-weekly',
+              }),
               onTap: () {
                 HapticFeedback.selectionClick();
                 onPress();
@@ -56,9 +60,17 @@ class PaywallPricingCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Expanded(
-                      child: yearly
-                          ? _YearlyCopy(offerings: offerings)
-                          : _MonthlyCopy(offerings: offerings),
+                      child: switch (plan) {
+                        PaywallPlan.yearly => _YearlyCopy(
+                          offerings: offerings,
+                        ),
+                        PaywallPlan.monthly => _MonthlyCopy(
+                          offerings: offerings,
+                        ),
+                        PaywallPlan.weekly => _WeeklyCopy(
+                          offerings: offerings,
+                        ),
+                      },
                     ),
                     const SizedBox(width: 12),
                     _Radio(selected: selected),
@@ -155,6 +167,52 @@ class _YearlyCopy extends StatelessWidget {
             color: tokens.textMuted,
             fontFeatures: const [FontFeature.tabularFigures()],
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class _WeeklyCopy extends StatelessWidget {
+  const _WeeklyCopy({required this.offerings});
+
+  final PaywallOfferings offerings;
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = AppTokens.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          AppStrings.weeklyPlan,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            color: tokens.textPrimary,
+          ),
+        ),
+        const SizedBox(height: 3),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Text(
+              offerings.weeklyPriceString,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.5,
+                color: tokens.textPrimary,
+                fontFeatures: const [FontFeature.tabularFigures()],
+              ),
+            ),
+            const SizedBox(width: 5),
+            Text(
+              AppStrings.compactPerWeek,
+              style: TextStyle(fontSize: 11.5, color: tokens.textSecondary),
+            ),
+          ],
         ),
       ],
     );

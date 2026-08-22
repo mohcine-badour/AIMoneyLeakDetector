@@ -21,6 +21,7 @@ abstract final class AppRoutes {
   static const String savings = '/savings';
   static const String settings = '/settings';
   static const String privacyPolicy = '/settings/privacy';
+  static const String termsOfUse = '/settings/terms';
   static const String paywall = '/paywall';
 
   static String paywallLocation({PaywallSource? source}) {

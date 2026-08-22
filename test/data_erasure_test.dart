@@ -85,7 +85,7 @@ void main() {
     final result = await eraser.erase(ErasureKind.account);
 
     expect(result.localDataRemoved, isTrue);
-    expect(result.cloudDeletionPending, isTrue);
+    expect(result.cloudDeletionPending, isFalse);
     expect(result.appStoreSubscriptionUnchanged, isTrue);
     expect(await DriftSubscriptionRepository(database).getAll(), isEmpty);
     expect(await DriftTrialRepository(database).getAll(), isEmpty);

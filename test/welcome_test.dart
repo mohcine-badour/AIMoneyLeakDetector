@@ -42,10 +42,10 @@ void main() {
     expect(find.text(AppStrings.tagline), findsOneWidget);
     expect(find.text(AppStrings.getStarted), findsOneWidget);
     expect(find.text(AppStrings.worksWith.toUpperCase()), findsOneWidget);
-    expect(find.text(AppStrings.bankLevelSecurity), findsOneWidget);
+    expect(find.text(AppStrings.dataStaysOnThisPhone), findsOneWidget);
     expect(find.text(AppStrings.privateByDefault), findsOneWidget);
-    expect(find.text(AppStrings.alreadyHaveAccount), findsOneWidget);
-    expect(find.text(AppStrings.signIn), findsOneWidget);
+    expect(find.text(AppStrings.alreadyHaveAccount), findsNothing);
+    expect(find.text(AppStrings.signIn), findsNothing);
     expect(find.text(AppStrings.terms), findsOneWidget);
     expect(find.text(AppStrings.privacyPolicy), findsOneWidget);
     expect(find.text("Find the money you're wasting."), findsNothing);
@@ -89,29 +89,17 @@ void main() {
     expect(analytics.has(AnalyticsEvent.anonymousSignInError), isTrue);
   });
 
-  testWidgets('Sign in opens the sign-in form', (tester) async {
-    _largeScreen(tester);
-    final analytics = RecordingAnalytics();
-    await pumpKichtaApp(tester, analytics: analytics);
-
-    await tester.tap(find.byKey(const Key('welcome-sign-in')));
-    await tester.pumpAndSettle();
-
-    expect(find.text(AppStrings.authWelcomeBack), findsOneWidget);
-    expect(find.text(AppStrings.authLocalNote), findsOneWidget);
-    expect(find.byKey(const Key('auth-email')), findsOneWidget);
-    expect(find.byKey(const Key('auth-password')), findsOneWidget);
-    expect(analytics.has(AnalyticsEvent.signInPress), isTrue);
-  });
-
-  testWidgets('Terms and Privacy open the in-app policy', (tester) async {
+  testWidgets('Terms and Privacy open their own in-app documents', (
+    tester,
+  ) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
     await pumpKichtaApp(tester, analytics: analytics);
 
     await tester.tap(find.byKey(const Key('welcome-terms')));
     await tester.pumpAndSettle();
-    expect(find.text(AppStrings.privacyPolicy), findsWidgets);
+    expect(find.text(AppStrings.termsOfUseTitle), findsWidgets);
+    expect(find.text(AppStrings.privacyPolicy), findsNothing);
     expect(analytics.has(AnalyticsEvent.termsPress), isTrue);
 
     await tester.pageBack();

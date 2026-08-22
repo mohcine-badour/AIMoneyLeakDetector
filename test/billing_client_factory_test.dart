@@ -50,6 +50,37 @@ void main() {
     expect(entitlement.period, EntitlementPeriod.active);
   });
 
+  test('StoreKit prefers yearly over monthly and weekly', () {
+    const config = MonetizationConfig();
+    final snapshot = StoreKitEntitlement.snapshotFromProductIds(
+      productIds: {
+        config.weeklyProductId,
+        config.monthlyProductId,
+        config.yearlyProductId,
+      },
+      config: config,
+    );
+    final entitlement = EntitlementMapper.fromSnapshot(
+      snapshot: snapshot,
+      config: config,
+    );
+    expect(entitlement.plan, PaywallPlan.yearly);
+  });
+
+  test('StoreKit weekly product IDs map to Pro', () {
+    const config = MonetizationConfig();
+    final snapshot = StoreKitEntitlement.snapshotFromProductIds(
+      productIds: {config.weeklyProductId},
+      config: config,
+    );
+    final entitlement = EntitlementMapper.fromSnapshot(
+      snapshot: snapshot,
+      config: config,
+    );
+    expect(entitlement.isPro, isTrue);
+    expect(entitlement.plan, PaywallPlan.weekly);
+  });
+
   test('unknown StoreKit product IDs stay free', () {
     const config = MonetizationConfig();
     final snapshot = StoreKitEntitlement.snapshotFromProductIds(
