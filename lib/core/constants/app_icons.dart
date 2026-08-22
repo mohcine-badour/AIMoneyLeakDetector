@@ -25,8 +25,14 @@ abstract final class AppIcons {
   static const IconData list = Icons.view_list_rounded;
   static const IconData grid = Icons.grid_view_rounded;
   static const IconData chevronDown = Icons.keyboard_arrow_down_rounded;
+  static const IconData chevronLeft = Icons.chevron_left_rounded;
   static const IconData chevronRight = Icons.chevron_right_rounded;
+  static const IconData arrowRight = Icons.arrow_forward_rounded;
   static const IconData close = Icons.close_rounded;
+  static const IconData chartBar = Icons.bar_chart_rounded;
+  static const IconData apps = Icons.apps_rounded;
+  static const IconData info = Icons.info_outline_rounded;
+  static const IconData swipe = Icons.swipe_rounded;
   static const IconData pause = Icons.pause_rounded;
   static const IconData filterOff = Icons.filter_list_off_rounded;
   static const IconData camera = Icons.photo_camera_outlined;

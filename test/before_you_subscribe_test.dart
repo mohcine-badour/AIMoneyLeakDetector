@@ -1,13 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/features/before_subscribe/data/local_subscribe_advice_backend.dart';
-import 'package:billkiller_ai/features/before_subscribe/data/validated_subscribe_advisor.dart';
-import 'package:billkiller_ai/features/before_subscribe/domain/subscribe_advice_exception.dart';
-import 'package:billkiller_ai/features/before_subscribe/domain/subscribe_advice_validator.dart';
-import 'package:billkiller_ai/features/before_subscribe/domain/subscribe_impact.dart';
-import 'package:billkiller_ai/features/before_subscribe/domain/subscription_candidate.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/features/before_subscribe/data/local_subscribe_advice_backend.dart';
+import 'package:kichta/features/before_subscribe/data/validated_subscribe_advisor.dart';
+import 'package:kichta/features/before_subscribe/domain/subscribe_advice_exception.dart';
+import 'package:kichta/features/before_subscribe/domain/subscribe_advice_validator.dart';
+import 'package:kichta/features/before_subscribe/domain/subscribe_impact.dart';
+import 'package:kichta/features/before_subscribe/domain/subscription_candidate.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 Subscription _sub({
   required String id,

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/savings/domain/potential_savings.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/savings/domain/potential_savings.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 Subscription _sub({
   required String id,

@@ -7,7 +7,7 @@ import '../../core/constants/app_spacing.dart';
 import 'app_colors.dart';
 import 'app_typography.dart';
 
-/// Material 3 light and dark themes for BillKiller AI.
+/// Material 3 light and dark themes for Kichta.
 abstract final class AppTheme {
   static ThemeData light() {
     const colorScheme = ColorScheme.light(

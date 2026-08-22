@@ -28,7 +28,8 @@ abstract final class SubscriptionBrand {
   }
 
   static BrandCategory categoryFor(Subscription subscription) {
-    return brandFor(subscription)?.category ?? fromStored(subscription.category);
+    return brandFor(subscription)?.category ??
+        fromStored(subscription.category);
   }
 
   static BrandCategory fromStored(SubscriptionCategory category) {
@@ -43,6 +44,21 @@ abstract final class SubscriptionBrand {
       SubscriptionCategory.software ||
       SubscriptionCategory.finance ||
       SubscriptionCategory.other => BrandCategory.other,
+    };
+  }
+
+  static SubscriptionCategory storedCategory(BrandCategory category) {
+    return switch (category) {
+      BrandCategory.entertainment ||
+      BrandCategory.music => SubscriptionCategory.entertainment,
+      BrandCategory.productivity ||
+      BrandCategory.developer ||
+      BrandCategory.ai => SubscriptionCategory.productivity,
+      BrandCategory.storage => SubscriptionCategory.cloudStorage,
+      BrandCategory.fitness => SubscriptionCategory.fitness,
+      BrandCategory.news => SubscriptionCategory.news,
+      BrandCategory.gaming => SubscriptionCategory.gaming,
+      BrandCategory.other => SubscriptionCategory.other,
     };
   }
 }

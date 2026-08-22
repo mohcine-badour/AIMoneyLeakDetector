@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/cancellation/domain/cancellation_link_opener.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/cancellation/domain/cancellation_link_opener.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -49,7 +49,7 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     final opener = _RecordingOpener();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptionDetailLocation('netflix'),
       cancellationLinkOpener: opener,
@@ -85,7 +85,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.cancellationGuideLocation('gym'),
       seed: (database) => _save(

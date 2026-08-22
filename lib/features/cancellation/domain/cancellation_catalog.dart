@@ -28,10 +28,10 @@ abstract final class CancellationCatalog {
     return CancellationGuide(
       merchantLabel: label,
       instructions:
-          'BillKiller cannot cancel this merchant for you. Open their account or billing page, or contact their support, and cancel there.',
+          'Kichta cannot cancel this merchant for you. Open their account or billing page, or contact their support, and cancel there.',
       estimatedTime: 'Varies by merchant',
       notes:
-          'There is no official cancellation link on file for this merchant. Removing the subscription in BillKiller only updates this app.',
+          'There is no official cancellation link on file for this merchant. Removing the subscription in Kichta only updates this app.',
       includeMessage: true,
     );
   }
@@ -48,7 +48,7 @@ abstract final class CancellationCatalog {
           'Open the Netflix cancellation page, sign in, and follow the on-screen steps to finish cancelling.',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel Netflix for you. You must finish on the Netflix site.',
+          'Kichta does not cancel Netflix for you. You must finish on the Netflix site.',
     ),
     'spotify': CancellationGuide(
       merchantLabel: 'Spotify',
@@ -57,7 +57,7 @@ abstract final class CancellationCatalog {
           'Open your Spotify subscription page, sign in, and choose the option to cancel Premium.',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel Spotify for you. You must finish on the Spotify site.',
+          'Kichta does not cancel Spotify for you. You must finish on the Spotify site.',
     ),
     'hulu': CancellationGuide(
       merchantLabel: 'Hulu',
@@ -68,7 +68,7 @@ abstract final class CancellationCatalog {
           'Open Hulu account help, sign in, and follow the steps to cancel your subscription.',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel Hulu for you. You must finish on Hulu.',
+          'Kichta does not cancel Hulu for you. You must finish on Hulu.',
     ),
     'adobe': CancellationGuide(
       merchantLabel: 'Adobe',
@@ -77,7 +77,7 @@ abstract final class CancellationCatalog {
           'Open your Adobe plans page, sign in, and follow the steps to cancel the plan.',
       estimatedTime: 'About 10 minutes',
       notes:
-          'BillKiller does not cancel Adobe for you. Adobe may keep access until the paid period ends.',
+          'Kichta does not cancel Adobe for you. Adobe may keep access until the paid period ends.',
     ),
     'youtube': CancellationGuide(
       merchantLabel: 'YouTube',
@@ -88,7 +88,7 @@ abstract final class CancellationCatalog {
           'Open YouTube membership help and follow the steps for the store where you subscribed (YouTube, Google Play, Apple, or another billing partner).',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel YouTube for you. Cancel in the same store that billed you.',
+          'Kichta does not cancel YouTube for you. Cancel in the same store that billed you.',
     ),
     'youtube premium': CancellationGuide(
       merchantLabel: 'YouTube Premium',
@@ -99,7 +99,7 @@ abstract final class CancellationCatalog {
           'Open YouTube membership help and follow the steps for the store where you subscribed.',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel YouTube Premium for you. Cancel in the same store that billed you.',
+          'Kichta does not cancel YouTube Premium for you. Cancel in the same store that billed you.',
     ),
     'chatgpt': CancellationGuide(
       merchantLabel: 'ChatGPT',
@@ -110,7 +110,7 @@ abstract final class CancellationCatalog {
           'Open the OpenAI cancel-help article, sign in to ChatGPT, and follow the steps to cancel Plus or Pro.',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel ChatGPT for you. You must finish in your OpenAI account.',
+          'Kichta does not cancel ChatGPT for you. You must finish in your OpenAI account.',
     ),
     'openai': CancellationGuide(
       merchantLabel: 'OpenAI',
@@ -121,7 +121,7 @@ abstract final class CancellationCatalog {
           'Open the OpenAI cancel-help article, sign in, and follow the steps to cancel the paid plan.',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel OpenAI for you. You must finish in your OpenAI account.',
+          'Kichta does not cancel OpenAI for you. You must finish in your OpenAI account.',
     ),
     'disney+': CancellationGuide(
       merchantLabel: 'Disney+',
@@ -132,7 +132,7 @@ abstract final class CancellationCatalog {
           'Open Disney+ cancel help, sign in, and follow the steps to cancel.',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel Disney+ for you. You must finish on Disney+.',
+          'Kichta does not cancel Disney+ for you. You must finish on Disney+.',
     ),
     'disney plus': CancellationGuide(
       merchantLabel: 'Disney+',
@@ -143,7 +143,7 @@ abstract final class CancellationCatalog {
           'Open Disney+ cancel help, sign in, and follow the steps to cancel.',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel Disney+ for you. You must finish on Disney+.',
+          'Kichta does not cancel Disney+ for you. You must finish on Disney+.',
     ),
     'amazon': CancellationGuide(
       merchantLabel: 'Amazon',
@@ -152,7 +152,7 @@ abstract final class CancellationCatalog {
           'Open Amazon Prime Central, sign in, and follow the steps to cancel Prime if that is the subscription you want to stop.',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel Amazon for you. Confirm you are cancelling the right Amazon membership.',
+          'Kichta does not cancel Amazon for you. Confirm you are cancelling the right Amazon membership.',
     ),
     'amazon prime': CancellationGuide(
       merchantLabel: 'Amazon Prime',
@@ -161,7 +161,7 @@ abstract final class CancellationCatalog {
           'Open Amazon Prime Central, sign in, and follow the steps to cancel Prime.',
       estimatedTime: 'About 5 minutes',
       notes:
-          'BillKiller does not cancel Amazon Prime for you. You must finish on Amazon.',
+          'Kichta does not cancel Amazon Prime for you. You must finish on Amazon.',
     ),
     'apple': CancellationGuide(
       merchantLabel: 'Apple',
@@ -170,7 +170,7 @@ abstract final class CancellationCatalog {
           'Open Apple subscription management, sign in with your Apple ID, and cancel the subscription there.',
       estimatedTime: 'About 3 minutes',
       notes:
-          'BillKiller does not cancel Apple subscriptions for you. Cancel in Settings or on the Apple subscriptions page.',
+          'Kichta does not cancel Apple subscriptions for you. Cancel in Settings or on the Apple subscriptions page.',
     ),
     'icloud': CancellationGuide(
       merchantLabel: 'iCloud',
@@ -179,7 +179,7 @@ abstract final class CancellationCatalog {
           'Open Apple subscription management and cancel iCloud+ or the related Apple subscription.',
       estimatedTime: 'About 3 minutes',
       notes:
-          'BillKiller does not cancel iCloud for you. Cancel with your Apple ID.',
+          'Kichta does not cancel iCloud for you. Cancel with your Apple ID.',
     ),
   };
 }

@@ -1,10 +1,10 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/core/utils/id_generator.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/core/utils/id_generator.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 void main() {
   late AppDatabase database;

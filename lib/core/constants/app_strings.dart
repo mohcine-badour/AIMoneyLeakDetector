@@ -1,11 +1,11 @@
 import '../copy/welcome_copy.dart';
 
-/// User-facing copy for BillKiller AI.
+/// User-facing copy for Kichta.
 ///
 /// English-only for V1. Centralizing strings here prepares the app
 /// for localization without introducing a localization package yet.
 abstract final class AppStrings {
-  static const String appName = 'BillKiller AI';
+  static const String appName = 'Kichta';
   static const String tagline = WelcomeCopy.tagline;
   static const String getStarted = 'Get started — free';
   static const String worksWith = 'Works with';
@@ -144,6 +144,7 @@ abstract final class AppStrings {
   static const String fieldName = 'Name';
   static const String fieldMerchant = 'Merchant';
   static const String fieldMerchantHint = 'Defaults to name';
+  static const String mostPopular = 'Most popular';
   static const String fieldAmount = 'Amount';
   static const String fieldCurrency = 'Currency';
   static const String fieldBillingCycle = 'Billing cycle';
@@ -232,10 +233,10 @@ abstract final class AppStrings {
   static const String cancel = 'Cancel';
   static const String deleteSubscriptionTitle = 'Delete this subscription?';
   static const String deleteSubscriptionMessage =
-      'This removes it from BillKiller. It does not cancel the merchant.';
+      'This removes it from Kichta. It does not cancel the merchant.';
   static const String cancellationGuide = 'Cancellation guide';
   static const String cancellationDidNotHappen =
-      'BillKiller does not cancel this for you.';
+      'Kichta does not cancel this for you.';
   static const String cancellationEstimatedTime = 'Estimated time';
   static const String cancellationInstructions = 'Instructions';
   static const String cancellationNotes = 'Notes';
@@ -246,9 +247,9 @@ abstract final class AppStrings {
   static const String cancellationOpenFailed =
       'Could not open the cancellation page.';
   static const String cancellationMessageDisclaimer =
-      'This is a draft for you to send. BillKiller does not send it or cancel the merchant.';
+      'This is a draft for you to send. Kichta does not send it or cancel the merchant.';
   static const String cancellationMessageCopied =
-      'Copied. Send it yourself — BillKiller did not cancel this.';
+      'Copied. Send it yourself — Kichta did not cancel this.';
   static const String subscriptionNotFound = 'This subscription was not found.';
   static const String backToList = 'Back to list';
 
@@ -326,7 +327,7 @@ abstract final class AppStrings {
   static const String trialNotFound = 'This trial was not found.';
   static const String deleteTrialTitle = 'Delete this trial?';
   static const String deleteTrialMessage =
-      'This removes it from BillKiller. It does not cancel the merchant.';
+      'This removes it from Kichta. It does not cancel the merchant.';
 
   static String trialDaysRemaining(int days) => '$days days remaining';
 
@@ -499,6 +500,8 @@ abstract final class AppStrings {
   static const String paywallProBadge = 'Pro';
   static const String paywallUnlock = 'Unlock:';
   static const String unlockPro = 'Unlock Pro';
+  static const String unlockProSubtitle =
+      'Trial alerts, AI insights, and no ads.';
   static const String yearlyPlan = 'Yearly';
   static const String monthlyPlan = 'Monthly';
   static const String billedAnnually = 'billed annually';

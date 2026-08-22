@@ -44,7 +44,7 @@ Future<void> main() async {
         billingClientProvider.overrideWithValue(billing),
         analyticsProvider.overrideWithValue(analytics),
       ],
-      child: BillKillerApp(
+      child: KichtaApp(
         router: AppRouter.create(
           initialLocation: onboarding.isCompleted
               ? AppRoutes.dashboard

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:billkiller_ai/features/auth/data/guest_session_repository.dart';
-import 'package:billkiller_ai/features/auth/data/local_anonymous_auth.dart';
+import 'package:kichta/features/auth/data/guest_session_repository.dart';
+import 'package:kichta/features/auth/data/local_anonymous_auth.dart';
 
 void main() {
   test('guest session is created once and reused', () async {

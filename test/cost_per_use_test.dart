@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/utils/money_format.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/cost_per_use.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription_usage.dart';
+import 'package:kichta/core/utils/money_format.dart';
+import 'package:kichta/features/subscriptions/domain/cost_per_use.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/subscriptions/domain/subscription_usage.dart';
 
 void main() {
   final netflix = Subscription.create(

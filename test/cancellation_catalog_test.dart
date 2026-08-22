@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/cancellation/domain/cancellation_catalog.dart';
-import 'package:billkiller_ai/features/cancellation/domain/cancellation_message.dart';
+import 'package:kichta/features/cancellation/domain/cancellation_catalog.dart';
+import 'package:kichta/features/cancellation/domain/cancellation_message.dart';
 
 void main() {
   test('looks up Netflix by merchant and keeps an official cancel URL', () {

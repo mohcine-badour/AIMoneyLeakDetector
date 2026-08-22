@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/analytics/data/analytics_factory.dart';
-import 'package:billkiller_ai/features/analytics/data/disabled_analytics.dart';
-import 'package:billkiller_ai/features/analytics/domain/analytics_event.dart';
+import 'package:kichta/features/analytics/data/analytics_factory.dart';
+import 'package:kichta/features/analytics/data/disabled_analytics.dart';
+import 'package:kichta/features/analytics/domain/analytics_event.dart';
 
 void main() {
   test('event names match the product analytics catalog', () {
@@ -19,7 +19,17 @@ void main() {
     expect(AnalyticsEvent.privacyPress.name, 'privacy_press');
     expect(AnalyticsEvent.featuredBrandTap.name, 'featured_brand_tap');
     expect(AnalyticsEvent.onboardingStarted.name, 'onboarding_started');
+    expect(AnalyticsEvent.onboardingPageView.name, 'onboarding_page_view');
+    expect(AnalyticsEvent.onboardingAdvance.name, 'onboarding_advance');
+    expect(AnalyticsEvent.onboardingBack.name, 'onboarding_back');
+    expect(AnalyticsEvent.onboardingJump.name, 'onboarding_jump');
+    expect(AnalyticsEvent.onboardingSkipPress.name, 'onboarding_skip_press');
     expect(AnalyticsEvent.onboardingCompleted.name, 'onboarding_completed');
+    expect(AnalyticsEvent.onboardingExampleTap.name, 'onboarding_example_tap');
+    expect(
+      AnalyticsEvent.onboardingTrialExampleTap.name,
+      'onboarding_trial_example_tap',
+    );
     expect(AnalyticsEvent.subscriptionCreated.name, 'subscription_created');
     expect(AnalyticsEvent.subscriptionDeleted.name, 'subscription_deleted');
     expect(AnalyticsEvent.subscriptionUpdated.name, 'subscription_updated');

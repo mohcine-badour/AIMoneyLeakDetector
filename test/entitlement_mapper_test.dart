@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/paywall/domain/billing_snapshot.dart';
-import 'package:billkiller_ai/features/paywall/domain/entitlement.dart';
-import 'package:billkiller_ai/features/paywall/domain/entitlement_copy.dart';
-import 'package:billkiller_ai/features/paywall/domain/entitlement_mapper.dart';
-import 'package:billkiller_ai/features/paywall/domain/monetization_config.dart';
-import 'package:billkiller_ai/features/paywall/domain/paywall_plan.dart';
+import 'package:kichta/features/paywall/domain/billing_snapshot.dart';
+import 'package:kichta/features/paywall/domain/entitlement.dart';
+import 'package:kichta/features/paywall/domain/entitlement_copy.dart';
+import 'package:kichta/features/paywall/domain/entitlement_mapper.dart';
+import 'package:kichta/features/paywall/domain/monetization_config.dart';
+import 'package:kichta/features/paywall/domain/paywall_plan.dart';
 
 void main() {
   const config = MonetizationConfig();

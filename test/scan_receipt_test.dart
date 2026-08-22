@@ -4,13 +4,13 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/features/scanner/domain/extracted_receipt.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_extractor.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_image.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/features/scanner/domain/extracted_receipt.dart';
+import 'package:kichta/features/scanner/domain/receipt_extractor.dart';
+import 'package:kichta/features/scanner/domain/receipt_image.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -107,7 +107,7 @@ void main() {
   final image = ReceiptImage(bytes: _png);
 
   testWidgets('scan source offers camera and gallery', (tester) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.scanReceipt);
+    await pumpKichtaApp(tester, location: AppRoutes.scanReceipt);
 
     expect(find.text(AppStrings.scanReceiptTitle), findsOneWidget);
     expect(find.text(AppStrings.scanUseCamera), findsOneWidget);
@@ -117,7 +117,7 @@ void main() {
   testWidgets('add subscription opens the paywall for the scanner', (
     tester,
   ) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.addSubscription);
+    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
 
     await tester.ensureVisible(find.text(AppStrings.entryScanReceipt));
     await tester.tap(find.text(AppStrings.entryScanReceipt));
@@ -131,7 +131,7 @@ void main() {
     tester,
   ) async {
     final extractor = _HeldExtractor();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.scanReceipt,
       imagePicker: _FakePicker(image),
@@ -169,7 +169,7 @@ void main() {
   testWidgets('confirm is required before a scanned subscription is saved', (
     tester,
   ) async {
-    final harness = await pumpBillKillerApp(
+    final harness = await pumpKichtaApp(
       tester,
       location: AppRoutes.scanReceipt,
       imagePicker: _FakePicker(image),

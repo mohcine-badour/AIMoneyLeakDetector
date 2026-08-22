@@ -3,12 +3,7 @@ import 'subscription.dart';
 import 'subscription_brand.dart';
 import 'subscription_cost.dart';
 
-enum SubscriptionSort {
-  nextPayment,
-  highestCost,
-  alphabetical,
-  recentlyAdded,
-}
+enum SubscriptionSort { nextPayment, highestCost, alphabetical, recentlyAdded }
 
 enum SubscriptionViewMode { list, grid }
 
@@ -28,9 +23,7 @@ class SubscriptionListQuery {
   final bool showInactive;
 
   bool get hasActiveFilters =>
-      category != null ||
-      sort != SubscriptionSort.nextPayment ||
-      showInactive;
+      category != null || sort != SubscriptionSort.nextPayment || showInactive;
 
   SubscriptionListQuery copyWith({
     String? search,
@@ -82,9 +75,7 @@ abstract final class SubscriptionListFilter {
     Iterable<Subscription> result = subscriptions;
 
     if (!query.showInactive) {
-      result = result.where(
-        (item) => item.status == SubscriptionStatus.active,
-      );
+      result = result.where((item) => item.status == SubscriptionStatus.active);
     }
 
     final search = query.search.trim().toLowerCase();

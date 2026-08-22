@@ -1,9 +1,9 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/trials/data/drift_trial_repository.dart';
-import 'package:billkiller_ai/features/trials/domain/trial.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/trials/data/drift_trial_repository.dart';
+import 'package:kichta/features/trials/domain/trial.dart';
 
 void main() {
   late AppDatabase database;

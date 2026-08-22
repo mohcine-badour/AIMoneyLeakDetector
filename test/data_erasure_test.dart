@@ -4,19 +4,19 @@ import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/core/security/document_store.dart';
-import 'package:billkiller_ai/core/security/in_memory_secure_store.dart';
-import 'package:billkiller_ai/features/notifications/domain/reminder_scheduler.dart';
-import 'package:billkiller_ai/features/notifications/domain/scheduled_reminder.dart';
-import 'package:billkiller_ai/features/onboarding/data/onboarding_repository.dart';
-import 'package:billkiller_ai/features/auth/data/guest_session_repository.dart';
-import 'package:billkiller_ai/features/onboarding/domain/onboarding_answers.dart';
-import 'package:billkiller_ai/features/settings/domain/local_data_eraser.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
-import 'package:billkiller_ai/features/trials/data/drift_trial_repository.dart';
-import 'package:billkiller_ai/features/trials/domain/trial.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/core/security/document_store.dart';
+import 'package:kichta/core/security/in_memory_secure_store.dart';
+import 'package:kichta/features/notifications/domain/reminder_scheduler.dart';
+import 'package:kichta/features/notifications/domain/scheduled_reminder.dart';
+import 'package:kichta/features/onboarding/data/onboarding_repository.dart';
+import 'package:kichta/features/auth/data/guest_session_repository.dart';
+import 'package:kichta/features/onboarding/domain/onboarding_answers.dart';
+import 'package:kichta/features/settings/domain/local_data_eraser.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/trials/data/drift_trial_repository.dart';
+import 'package:kichta/features/trials/domain/trial.dart';
 
 class _RecordingReminders implements ReminderScheduler {
   List<ScheduledReminder>? last;

@@ -1,11 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/ads/data/ad_service_factory.dart';
-import 'package:billkiller_ai/features/ads/data/disabled_ad_service.dart';
-import 'package:billkiller_ai/features/ads/data/local_ad_service.dart';
-import 'package:billkiller_ai/features/ads/domain/ad_config.dart';
-import 'package:billkiller_ai/features/ads/domain/ad_placement.dart';
-import 'package:billkiller_ai/features/ads/domain/ad_policy.dart';
+import 'package:kichta/features/ads/data/ad_service_factory.dart';
+import 'package:kichta/features/ads/data/disabled_ad_service.dart';
+import 'package:kichta/features/ads/data/local_ad_service.dart';
+import 'package:kichta/features/ads/domain/ad_config.dart';
+import 'package:kichta/features/ads/domain/ad_placement.dart';
+import 'package:kichta/features/ads/domain/ad_policy.dart';
 
 void main() {
   test('free users only see banners on browsing screens', () {

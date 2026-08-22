@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -46,7 +46,7 @@ void _largeScreen(WidgetTester tester) {
 
 void main() {
   testWidgets('empty list shows an empty state', (tester) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.subscriptions);
+    await pumpKichtaApp(tester, location: AppRoutes.subscriptions);
 
     expect(find.text(AppStrings.emptySubscriptionsTitle), findsOneWidget);
     expect(find.text(AppStrings.addFirstSubscriptionTitle), findsOneWidget);
@@ -56,7 +56,7 @@ void main() {
   testWidgets('list card shows name, cost, category, and next payment', (
     tester,
   ) async {
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptions,
       now: DateTime.utc(2026, 8, 21),
@@ -78,7 +78,7 @@ void main() {
   ) async {
     _largeScreen(tester);
 
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptions,
       now: DateTime.utc(2026, 8, 21),

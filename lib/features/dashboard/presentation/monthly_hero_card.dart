@@ -220,7 +220,7 @@ class _SparkChart extends StatelessWidget {
                 isCurrent: i == values.length - 1,
                 barColor: i == values.length - 1
                     ? tokens.textPrimary
-                    : tokens.bgCard,
+                    : tokens.textPrimary.withValues(alpha: 0.18),
                 labelColor: i == values.length - 1
                     ? tokens.textPrimary
                     : tokens.textMuted,
@@ -276,9 +276,9 @@ class _SparkColumn extends StatelessWidget {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: FractionallySizedBox(
-              heightFactor: fraction == 0 ? 0.04 : fraction,
-              widthFactor: 1,
-              child: DecoratedBox(
+              heightFactor: fraction == 0 ? 0.08 : fraction,
+              child: Container(
+                width: 7,
                 decoration: BoxDecoration(
                   color: barColor,
                   borderRadius: BorderRadius.circular(3),

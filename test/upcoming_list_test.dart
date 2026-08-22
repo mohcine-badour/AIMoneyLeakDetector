@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -50,7 +50,7 @@ Future<void> _savePayments(AppDatabase database) async {
 
 void main() {
   testWidgets('empty upcoming list shows an empty state', (tester) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.upcoming, now: _now);
+    await pumpKichtaApp(tester, location: AppRoutes.upcoming, now: _now);
 
     expect(find.text(AppStrings.upcomingPayments), findsOneWidget);
     expect(find.text(AppStrings.emptyUpcomingTitle), findsOneWidget);
@@ -62,7 +62,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.upcoming,
       now: _now,
@@ -92,7 +92,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await pumpBillKillerApp(tester, location: AppRoutes.dashboard, now: _now);
+    await pumpKichtaApp(tester, location: AppRoutes.dashboard, now: _now);
 
     await tester.tap(find.text(AppStrings.tabSubscriptions));
     await tester.pumpAndSettle();

@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/config/app_config.dart';
-import 'package:billkiller_ai/core/security/api_security_policy.dart';
-import 'package:billkiller_ai/features/cancellation/data/https_link_opener.dart';
-import 'package:billkiller_ai/features/cancellation/domain/cancellation_link_opener.dart';
+import 'package:kichta/app/config/app_config.dart';
+import 'package:kichta/core/security/api_security_policy.dart';
+import 'package:kichta/features/cancellation/data/https_link_opener.dart';
+import 'package:kichta/features/cancellation/domain/cancellation_link_opener.dart';
 
 class _RecordingOpener implements CancellationLinkOpener {
   Uri? last;

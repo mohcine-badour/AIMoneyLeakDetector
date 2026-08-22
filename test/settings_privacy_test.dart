@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/onboarding/data/onboarding_repository.dart';
-import 'package:billkiller_ai/features/settings/domain/privacy_policy.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/onboarding/data/onboarding_repository.dart';
+import 'package:kichta/features/settings/domain/privacy_policy.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -37,7 +37,7 @@ void main() {
     tester,
   ) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(tester, location: AppRoutes.settings);
+    await pumpKichtaApp(tester, location: AppRoutes.settings);
 
     expect(find.text(AppStrings.settingsTitle), findsWidgets);
     expect(find.text(AppStrings.privacyPolicy), findsOneWidget);
@@ -51,7 +51,7 @@ void main() {
     'privacy policy explains local storage and no financial analytics',
     (tester) async {
       _largeScreen(tester);
-      await pumpBillKillerApp(tester, location: AppRoutes.privacyPolicy);
+      await pumpKichtaApp(tester, location: AppRoutes.privacyPolicy);
 
       expect(find.text(AppStrings.privacyPolicy), findsWidgets);
       expect(find.text(PrivacyPolicy.sections.first.title), findsOneWidget);
@@ -65,7 +65,7 @@ void main() {
   );
 
   testWidgets('dashboard opens settings', (tester) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.dashboard);
+    await pumpKichtaApp(tester, location: AppRoutes.dashboard);
 
     await tester.tap(find.byKey(const Key('open-settings')));
     await tester.pumpAndSettle();
@@ -77,7 +77,7 @@ void main() {
     tester,
   ) async {
     _largeScreen(tester);
-    final harness = await pumpBillKillerApp(
+    final harness = await pumpKichtaApp(
       tester,
       location: AppRoutes.settings,
       seed: _saveNetflix,
@@ -102,7 +102,7 @@ void main() {
     'deleting account wipes local data without claiming Apple cancel',
     (tester) async {
       _largeScreen(tester);
-      final harness = await pumpBillKillerApp(
+      final harness = await pumpKichtaApp(
         tester,
         location: AppRoutes.settings,
         seed: _saveNetflix,

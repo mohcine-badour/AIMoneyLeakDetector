@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/dashboard/domain/home_insight.dart';
-import 'package:billkiller_ai/features/dashboard/domain/spending_summary.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/dashboard/domain/home_insight.dart';
+import 'package:kichta/features/dashboard/domain/spending_summary.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 Subscription _item({
   required String id,

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/features/trials/data/drift_trial_repository.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/features/trials/data/drift_trial_repository.dart';
 
 import 'helpers/pump_app.dart';
 
 void main() {
   testWidgets('empty save shows validation errors', (tester) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.addTrial);
+    await pumpKichtaApp(tester, location: AppRoutes.addTrial);
 
     await tester.ensureVisible(find.text(AppStrings.save));
     await tester.tap(find.text(AppStrings.save));
@@ -24,7 +24,7 @@ void main() {
   testWidgets('valid form saves and returns to the trials list', (
     tester,
   ) async {
-    final harness = await pumpBillKillerApp(
+    final harness = await pumpKichtaApp(
       tester,
       location: AppRoutes.addTrial,
     );

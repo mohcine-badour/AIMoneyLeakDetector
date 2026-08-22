@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/trials/data/drift_trial_repository.dart';
-import 'package:billkiller_ai/features/trials/domain/trial.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/trials/data/drift_trial_repository.dart';
+import 'package:kichta/features/trials/domain/trial.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -25,7 +25,7 @@ void main() {
   testWidgets('marking cancelled persists locally and updates the card', (
     tester,
   ) async {
-    final harness = await pumpBillKillerApp(
+    final harness = await pumpKichtaApp(
       tester,
       location: AppRoutes.trialDetailLocation('chatgpt'),
       now: _now,
@@ -45,7 +45,7 @@ void main() {
   testWidgets('delete removes the local trial after confirmation', (
     tester,
   ) async {
-    final harness = await pumpBillKillerApp(
+    final harness = await pumpKichtaApp(
       tester,
       location: AppRoutes.trialDetailLocation('chatgpt'),
       now: _now,

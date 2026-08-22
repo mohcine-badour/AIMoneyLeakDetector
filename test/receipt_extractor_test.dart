@@ -2,15 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/scanner/data/local_receipt_extraction_backend.dart';
-import 'package:billkiller_ai/features/scanner/data/validated_receipt_extractor.dart';
-import 'package:billkiller_ai/features/scanner/domain/extracted_receipt.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_extraction_backend.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_extraction_exception.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_extraction_validator.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_extractor.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_image.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/scanner/data/local_receipt_extraction_backend.dart';
+import 'package:kichta/features/scanner/data/validated_receipt_extractor.dart';
+import 'package:kichta/features/scanner/domain/extracted_receipt.dart';
+import 'package:kichta/features/scanner/domain/receipt_extraction_backend.dart';
+import 'package:kichta/features/scanner/domain/receipt_extraction_exception.dart';
+import 'package:kichta/features/scanner/domain/receipt_extraction_validator.dart';
+import 'package:kichta/features/scanner/domain/receipt_extractor.dart';
+import 'package:kichta/features/scanner/domain/receipt_image.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 class _JsonBackend implements ReceiptExtractionBackend {
   const _JsonBackend(this.json);

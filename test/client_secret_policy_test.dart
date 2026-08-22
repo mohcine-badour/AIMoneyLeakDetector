@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/security/client_secret_policy.dart';
+import 'package:kichta/core/security/client_secret_policy.dart';
 
 void main() {
   test('AI and billing secret names are forbidden in Flutter', () {

@@ -46,9 +46,8 @@ class SubscriptionListRow extends ConsumerWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () => context.push(
-          AppRoutes.subscriptionDetailLocation(subscription.id),
-        ),
+        onTap: () =>
+            context.push(AppRoutes.subscriptionDetailLocation(subscription.id)),
         onLongPress: () => _showMenu(context, ref),
         child: Opacity(
           opacity: faded ? 0.5 : 1,
@@ -215,7 +214,9 @@ class SubscriptionListRow extends ConsumerWidget {
       },
     );
     if (confirmed == true) {
-      await ref.read(subscriptionDetailControllerProvider).delete(subscription.id);
+      await ref
+          .read(subscriptionDetailControllerProvider)
+          .delete(subscription.id);
     }
   }
 }

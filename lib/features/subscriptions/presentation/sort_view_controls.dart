@@ -80,7 +80,10 @@ class SortViewControls extends ConsumerWidget {
                 ListTile(
                   title: Text(_labelFor(sort)),
                   trailing: sort == current
-                      ? Icon(AppIcons.check, color: AppTokens.of(context).textPrimary)
+                      ? Icon(
+                          AppIcons.check,
+                          color: AppTokens.of(context).textPrimary,
+                        )
                       : null,
                   onTap: () => Navigator.of(context).pop(sort),
                 ),

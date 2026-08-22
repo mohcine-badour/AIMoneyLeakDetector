@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -28,7 +28,7 @@ void main() {
   testWidgets('detail screen shows billed amount, annual cost, and metadata', (
     tester,
   ) async {
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptionDetailLocation('netflix'),
       seed: _saveNetflix,
@@ -51,7 +51,7 @@ void main() {
   testWidgets('edit updates the subscription and returns to details', (
     tester,
   ) async {
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptionDetailLocation('netflix'),
       seed: _saveNetflix,
@@ -80,7 +80,7 @@ void main() {
   testWidgets('delete removes the subscription and returns to the list', (
     tester,
   ) async {
-    final harness = await pumpBillKillerApp(
+    final harness = await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptionDetailLocation('netflix'),
       seed: _saveNetflix,
@@ -107,7 +107,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptionDetailLocation('netflix'),
       seed: _saveNetflix,
@@ -128,7 +128,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptionDetailLocation('netflix'),
       seed: _saveNetflix,
@@ -153,7 +153,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptionDetailLocation('netflix'),
       seed: _saveNetflix,

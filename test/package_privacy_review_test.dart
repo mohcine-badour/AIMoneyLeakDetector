@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/settings/domain/package_privacy_review.dart';
+import 'package:kichta/features/settings/domain/package_privacy_review.dart';
 
 void main() {
   test('every runtime package has a privacy note', () {

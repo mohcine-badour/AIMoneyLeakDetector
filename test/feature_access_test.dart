@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/paywall/domain/entitlement.dart';
-import 'package:billkiller_ai/features/paywall/domain/feature_access.dart';
-import 'package:billkiller_ai/features/paywall/domain/monetization_config.dart';
+import 'package:kichta/features/paywall/domain/entitlement.dart';
+import 'package:kichta/features/paywall/domain/feature_access.dart';
+import 'package:kichta/features/paywall/domain/monetization_config.dart';
 
 void main() {
   const config = MonetizationConfig(

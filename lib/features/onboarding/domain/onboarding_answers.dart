@@ -18,25 +18,3 @@ class OnboardingAnswers {
   final DateTime completedAt;
 }
 
-class OnboardingDraft {
-  const OnboardingDraft({this.step = 0, this.spendingRange, this.savingsGoal});
-
-  final int step;
-  final SpendingRange? spendingRange;
-  final SavingsGoal? savingsGoal;
-
-  bool get canContinueSpending => spendingRange != null;
-  bool get canContinueSavings => savingsGoal != null;
-
-  OnboardingDraft copyWith({
-    int? step,
-    SpendingRange? spendingRange,
-    SavingsGoal? savingsGoal,
-  }) {
-    return OnboardingDraft(
-      step: step ?? this.step,
-      spendingRange: spendingRange ?? this.spendingRange,
-      savingsGoal: savingsGoal ?? this.savingsGoal,
-    );
-  }
-}

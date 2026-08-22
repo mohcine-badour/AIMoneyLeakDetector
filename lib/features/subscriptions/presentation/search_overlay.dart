@@ -179,10 +179,7 @@ class _RecentSearches extends StatelessWidget {
             runSpacing: 6,
             children: [
               for (final item in recent)
-                ActionChip(
-                  label: Text(item),
-                  onPressed: () => onTap(item),
-                ),
+                ActionChip(label: Text(item), onPressed: () => onTap(item)),
             ],
           ),
         ],

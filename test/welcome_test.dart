@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/theme/app_tokens.dart';
-import 'package:billkiller_ai/core/brand/brand_registry.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/widgets/app_tab_bar.dart';
-import 'package:billkiller_ai/features/analytics/data/recording_analytics.dart';
-import 'package:billkiller_ai/features/analytics/domain/analytics_event.dart';
-import 'package:billkiller_ai/features/auth/data/guest_session_repository.dart';
-import 'package:billkiller_ai/features/auth/domain/anonymous_auth.dart';
-import 'package:billkiller_ai/features/onboarding/data/onboarding_repository.dart';
-import 'package:billkiller_ai/features/welcome/domain/featured_brands.dart';
-import 'package:billkiller_ai/features/welcome/presentation/welcome_screen.dart';
-import 'package:billkiller_ai/features/welcome/presentation/works_with_grid.dart';
+import 'package:kichta/app/theme/app_tokens.dart';
+import 'package:kichta/core/brand/brand_registry.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/widgets/app_tab_bar.dart';
+import 'package:kichta/features/analytics/data/recording_analytics.dart';
+import 'package:kichta/features/analytics/domain/analytics_event.dart';
+import 'package:kichta/features/auth/data/guest_session_repository.dart';
+import 'package:kichta/features/auth/domain/anonymous_auth.dart';
+import 'package:kichta/features/onboarding/data/onboarding_repository.dart';
+import 'package:kichta/features/welcome/domain/featured_brands.dart';
+import 'package:kichta/features/welcome/presentation/welcome_screen.dart';
+import 'package:kichta/features/welcome/presentation/works_with_grid.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -36,7 +36,7 @@ void main() {
   ) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(tester, analytics: analytics);
+    await pumpKichtaApp(tester, analytics: analytics);
 
     expect(find.text(AppStrings.appName), findsOneWidget);
     expect(find.text(AppStrings.tagline), findsOneWidget);
@@ -60,12 +60,12 @@ void main() {
   ) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
-    final harness = await pumpBillKillerApp(tester, analytics: analytics);
+    final harness = await pumpKichtaApp(tester, analytics: analytics);
 
     await tester.tap(find.byKey(const Key('get-started')));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.onboardingHeadline), findsOneWidget);
+    expect(find.text('THE GAP'), findsOneWidget);
     expect(GuestSessionRepository(harness.$2).hasSession, isTrue);
     expect(analytics.has(AnalyticsEvent.getStartedPress), isTrue);
     expect(analytics.has(AnalyticsEvent.anonymousSignInSuccess), isTrue);
@@ -74,7 +74,7 @@ void main() {
   testWidgets('failed guest session shows a friendly alert', (tester) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       analytics: analytics,
       anonymousAuth: _FailingAuth(),
@@ -92,7 +92,7 @@ void main() {
   testWidgets('Sign in opens the stub screen', (tester) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(tester, analytics: analytics);
+    await pumpKichtaApp(tester, analytics: analytics);
 
     await tester.tap(find.byKey(const Key('welcome-sign-in')));
     await tester.pumpAndSettle();
@@ -104,7 +104,7 @@ void main() {
   testWidgets('Terms and Privacy open the in-app policy', (tester) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(tester, analytics: analytics);
+    await pumpKichtaApp(tester, analytics: analytics);
 
     await tester.tap(find.byKey(const Key('welcome-terms')));
     await tester.pumpAndSettle();
@@ -125,7 +125,7 @@ void main() {
   ) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(tester, analytics: analytics);
+    await pumpKichtaApp(tester, analytics: analytics);
 
     await tester.tap(find.byKey(const Key('featured-brand-netflix')));
     await tester.pump();
@@ -149,7 +149,7 @@ void main() {
 
   testWidgets('CTA uses accent fill, not a muted background', (tester) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(tester);
+    await pumpKichtaApp(tester);
 
     final button = tester.widget<FilledButton>(find.byKey(const Key('get-started')));
     final style = button.style;
@@ -163,7 +163,7 @@ void main() {
     tester,
   ) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       prefs: {OnboardingRepository.completedKey: true},
       settle: false,

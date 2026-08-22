@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/brand/brand_registry.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/widgets/app_text_field.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
 void main() {
   testWidgets('empty save shows validation errors', (tester) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.addSubscription);
+    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
 
     await tester.ensureVisible(find.text(AppStrings.reviewBeforeAdding));
     await tester.tap(find.text(AppStrings.reviewBeforeAdding));
@@ -27,7 +29,7 @@ void main() {
   testWidgets('valid form saves and returns to the subscriptions list', (
     tester,
   ) async {
-    final harness = await pumpBillKillerApp(
+    final harness = await pumpKichtaApp(
       tester,
       location: AppRoutes.addSubscription,
     );
@@ -84,5 +86,38 @@ void main() {
     expect(stored.first.billingCycle, BillingCycle.monthly);
     expect(stored.first.category, SubscriptionCategory.entertainment);
     expect(stored.first.source, SubscriptionSource.manual);
+  });
+
+  testWidgets('popular app tiles prefill name, merchant, and category', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+
+    expect(find.text(AppStrings.mostPopular), findsOneWidget);
+    expect(find.byKey(const Key('popular-app-netflix')), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('popular-app-netflix')));
+    await tester.pumpAndSettle();
+
+    expect(
+      tester
+          .widget<AppTextField>(find.byKey(const Key('subscription-name')))
+          .controller
+          ?.text,
+      BrandRegistry.bySlug['netflix']!.displayName,
+    );
+    expect(
+      tester
+          .widget<AppTextField>(find.byKey(const Key('subscription-merchant')))
+          .controller
+          ?.text,
+      BrandRegistry.bySlug['netflix']!.displayName,
+    );
+    expect(find.text(AppStrings.categoryEntertainment), findsOneWidget);
   });
 }

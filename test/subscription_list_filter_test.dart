@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/brand/brand_registry.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription_cost.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription_list_filter.dart';
+import 'package:kichta/core/brand/brand_registry.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/subscriptions/domain/subscription_cost.dart';
+import 'package:kichta/features/subscriptions/domain/subscription_list_filter.dart';
 
 Subscription _item({
   required String id,

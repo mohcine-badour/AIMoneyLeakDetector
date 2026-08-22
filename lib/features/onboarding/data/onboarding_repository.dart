@@ -55,8 +55,16 @@ class OnboardingRepository {
     );
   }
 
-  Future<void> save(OnboardingAnswers answers) async {
+  Future<void> markComplete() async {
     await _prefs.setBool(completedKey, true);
+    await _prefs.setString(
+      completedAtKey,
+      DateTime.now().toUtc().toIso8601String(),
+    );
+  }
+
+  Future<void> save(OnboardingAnswers answers) async {
+    await markComplete();
     await _prefs.setString(spendingKey, answers.spendingRange.name);
     await _prefs.setString(savingsKey, answers.savingsGoal.name);
     await _prefs.setString(entryPathKey, answers.entryPath.name);

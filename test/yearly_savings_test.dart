@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/paywall/domain/yearly_savings.dart';
+import 'package:kichta/features/paywall/domain/yearly_savings.dart';
 
 void main() {
   test('yearly savings are 44 percent at default prices', () {

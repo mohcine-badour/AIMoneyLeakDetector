@@ -5,35 +5,35 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:billkiller_ai/app/app.dart';
-import 'package:billkiller_ai/app/router/app_router.dart';
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/core/providers/app_database_provider.dart';
-import 'package:billkiller_ai/core/providers/shared_preferences_provider.dart';
-import 'package:billkiller_ai/core/providers/clock_provider.dart';
-import 'package:billkiller_ai/features/cancellation/cancellation_providers.dart';
-import 'package:billkiller_ai/features/cancellation/domain/cancellation_link_opener.dart';
-import 'package:billkiller_ai/features/notifications/domain/reminder_scheduler.dart';
-import 'package:billkiller_ai/features/notifications/notifications_providers.dart';
-import 'package:billkiller_ai/features/ads/ads_providers.dart';
-import 'package:billkiller_ai/features/ads/domain/ad_config.dart';
-import 'package:billkiller_ai/features/ads/domain/ad_service.dart';
-import 'package:billkiller_ai/features/auth/auth_providers.dart';
-import 'package:billkiller_ai/features/auth/domain/anonymous_auth.dart';
-import 'package:billkiller_ai/features/analytics/analytics_providers.dart';
-import 'package:billkiller_ai/features/analytics/data/disabled_analytics.dart';
-import 'package:billkiller_ai/features/analytics/domain/analytics.dart';
-import 'package:billkiller_ai/features/paywall/data/fake_billing_client.dart';
-import 'package:billkiller_ai/features/paywall/domain/billing_client.dart';
-import 'package:billkiller_ai/features/paywall/domain/entitlement.dart';
-import 'package:billkiller_ai/features/paywall/domain/monetization_config.dart';
-import 'package:billkiller_ai/features/paywall/paywall_providers.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_extractor.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_image.dart';
-import 'package:billkiller_ai/features/scanner/scan_flow_controller.dart';
+import 'package:kichta/app/app.dart';
+import 'package:kichta/app/router/app_router.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/core/providers/app_database_provider.dart';
+import 'package:kichta/core/providers/shared_preferences_provider.dart';
+import 'package:kichta/core/providers/clock_provider.dart';
+import 'package:kichta/features/cancellation/cancellation_providers.dart';
+import 'package:kichta/features/cancellation/domain/cancellation_link_opener.dart';
+import 'package:kichta/features/notifications/domain/reminder_scheduler.dart';
+import 'package:kichta/features/notifications/notifications_providers.dart';
+import 'package:kichta/features/ads/ads_providers.dart';
+import 'package:kichta/features/ads/domain/ad_config.dart';
+import 'package:kichta/features/ads/domain/ad_service.dart';
+import 'package:kichta/features/auth/auth_providers.dart';
+import 'package:kichta/features/auth/domain/anonymous_auth.dart';
+import 'package:kichta/features/analytics/analytics_providers.dart';
+import 'package:kichta/features/analytics/data/disabled_analytics.dart';
+import 'package:kichta/features/analytics/domain/analytics.dart';
+import 'package:kichta/features/paywall/data/fake_billing_client.dart';
+import 'package:kichta/features/paywall/domain/billing_client.dart';
+import 'package:kichta/features/paywall/domain/entitlement.dart';
+import 'package:kichta/features/paywall/domain/monetization_config.dart';
+import 'package:kichta/features/paywall/paywall_providers.dart';
+import 'package:kichta/features/scanner/domain/receipt_extractor.dart';
+import 'package:kichta/features/scanner/domain/receipt_image.dart';
+import 'package:kichta/features/scanner/scan_flow_controller.dart';
 
-Future<(GoRouter, SharedPreferences, AppDatabase)> pumpBillKillerApp(
+Future<(GoRouter, SharedPreferences, AppDatabase)> pumpKichtaApp(
   WidgetTester tester, {
   String location = AppRoutes.launch,
   Map<String, Object> prefs = const {},
@@ -92,7 +92,7 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpBillKillerApp(
         if (adConfig != null) adConfigProvider.overrideWithValue(adConfig),
         if (adService != null) adServiceProvider.overrideWithValue(adService),
       ],
-      child: BillKillerApp(router: router),
+      child: KichtaApp(router: router),
     ),
   );
   if (settle) {

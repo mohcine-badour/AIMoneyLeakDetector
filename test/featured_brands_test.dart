@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/brand/brand_registry.dart';
-import 'package:billkiller_ai/features/welcome/domain/featured_brands.dart';
+import 'package:kichta/core/brand/brand_registry.dart';
+import 'package:kichta/features/welcome/domain/featured_brands.dart';
 
 void main() {
   test('featured slugs stay in registry in the intended order', () {

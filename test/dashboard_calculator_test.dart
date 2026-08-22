@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/utils/app_date_format.dart';
-import 'package:billkiller_ai/features/dashboard/domain/dashboard_snapshot.dart';
-import 'package:billkiller_ai/features/dashboard/domain/day_period.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/core/utils/app_date_format.dart';
+import 'package:kichta/features/dashboard/domain/dashboard_snapshot.dart';
+import 'package:kichta/features/dashboard/domain/day_period.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 Subscription _item({
   required String id,

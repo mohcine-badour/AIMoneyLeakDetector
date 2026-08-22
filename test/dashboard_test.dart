@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/paywall/domain/entitlement.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -43,7 +44,7 @@ void main() {
   testWidgets('empty dashboard shows zero totals and no leak suggestions', (
     tester,
   ) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.dashboard, now: _now);
+    await pumpKichtaApp(tester, location: AppRoutes.dashboard, now: _now);
 
     expect(find.text(AppStrings.goodEvening), findsOneWidget);
     expect(find.text(AppStrings.noRenewalsThisWeek), findsOneWidget);
@@ -63,7 +64,7 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.dashboard,
       now: _now,
@@ -82,5 +83,37 @@ void main() {
     expect(find.text(AppStrings.addSubscriptionTitle), findsNothing);
     expect(find.text(AppStrings.emptyLeaksMessage), findsNothing);
     expect(find.text(r'You could save $0.00/month'), findsNothing);
+  });
+
+  testWidgets('free users see an Unlock Pro banner that opens the paywall', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await pumpKichtaApp(tester, location: AppRoutes.dashboard, now: _now);
+
+    expect(find.byKey(const Key('dashboard-unlock-pro')), findsOneWidget);
+    expect(find.text(AppStrings.unlockPro), findsOneWidget);
+    expect(find.text(AppStrings.unlockProSubtitle), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('dashboard-unlock-pro')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.paywallHeadline), findsOneWidget);
+  });
+
+  testWidgets('Pro users do not see the Unlock Pro banner', (tester) async {
+    await pumpKichtaApp(
+      tester,
+      location: AppRoutes.dashboard,
+      now: _now,
+      entitlement: Entitlement.pro,
+    );
+
+    expect(find.byKey(const Key('dashboard-unlock-pro')), findsNothing);
+    expect(find.text(AppStrings.unlockPro), findsNothing);
   });
 }

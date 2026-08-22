@@ -11,37 +11,59 @@ import '../../analytics/domain/analytics_event.dart';
 import '../domain/featured_brands.dart';
 
 class WorksWithGrid extends ConsumerWidget {
-  const WorksWithGrid({super.key});
+  const WorksWithGrid({
+    super.key,
+    this.slugs,
+    this.moreCount,
+    this.showLabel = true,
+    this.center = true,
+  });
+
+  final List<String>? slugs;
+  final int? moreCount;
+  final bool showLabel;
+  final bool center;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tokens = AppTokens.of(context);
+    final tiles = slugs ?? FeaturedBrands.slugs;
+    final extra = moreCount ?? FeaturedBrands.otherCount;
+    final columns = tiles.length <= 8 ? 4 : FeaturedBrands.gridColumns;
+    final row1 = tiles.take(columns).toList();
+    final row2 = tiles.skip(columns).toList();
+    final alignment = center
+        ? MainAxisAlignment.center
+        : MainAxisAlignment.start;
+
     return Column(
+      crossAxisAlignment: center
+          ? CrossAxisAlignment.center
+          : CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 14),
-          child: Text(
-            AppStrings.worksWith.toUpperCase(),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 10.5,
-              fontWeight: FontWeight.w500,
-              letterSpacing: 0.5,
-              color: tokens.textMuted,
+        if (showLabel)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 14),
+            child: Text(
+              AppStrings.worksWith.toUpperCase(),
+              textAlign: center ? TextAlign.center : TextAlign.start,
+              style: TextStyle(
+                fontSize: 10.5,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.5,
+                color: tokens.textMuted,
+              ),
             ),
           ),
-        ),
         Column(
           children: [
-            _Row(
-              slugs: FeaturedBrands.row1,
-              onTap: (slug) => _track(ref, slug),
-            ),
+            _Row(slugs: row1, onTap: (slug) => _track(ref, slug), alignment: alignment),
             const SizedBox(height: 8),
             _Row(
-              slugs: FeaturedBrands.row2,
-              trailingCount: FeaturedBrands.otherCount,
+              slugs: row2,
+              trailingCount: extra,
               onTap: (slug) => _track(ref, slug),
+              alignment: alignment,
             ),
           ],
         ),
@@ -58,16 +80,22 @@ class WorksWithGrid extends ConsumerWidget {
 }
 
 class _Row extends StatelessWidget {
-  const _Row({required this.slugs, required this.onTap, this.trailingCount});
+  const _Row({
+    required this.slugs,
+    required this.onTap,
+    this.trailingCount,
+    this.alignment = MainAxisAlignment.center,
+  });
 
   final List<String> slugs;
   final ValueChanged<String> onTap;
   final int? trailingCount;
+  final MainAxisAlignment alignment;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: alignment,
       children: [
         for (var i = 0; i < slugs.length; i++) ...[
           if (i > 0) const SizedBox(width: 8),

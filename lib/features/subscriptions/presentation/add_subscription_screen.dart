@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_routes.dart';
+import '../../../core/brand/brand_registry.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/app_date_format.dart';
@@ -13,12 +14,16 @@ import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../analytics/analytics_providers.dart';
+import '../../analytics/domain/analytics_event.dart';
 import '../../paywall/domain/paywall_source.dart';
 import '../../paywall/paywall_navigation.dart';
 import '../../paywall/paywall_providers.dart';
 import '../add_subscription_controller.dart';
 import '../domain/subscription.dart';
+import '../domain/subscription_brand.dart';
 import '../subscriptions_providers.dart';
+import 'popular_apps_scroller.dart';
 import 'subscription_labels.dart';
 
 class AddSubscriptionScreen extends ConsumerStatefulWidget {
@@ -36,6 +41,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   final _merchantController = TextEditingController();
   final _amountController = TextEditingController();
   var _hydrated = false;
+  String? _selectedBrandSlug;
 
   bool get _isEditing => widget.subscriptionId != null;
 
@@ -112,6 +118,13 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            if (!_isEditing) ...[
+              PopularAppsScroller(
+                selectedSlug: _selectedBrandSlug,
+                onSelected: _selectBrand,
+              ),
+              const SizedBox(height: AppSpacing.xl),
+            ],
             AppTextField(
               key: const Key('subscription-name'),
               label: AppStrings.fieldName,
@@ -202,6 +215,21 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
         ),
       ),
     );
+  }
+
+  void _selectBrand(Brand brand) {
+    _nameController.text = brand.displayName;
+    _merchantController.text = brand.displayName;
+    ref
+        .read(addSubscriptionControllerProvider.notifier)
+        .setCategory(SubscriptionBrand.storedCategory(brand.category));
+    ref
+        .read(analyticsProvider)
+        .track(
+          AnalyticsEvent.featuredBrandTap,
+          properties: {'kind': brand.slug},
+        );
+    setState(() => _selectedBrandSlug = brand.slug);
   }
 
   Future<void> _save(AddSubscriptionController controller) async {

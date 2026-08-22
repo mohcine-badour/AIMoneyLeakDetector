@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
 
 import 'helpers/pump_app.dart';
 
 void main() {
   testWidgets('welcome screen shows brand, tagline, and CTA', (tester) async {
-    await pumpBillKillerApp(tester);
+    await pumpKichtaApp(tester);
 
     expect(find.text(AppStrings.appName), findsOneWidget);
     expect(find.text(AppStrings.tagline), findsOneWidget);
@@ -16,7 +16,7 @@ void main() {
   });
 
   testWidgets('app wires Material 3 light and dark themes', (tester) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.launch);
+    await pumpKichtaApp(tester, location: AppRoutes.launch);
 
     final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
 

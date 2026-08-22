@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/insights/domain/insight_copy.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
-import 'package:billkiller_ai/features/trials/data/drift_trial_repository.dart';
-import 'package:billkiller_ai/features/trials/domain/trial.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/insights/domain/insight_copy.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/trials/data/drift_trial_repository.dart';
+import 'package:kichta/features/trials/domain/trial.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -77,7 +77,7 @@ void main() {
   testWidgets('empty insights shows coming state without zero cards', (
     tester,
   ) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.savings, now: _now);
+    await pumpKichtaApp(tester, location: AppRoutes.savings, now: _now);
 
     expect(find.text(AppStrings.insightsTitle), findsWidgets);
     expect(find.text(AppStrings.insightsComing), findsOneWidget);
@@ -94,7 +94,7 @@ void main() {
     'insights shows spend, categories, top cost, and overlap callout',
     (tester) async {
       _largeScreen(tester);
-      await pumpBillKillerApp(
+      await pumpKichtaApp(
         tester,
         location: AppRoutes.savings,
         now: _now,
@@ -134,7 +134,7 @@ void main() {
     tester,
   ) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.savings,
       now: _now,
@@ -158,7 +158,7 @@ void main() {
     tester,
   ) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.savings,
       now: _now,
@@ -176,7 +176,7 @@ void main() {
     tester,
   ) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.savings,
       now: _now,
@@ -197,7 +197,7 @@ void main() {
     tester,
   ) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.savings,
       now: _now,

@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/paywall/data/billing_client_factory.dart';
-import 'package:billkiller_ai/features/paywall/data/revenuecat_billing_client.dart';
-import 'package:billkiller_ai/features/paywall/data/unconfigured_billing_client.dart';
-import 'package:billkiller_ai/features/paywall/domain/monetization_config.dart';
+import 'package:kichta/features/paywall/data/billing_client_factory.dart';
+import 'package:kichta/features/paywall/data/revenuecat_billing_client.dart';
+import 'package:kichta/features/paywall/data/unconfigured_billing_client.dart';
+import 'package:kichta/features/paywall/domain/monetization_config.dart';
 
 void main() {
   test('skips RevenueCat until a public SDK key is configured', () {

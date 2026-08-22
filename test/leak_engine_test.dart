@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/features/savings/domain/leak_engine.dart';
-import 'package:billkiller_ai/features/savings/domain/leak_recommendation.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
-import 'package:billkiller_ai/features/trials/domain/trial.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/features/savings/domain/leak_engine.dart';
+import 'package:kichta/features/savings/domain/leak_recommendation.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/trials/domain/trial.dart';
 
 Subscription _sub({
   required String id,

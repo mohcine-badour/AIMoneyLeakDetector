@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/trials/data/drift_trial_repository.dart';
-import 'package:billkiller_ai/features/trials/domain/trial.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/trials/data/drift_trial_repository.dart';
+import 'package:kichta/features/trials/domain/trial.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -23,7 +23,7 @@ Future<void> _saveChatGPT(AppDatabase database) async {
 
 void main() {
   testWidgets('empty trials list shows an empty state', (tester) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.trials, now: _now);
+    await pumpKichtaApp(tester, location: AppRoutes.trials, now: _now);
 
     expect(find.text(AppStrings.trialsTitle), findsOneWidget);
     expect(find.text(AppStrings.emptyTrialsTitle), findsOneWidget);
@@ -34,7 +34,7 @@ void main() {
   testWidgets('trial card shows remaining days and after-trial amount', (
     tester,
   ) async {
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.trials,
       now: _now,
@@ -49,7 +49,7 @@ void main() {
   });
 
   testWidgets('tapping a trial opens details', (tester) async {
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.trials,
       now: _now,

@@ -1,15 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/features/ai_analysis/data/local_money_analysis_backend.dart';
-import 'package:billkiller_ai/features/ai_analysis/data/validated_money_analyzer.dart';
-import 'package:billkiller_ai/features/ai_analysis/domain/money_analysis_exception.dart';
-import 'package:billkiller_ai/features/ai_analysis/domain/money_analysis_facts_builder.dart';
-import 'package:billkiller_ai/features/ai_analysis/domain/money_analysis_validator.dart';
-import 'package:billkiller_ai/features/ai_analysis/domain/money_analyzer.dart';
-import 'package:billkiller_ai/features/ai_analysis/domain/money_leak_report.dart';
-import 'package:billkiller_ai/features/savings/domain/leak_recommendation.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/features/ai_analysis/data/local_money_analysis_backend.dart';
+import 'package:kichta/features/ai_analysis/data/validated_money_analyzer.dart';
+import 'package:kichta/features/ai_analysis/domain/money_analysis_exception.dart';
+import 'package:kichta/features/ai_analysis/domain/money_analysis_facts_builder.dart';
+import 'package:kichta/features/ai_analysis/domain/money_analysis_validator.dart';
+import 'package:kichta/features/ai_analysis/domain/money_analyzer.dart';
+import 'package:kichta/features/ai_analysis/domain/money_leak_report.dart';
+import 'package:kichta/features/savings/domain/leak_recommendation.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 Subscription _sub({
   required String id,

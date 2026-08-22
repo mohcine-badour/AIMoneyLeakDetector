@@ -13,6 +13,7 @@ import '../../../core/widgets/loading_state.dart';
 import '../../paywall/domain/paywall_source.dart';
 import '../../paywall/paywall_navigation.dart';
 import '../../paywall/paywall_providers.dart';
+import 'unlock_pro_banner.dart';
 import '../../subscriptions/domain/subscription.dart';
 import '../../subscriptions/subscriptions_providers.dart';
 import '../domain/home_insight.dart';
@@ -111,15 +112,9 @@ class _HomeBody extends ConsumerWidget {
       children: [
         HomeGreeting(now: now, renewalCount: split.soon.length),
         if (showUnlock)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
-            child: AppButton(
-              key: const Key('dashboard-unlock-pro'),
-              label: AppStrings.unlockPro,
-              variant: AppButtonVariant.tertiary,
-              onPressed: () => context.push(
-                AppRoutes.paywallLocation(source: PaywallSource.settings),
-              ),
+          UnlockProBanner(
+            onPressed: () => context.push(
+              AppRoutes.paywallLocation(source: PaywallSource.settings),
             ),
           ),
         MonthlyHeroCard(summary: summary, now: now),

@@ -1,15 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/brand/brand_registry.dart';
-import 'package:billkiller_ai/features/insights/domain/category_breakdown.dart';
-import 'package:billkiller_ai/features/insights/domain/category_colors.dart';
-import 'package:billkiller_ai/features/insights/domain/insight_item.dart';
-import 'package:billkiller_ai/features/insights/domain/insight_list.dart';
-import 'package:billkiller_ai/features/insights/domain/insights_timeframe.dart';
-import 'package:billkiller_ai/features/insights/domain/spend_math.dart';
-import 'package:billkiller_ai/features/insights/domain/spend_metrics.dart';
-import 'package:billkiller_ai/features/insights/domain/top_by_cost.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/core/brand/brand_registry.dart';
+import 'package:kichta/features/insights/domain/category_breakdown.dart';
+import 'package:kichta/features/insights/domain/category_colors.dart';
+import 'package:kichta/features/insights/domain/insight_item.dart';
+import 'package:kichta/features/insights/domain/insight_list.dart';
+import 'package:kichta/features/insights/domain/insights_timeframe.dart';
+import 'package:kichta/features/insights/domain/spend_math.dart';
+import 'package:kichta/features/insights/domain/spend_metrics.dart';
+import 'package:kichta/features/insights/domain/top_by_cost.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 Subscription _sub({
   required String id,

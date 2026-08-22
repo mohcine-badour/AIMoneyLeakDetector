@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/core/security/in_memory_secure_store.dart';
-import 'package:billkiller_ai/core/security/secure_store.dart';
+import 'package:kichta/core/security/in_memory_secure_store.dart';
+import 'package:kichta/core/security/secure_store.dart';
 
 void main() {
   test('stores tokens in memory and never accepts financial keys', () async {

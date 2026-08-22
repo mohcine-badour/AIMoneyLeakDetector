@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Centralized BillKiller color tokens mapped from [AppTokens].
+/// Centralized Kichta color tokens mapped from [AppTokens].
 abstract final class AppColors {
   static const Color navy = Color(0xFF1A1A1A);
   static const Color primary = Color(0xFF1A1A1A);

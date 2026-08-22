@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/analytics/data/disabled_analytics.dart';
-import 'package:billkiller_ai/features/analytics/data/recording_analytics.dart';
-import 'package:billkiller_ai/features/analytics/domain/analytics_event.dart';
-import 'package:billkiller_ai/features/analytics/domain/analytics_sanitizer.dart';
+import 'package:kichta/features/analytics/data/disabled_analytics.dart';
+import 'package:kichta/features/analytics/data/recording_analytics.dart';
+import 'package:kichta/features/analytics/domain/analytics_event.dart';
+import 'package:kichta/features/analytics/domain/analytics_sanitizer.dart';
 
 void main() {
   test('keeps only non-financial allowlisted properties', () {

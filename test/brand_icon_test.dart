@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/theme/app_theme.dart';
-import 'package:billkiller_ai/core/brand/brand_icon.dart';
-import 'package:billkiller_ai/core/brand/brand_registry.dart';
+import 'package:kichta/app/theme/app_theme.dart';
+import 'package:kichta/core/brand/brand_icon.dart';
+import 'package:kichta/core/brand/brand_registry.dart';
 
 Finder _tile(Color color) {
   return find.byWidgetPredicate(

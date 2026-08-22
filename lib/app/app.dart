@@ -9,8 +9,8 @@ import '../features/paywall/paywall_providers.dart';
 import 'config/app_config.dart';
 import 'theme/app_theme.dart';
 
-class BillKillerApp extends ConsumerWidget {
-  const BillKillerApp({required this.router, super.key});
+class KichtaApp extends ConsumerWidget {
+  const KichtaApp({required this.router, super.key});
 
   final GoRouter router;
 

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/theme/app_theme.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/utils/money_format.dart';
-import 'package:billkiller_ai/core/widgets/app_button.dart';
-import 'package:billkiller_ai/core/widgets/app_card.dart';
-import 'package:billkiller_ai/core/widgets/app_scaffold.dart';
-import 'package:billkiller_ai/core/widgets/app_text_field.dart';
-import 'package:billkiller_ai/core/widgets/empty_state.dart';
-import 'package:billkiller_ai/core/widgets/error_state.dart';
-import 'package:billkiller_ai/core/widgets/loading_state.dart';
-import 'package:billkiller_ai/core/widgets/money_text.dart';
-import 'package:billkiller_ai/core/widgets/section_header.dart';
+import 'package:kichta/app/theme/app_theme.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/utils/money_format.dart';
+import 'package:kichta/core/widgets/app_button.dart';
+import 'package:kichta/core/widgets/app_card.dart';
+import 'package:kichta/core/widgets/app_scaffold.dart';
+import 'package:kichta/core/widgets/app_text_field.dart';
+import 'package:kichta/core/widgets/empty_state.dart';
+import 'package:kichta/core/widgets/error_state.dart';
+import 'package:kichta/core/widgets/loading_state.dart';
+import 'package:kichta/core/widgets/money_text.dart';
+import 'package:kichta/core/widgets/section_header.dart';
 
 Widget _wrap(Widget child) {
   return MaterialApp(theme: AppTheme.light(), home: child);

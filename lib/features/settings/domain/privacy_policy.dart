@@ -14,7 +14,7 @@ abstract final class PrivacyPolicy {
     PrivacyPolicySection(
       title: 'Overview',
       body:
-          'BillKiller AI is an AI money leak detector. This version stores your subscription data on this device. We collect as little as we can and do not send receipts or money amounts to analytics.',
+          'Kichta is an AI money leak detector. This version stores your subscription data on this device. We collect as little as we can and do not send receipts or money amounts to analytics.',
     ),
     PrivacyPolicySection(
       title: 'Data stored on this device',
@@ -54,7 +54,7 @@ abstract final class PrivacyPolicy {
     PrivacyPolicySection(
       title: 'Sharing',
       body:
-          'This version does not upload your subscription list to a BillKiller account. Outbound links use HTTPS only.',
+          'This version does not upload your subscription list to a Kichta account. Outbound links use HTTPS only.',
     ),
     PrivacyPolicySection(
       title: 'Deletion',

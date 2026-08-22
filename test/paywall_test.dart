@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/paywall/data/fake_billing_client.dart';
-import 'package:billkiller_ai/features/paywall/data/unconfigured_billing_client.dart';
-import 'package:billkiller_ai/features/paywall/domain/billing_exception.dart';
-import 'package:billkiller_ai/features/paywall/domain/entitlement.dart';
-import 'package:billkiller_ai/features/paywall/domain/monetization_config.dart';
-import 'package:billkiller_ai/features/paywall/domain/paywall_features.dart';
-import 'package:billkiller_ai/features/paywall/domain/paywall_plan.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/paywall/data/fake_billing_client.dart';
+import 'package:kichta/features/paywall/data/unconfigured_billing_client.dart';
+import 'package:kichta/features/paywall/domain/billing_exception.dart';
+import 'package:kichta/features/paywall/domain/entitlement.dart';
+import 'package:kichta/features/paywall/domain/monetization_config.dart';
+import 'package:kichta/features/paywall/domain/paywall_features.dart';
+import 'package:kichta/features/paywall/domain/paywall_plan.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -42,7 +42,7 @@ void main() {
     tester,
   ) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(tester, location: AppRoutes.paywall);
+    await pumpKichtaApp(tester, location: AppRoutes.paywall);
 
     expect(find.text(AppStrings.paywallTitle), findsNothing);
     expect(find.text(AppStrings.paywallHeadline), findsOneWidget);
@@ -70,7 +70,7 @@ void main() {
   ) async {
     _largeScreen(tester);
     final billing = FakeBillingClient();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.paywall,
       billingClient: billing,
@@ -92,7 +92,7 @@ void main() {
     _largeScreen(tester);
     final billing = FakeBillingClient()..seed(Entitlement.pro);
     billing.seed(Entitlement.free);
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.paywall,
       billingClient: billing,
@@ -112,7 +112,7 @@ void main() {
     tester,
   ) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(tester, location: AppRoutes.paywall);
+    await pumpKichtaApp(tester, location: AppRoutes.paywall);
 
     await tester.ensureVisible(find.text(AppStrings.restorePurchases));
     await tester.tap(find.text(AppStrings.restorePurchases));
@@ -129,7 +129,7 @@ void main() {
     final billing = FakeBillingClient(
       purchaseError: const BillingException('cancelled', isCancelled: true),
     );
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.paywall,
       billingClient: billing,
@@ -148,7 +148,7 @@ void main() {
     tester,
   ) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.paywall,
       billingClient: const UnconfiguredBillingClient(),
@@ -162,7 +162,7 @@ void main() {
   });
 
   testWidgets('free subscription limit opens the paywall', (tester) async {
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptions,
       seed: _saveNetflix,
@@ -177,7 +177,7 @@ void main() {
   });
 
   testWidgets('pro users can still add past the free limit', (tester) async {
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptions,
       seed: _saveNetflix,
@@ -194,7 +194,7 @@ void main() {
 
   testWidgets('selecting monthly updates the CTA amount', (tester) async {
     _largeScreen(tester);
-    await pumpBillKillerApp(tester, location: AppRoutes.paywall);
+    await pumpKichtaApp(tester, location: AppRoutes.paywall);
 
     await tester.tap(find.byKey(const Key('paywall-plan-monthly')));
     await tester.pumpAndSettle();

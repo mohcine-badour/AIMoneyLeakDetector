@@ -3,19 +3,19 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/constants/app_strings.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/analytics/data/recording_analytics.dart';
-import 'package:billkiller_ai/features/analytics/domain/analytics_event.dart';
-import 'package:billkiller_ai/features/paywall/data/fake_billing_client.dart';
-import 'package:billkiller_ai/features/paywall/domain/entitlement.dart';
-import 'package:billkiller_ai/features/paywall/domain/paywall_plan.dart';
-import 'package:billkiller_ai/features/scanner/domain/extracted_receipt.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_extractor.dart';
-import 'package:billkiller_ai/features/scanner/domain/receipt_image.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/analytics/data/recording_analytics.dart';
+import 'package:kichta/features/analytics/domain/analytics_event.dart';
+import 'package:kichta/features/paywall/data/fake_billing_client.dart';
+import 'package:kichta/features/paywall/domain/entitlement.dart';
+import 'package:kichta/features/paywall/domain/paywall_plan.dart';
+import 'package:kichta/features/scanner/domain/extracted_receipt.dart';
+import 'package:kichta/features/scanner/domain/receipt_extractor.dart';
+import 'package:kichta/features/scanner/domain/receipt_image.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -145,7 +145,7 @@ void main() {
     tester,
   ) async {
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(tester, analytics: analytics);
+    await pumpKichtaApp(tester, analytics: analytics);
 
     expect(analytics.has(AnalyticsEvent.appOpened), isTrue);
     _expectNoFinancialData(analytics);
@@ -153,7 +153,7 @@ void main() {
 
   testWidgets('welcome events omit financial properties', (tester) async {
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(tester, analytics: analytics);
+    await pumpKichtaApp(tester, analytics: analytics);
 
     expect(analytics.has(AnalyticsEvent.welcomeView), isTrue);
     await tester.tap(find.byKey(const Key('get-started')));
@@ -166,8 +166,9 @@ void main() {
   testWidgets('onboarding started and completed omit spending amounts', (
     tester,
   ) async {
+    _largeScreen(tester);
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.onboarding,
       analytics: analytics,
@@ -175,29 +176,26 @@ void main() {
 
     expect(analytics.has(AnalyticsEvent.onboardingStarted), isTrue);
 
-    await tester.tap(find.text(AppStrings.onboardingFindOut));
+    await tester.tap(find.byKey(const Key('onboarding-cta')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(AppStrings.spendingOver200));
+    await tester.tap(find.byKey(const Key('onboarding-cta')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(AppStrings.continueLabel));
+    await tester.tap(find.byKey(const Key('onboarding-cta')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(AppStrings.savings200));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text(AppStrings.continueLabel));
-    await tester.pumpAndSettle();
-    await tester.tap(find.text(AppStrings.entryImportLater));
+    await tester.tap(find.byKey(const Key('onboarding-cta')));
     await tester.pumpAndSettle();
 
     expect(analytics.has(AnalyticsEvent.onboardingCompleted), isTrue);
     expect(analytics.propertiesFor(AnalyticsEvent.onboardingCompleted), {
-      'source': 'later',
+      'source': 'cta_final',
+      'kind': 'safety',
     });
     _expectNoFinancialData(analytics);
   });
 
   testWidgets('creating a subscription records source only', (tester) async {
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.addSubscription,
       analytics: analytics,
@@ -245,7 +243,7 @@ void main() {
   ) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.subscriptionDetailLocation('netflix'),
       seed: _saveNetflix,
@@ -280,7 +278,7 @@ void main() {
     tester,
   ) async {
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.scanReceipt,
       imagePicker: _FakePicker(ReceiptImage(bytes: _png)),
@@ -303,7 +301,7 @@ void main() {
 
   testWidgets('failed scans do not send receipt text', (tester) async {
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.scanReceipt,
       imagePicker: _FakePicker(ReceiptImage(bytes: _png)),
@@ -326,7 +324,7 @@ void main() {
     tester,
   ) async {
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.savings,
       seed: _saveNetflix,
@@ -342,7 +340,7 @@ void main() {
     tester,
   ) async {
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.addTrial,
       analytics: analytics,
@@ -368,7 +366,7 @@ void main() {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
     final billing = FakeBillingClient();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.paywall,
       billingClient: billing,
@@ -398,7 +396,7 @@ void main() {
     final analytics = RecordingAnalytics();
     final billing = FakeBillingClient()..seed(Entitlement.pro);
     billing.seed(Entitlement.free);
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.paywall,
       billingClient: billing,
@@ -420,7 +418,7 @@ void main() {
   ) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.cancellationGuideLocation('netflix'),
       seed: _saveNetflix,

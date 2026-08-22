@@ -1,14 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/app/router/app_routes.dart';
-import 'package:billkiller_ai/core/database/app_database.dart';
-import 'package:billkiller_ai/features/notifications/domain/reminder_scheduler.dart';
-import 'package:billkiller_ai/features/notifications/domain/scheduled_reminder.dart';
-import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
-import 'package:billkiller_ai/features/trials/data/drift_trial_repository.dart';
-import 'package:billkiller_ai/features/trials/domain/trial.dart';
-import 'package:billkiller_ai/features/upcoming/domain/payment_reminder_scheduler.dart';
+import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/notifications/domain/reminder_scheduler.dart';
+import 'package:kichta/features/notifications/domain/scheduled_reminder.dart';
+import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/trials/data/drift_trial_repository.dart';
+import 'package:kichta/features/trials/domain/trial.dart';
+import 'package:kichta/features/upcoming/domain/payment_reminder_scheduler.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -52,7 +52,7 @@ void main() {
     tester,
   ) async {
     final scheduler = _RecordingScheduler();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.dashboard,
       now: _now,
@@ -81,7 +81,7 @@ void main() {
     tester,
   ) async {
     final scheduler = _RecordingScheduler();
-    await pumpBillKillerApp(
+    await pumpKichtaApp(
       tester,
       location: AppRoutes.trialDetailLocation('chatgpt'),
       now: _now,

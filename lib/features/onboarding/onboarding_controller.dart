@@ -3,80 +3,131 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../analytics/analytics_providers.dart';
 import '../analytics/domain/analytics_event.dart';
 import 'data/onboarding_repository.dart';
-import 'domain/onboarding_answers.dart';
+import 'domain/onboarding_pages.dart';
 
 final onboardingControllerProvider =
-    NotifierProvider<OnboardingController, OnboardingDraft>(
+    NotifierProvider.autoDispose<OnboardingController, OnboardingFlowState>(
       OnboardingController.new,
     );
 
-class OnboardingController extends Notifier<OnboardingDraft> {
-  @override
-  OnboardingDraft build() => const OnboardingDraft();
+class OnboardingFlowState {
+  const OnboardingFlowState({
+    this.index = 0,
+    this.shownHeroes = const {},
+  });
 
-  void goToSpendingStep() {
-    state = state.copyWith(step: 1);
-  }
+  final int index;
+  final Set<OnboardingPageId> shownHeroes;
 
-  void selectSpendingRange(SpendingRange range) {
-    state = state.copyWith(spendingRange: range);
-  }
+  bool get isFirst => index == 0;
+  bool get isLast => index >= OnboardingPages.all.length - 1;
+  int get total => OnboardingPages.all.length;
+  OnboardingPage get page => OnboardingPages.all[index];
 
-  void goToSavingsStep() {
-    if (!state.canContinueSpending) {
-      return;
-    }
-    state = state.copyWith(step: 2);
-  }
-
-  void selectSavingsGoal(SavingsGoal goal) {
-    state = state.copyWith(savingsGoal: goal);
-  }
-
-  void goToEntryPathStep() {
-    if (!state.canContinueSavings) {
-      return;
-    }
-    state = state.copyWith(step: 3);
-  }
-
-  void goBack() {
-    if (state.step == 0) {
-      return;
-    }
-    state = state.copyWith(step: state.step - 1);
-  }
-
-  Future<void> complete(OnboardingEntryPath entryPath) async {
-    final spending = state.spendingRange;
-    final savings = state.savingsGoal;
-    if (spending == null || savings == null) {
-      return;
-    }
-
-    await ref
-        .read(onboardingRepositoryProvider)
-        .save(
-          OnboardingAnswers(
-            spendingRange: spending,
-            savingsGoal: savings,
-            entryPath: entryPath,
-            completedAt: DateTime.now().toUtc(),
-          ),
-        );
-    await ref
-        .read(analyticsProvider)
-        .track(
-          AnalyticsEvent.onboardingCompleted,
-          properties: {'source': _entrySource(entryPath)},
-        );
+  OnboardingFlowState copyWith({
+    int? index,
+    Set<OnboardingPageId>? shownHeroes,
+  }) {
+    return OnboardingFlowState(
+      index: index ?? this.index,
+      shownHeroes: shownHeroes ?? this.shownHeroes,
+    );
   }
 }
 
-String _entrySource(OnboardingEntryPath entryPath) {
-  return switch (entryPath) {
-    OnboardingEntryPath.addManually => 'manual',
-    OnboardingEntryPath.scanReceipt => 'scan',
-    OnboardingEntryPath.importLater => 'later',
-  };
+class OnboardingController extends Notifier<OnboardingFlowState> {
+  @override
+  OnboardingFlowState build() => const OnboardingFlowState();
+
+  void trackPageView() {
+    final page = state.page;
+    ref.read(analyticsProvider).track(
+      AnalyticsEvent.onboardingPageView,
+      properties: {'kind': page.id.name},
+    );
+  }
+
+  void goToNext() {
+    if (state.isLast) {
+      return;
+    }
+    _trackAdvance(OnboardingAdvanceMethod.cta);
+    state = state.copyWith(index: state.index + 1);
+    trackPageView();
+  }
+
+  void goToPrevious() {
+    if (state.isFirst) {
+      return;
+    }
+    ref.read(analyticsProvider).track(
+      AnalyticsEvent.onboardingBack,
+      properties: {'kind': state.page.id.name},
+    );
+    state = state.copyWith(index: state.index - 1);
+    trackPageView();
+  }
+
+  void goToPage(int index) {
+    if (index < 0 || index >= state.total || index == state.index) {
+      return;
+    }
+    ref.read(analyticsProvider).track(
+      AnalyticsEvent.onboardingJump,
+      properties: {
+        'source': state.page.id.name,
+        'kind': OnboardingPages.all[index].id.name,
+      },
+    );
+    state = state.copyWith(index: index);
+    trackPageView();
+  }
+
+  void syncFromUserScroll(int index) {
+    if (index < 0 || index >= state.total || index == state.index) {
+      return;
+    }
+    if (index > state.index) {
+      _trackAdvance(OnboardingAdvanceMethod.swipe);
+    } else {
+      ref.read(analyticsProvider).track(
+        AnalyticsEvent.onboardingBack,
+        properties: {'kind': state.page.id.name},
+      );
+    }
+    state = state.copyWith(index: index);
+    trackPageView();
+  }
+
+  void markHeroShown(OnboardingPageId id) {
+    if (state.shownHeroes.contains(id)) {
+      return;
+    }
+    state = state.copyWith(shownHeroes: {...state.shownHeroes, id});
+  }
+
+  Future<void> complete(OnboardingCompleteVia via) async {
+    final lastPage = state.page.id.name;
+    if (via == OnboardingCompleteVia.skip) {
+      await ref.read(analyticsProvider).track(
+        AnalyticsEvent.onboardingSkipPress,
+        properties: {'kind': lastPage},
+      );
+    }
+    await ref.read(onboardingRepositoryProvider).markComplete();
+    await ref.read(analyticsProvider).track(
+      AnalyticsEvent.onboardingCompleted,
+      properties: {'source': via.source, 'kind': lastPage},
+    );
+  }
+
+  void _trackAdvance(OnboardingAdvanceMethod method) {
+    ref.read(analyticsProvider).track(
+      AnalyticsEvent.onboardingAdvance,
+      properties: {
+        'source': method.source,
+        'kind': state.page.id.name,
+      },
+    );
+  }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
-import 'package:billkiller_ai/features/upcoming/domain/upcoming_payments.dart';
-import 'package:billkiller_ai/features/upcoming/domain/payment_reminder_scheduler.dart';
+import 'package:kichta/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/upcoming/domain/upcoming_payments.dart';
+import 'package:kichta/features/upcoming/domain/payment_reminder_scheduler.dart';
 
 Subscription _item({
   required String id,

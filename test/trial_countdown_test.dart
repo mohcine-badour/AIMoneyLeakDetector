@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:billkiller_ai/features/trials/domain/trial.dart';
-import 'package:billkiller_ai/features/trials/domain/trial_countdown.dart';
-import 'package:billkiller_ai/features/trials/domain/trial_list.dart';
+import 'package:kichta/features/trials/domain/trial.dart';
+import 'package:kichta/features/trials/domain/trial_countdown.dart';
+import 'package:kichta/features/trials/domain/trial_list.dart';
 
 void main() {
   final now = DateTime.utc(2026, 8, 21);
