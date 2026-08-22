@@ -10,6 +10,7 @@ import '../../../core/utils/app_date_format.dart';
 import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_scaffold.dart';
+import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
 import '../domain/trial.dart';
@@ -125,28 +126,10 @@ class _TrialDetailBody extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showConfirmDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text(AppStrings.deleteTrialTitle),
-          content: const Text(AppStrings.deleteTrialMessage),
-          actions: [
-            AppButton(
-              label: AppStrings.cancel,
-              variant: AppButtonVariant.tertiary,
-              expand: false,
-              onPressed: () => Navigator.of(context).pop(false),
-            ),
-            AppButton(
-              label: AppStrings.delete,
-              variant: AppButtonVariant.danger,
-              expand: false,
-              onPressed: () => Navigator.of(context).pop(true),
-            ),
-          ],
-        );
-      },
+      title: AppStrings.deleteTrialTitle,
+      message: AppStrings.deleteTrialMessage,
     );
     if (confirmed != true) {
       return;

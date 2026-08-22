@@ -26,6 +26,10 @@ void main() {
     expect(MoneyFormat.format(2249.16), r'$2,249.16');
     expect(MoneyFormat.short(82.98), r'$83');
     expect(MoneyFormat.short(22.99), r'$23');
+    expect(MoneyFormat.symbolFor('USD'), r'$');
+    expect(MoneyFormat.symbolFor('CHF'), 'CHF');
+    expect(MoneyFormat.nameFor('EUR'), 'Euro');
+    expect(MoneyFormat.nameFor('GBP'), 'British pound');
   });
 
   testWidgets('AppButton invokes onPressed', (tester) async {

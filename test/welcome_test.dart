@@ -89,7 +89,7 @@ void main() {
     expect(analytics.has(AnalyticsEvent.anonymousSignInError), isTrue);
   });
 
-  testWidgets('Sign in opens the stub screen', (tester) async {
+  testWidgets('Sign in opens the sign-in form', (tester) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();
     await pumpKichtaApp(tester, analytics: analytics);
@@ -97,7 +97,10 @@ void main() {
     await tester.tap(find.byKey(const Key('welcome-sign-in')));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.signInUnavailable), findsOneWidget);
+    expect(find.text(AppStrings.authWelcomeBack), findsOneWidget);
+    expect(find.text(AppStrings.authLocalNote), findsOneWidget);
+    expect(find.byKey(const Key('auth-email')), findsOneWidget);
+    expect(find.byKey(const Key('auth-password')), findsOneWidget);
     expect(analytics.has(AnalyticsEvent.signInPress), isTrue);
   });
 
@@ -151,12 +154,11 @@ void main() {
     _largeScreen(tester);
     await pumpKichtaApp(tester);
 
-    final button = tester.widget<FilledButton>(find.byKey(const Key('get-started')));
-    final style = button.style;
-    expect(
-      style?.backgroundColor?.resolve({}),
-      AppTokens.dark.accent,
+    final button = tester.widget<FilledButton>(
+      find.byKey(const Key('get-started')),
     );
+    final style = button.style;
+    expect(style?.backgroundColor?.resolve({}), AppTokens.dark.accent);
   });
 
   testWidgets('completed onboarding flashes welcome then opens home', (

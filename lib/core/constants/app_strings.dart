@@ -13,13 +13,32 @@ abstract final class AppStrings {
   static const String privateByDefault = 'Private by default';
   static const String alreadyHaveAccount = 'Already have an account?';
   static const String signIn = 'Sign in';
+  static const String createAccount = 'Create account';
+  static const String noAccountYet = "Don't have an account?";
+  static const String authWelcomeBack = 'Welcome back';
+  static const String authCreateHeadline = 'Start on this phone';
+  static const String authContinueOnPhone = 'Continue on this phone.';
+  static const String fieldEmail = 'Email';
+  static const String fieldPassword = 'Password';
+  static const String fieldConfirmPassword = 'Confirm password';
+  static const String emailHint = 'you@example.com';
+  static const String passwordHint = 'At least 8 characters';
+  static const String authLocalNote =
+      'Your data stays on this phone. There is no Kichta cloud account yet.';
+  static const String errorEmailInvalid = 'Enter a valid email.';
+  static const String errorPasswordShort = 'Use at least 8 characters.';
+  static const String errorPasswordMismatch = 'Passwords do not match.';
+  static const String authOr = 'or';
+  static const String continueWithApple = 'Continue with Apple';
+  static const String continueWithGoogle = 'Continue with Google';
+  static const String continueWithFacebook = 'Continue with Facebook';
+  static const String socialSignInUnavailable =
+      'Apple, Google, and Facebook sign-in is not available yet. Use email on this phone.';
   static const String legalContinuingPrefix = 'By continuing, you agree to our';
   static const String legalAnd = 'and';
   static const String couldNotContinueTitle = 'Could not continue';
   static const String couldNotContinueMessage =
       'Something went wrong setting up your account. Check your connection and try again.';
-  static const String signInUnavailable =
-      'Sign in is not available yet. Your data stays on this phone.';
   static String moreBrandsCount(int count) => '+$count';
 
   static const String onboardingTitle = 'Onboarding';
@@ -159,6 +178,11 @@ abstract final class AppStrings {
   static const String billingQuarterly = 'Quarterly';
   static const String billingYearly = 'Yearly';
   static const String billingCustom = 'Custom';
+  static const String billingHintWeekly = 'Every week';
+  static const String billingHintMonthly = 'Every month';
+  static const String billingHintQuarterly = 'Every 3 months';
+  static const String billingHintYearly = 'Every year';
+  static const String billingHintCustom = 'Irregular schedule';
 
   static const String errorNameRequired = 'Enter a name.';
   static const String errorAmountInvalid = 'Enter an amount greater than 0.';

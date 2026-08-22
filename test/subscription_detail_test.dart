@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kichta/app/router/app_routes.dart';
 import 'package:kichta/core/constants/app_strings.dart';
 import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/core/widgets/confirm_dialog.dart';
 import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
 import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
@@ -92,7 +93,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(
       find.descendant(
-        of: find.byType(AlertDialog),
+        of: find.byType(ConfirmDialog),
         matching: find.text(AppStrings.delete),
       ),
     );

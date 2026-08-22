@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kichta/app/router/app_routes.dart';
 import 'package:kichta/core/constants/app_strings.dart';
 import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/core/widgets/confirm_dialog.dart';
 import 'package:kichta/features/analytics/data/recording_analytics.dart';
 import 'package:kichta/features/analytics/domain/analytics_event.dart';
 import 'package:kichta/features/paywall/data/fake_billing_client.dart';
@@ -264,7 +265,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(
       find.descendant(
-        of: find.byType(AlertDialog),
+        of: find.byType(ConfirmDialog),
         matching: find.text(AppStrings.delete),
       ),
     );
@@ -320,21 +321,22 @@ void main() {
     _expectNoFinancialData(analytics);
   });
 
-  testWidgets('insights tab does not send financial data or start AI analysis', (
-    tester,
-  ) async {
-    final analytics = RecordingAnalytics();
-    await pumpKichtaApp(
-      tester,
-      location: AppRoutes.savings,
-      seed: _saveNetflix,
-      analytics: analytics,
-    );
+  testWidgets(
+    'insights tab does not send financial data or start AI analysis',
+    (tester) async {
+      final analytics = RecordingAnalytics();
+      await pumpKichtaApp(
+        tester,
+        location: AppRoutes.savings,
+        seed: _saveNetflix,
+        analytics: analytics,
+      );
 
-    expect(analytics.has(AnalyticsEvent.aiAnalysisStarted), isFalse);
-    expect(analytics.has(AnalyticsEvent.aiAnalysisCompleted), isFalse);
-    _expectNoFinancialData(analytics);
-  });
+      expect(analytics.has(AnalyticsEvent.aiAnalysisStarted), isFalse);
+      expect(analytics.has(AnalyticsEvent.aiAnalysisCompleted), isFalse);
+      _expectNoFinancialData(analytics);
+    },
+  );
 
   testWidgets('creating a trial does not send the trial amount', (
     tester,

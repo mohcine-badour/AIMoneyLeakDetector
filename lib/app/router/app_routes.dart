@@ -5,6 +5,7 @@ abstract final class AppRoutes {
   static const String launch = '/';
   static const String onboarding = '/onboarding';
   static const String signIn = '/sign-in';
+  static const String register = '/register';
   static const String dashboard = '/dashboard';
   static const String subscriptions = '/subscriptions';
   static const String addSubscription = '/subscriptions/add';

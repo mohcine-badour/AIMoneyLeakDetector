@@ -8,8 +8,8 @@ import '../../../app/theme/app_tokens.dart';
 import '../../../core/constants/app_icons.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_strings.dart';
-import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_scaffold.dart';
+import '../../../core/widgets/confirm_dialog.dart';
 import '../../insights/insights_providers.dart';
 import '../../paywall/domain/entitlement_copy.dart';
 import '../../paywall/domain/paywall_source.dart';
@@ -180,29 +180,11 @@ class SettingsScreen extends ConsumerWidget {
     required String message,
   }) async {
     HapticFeedback.selectionClick();
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showConfirmDialog(
       context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          title: Text(title),
-          content: Text(message),
-          actions: [
-            AppButton(
-              label: AppStrings.cancel,
-              variant: AppButtonVariant.tertiary,
-              expand: false,
-              onPressed: () => Navigator.of(dialogContext).pop(false),
-            ),
-            AppButton(
-              key: const Key('confirm-erasure'),
-              label: AppStrings.delete,
-              variant: AppButtonVariant.danger,
-              expand: false,
-              onPressed: () => Navigator.of(dialogContext).pop(true),
-            ),
-          ],
-        );
-      },
+      title: title,
+      message: message,
+      confirmKey: const Key('confirm-erasure'),
     );
     if (confirmed != true || !context.mounted) {
       return;

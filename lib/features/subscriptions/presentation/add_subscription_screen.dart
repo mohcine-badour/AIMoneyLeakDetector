@@ -12,6 +12,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/app_text_field.dart';
+import '../../../core/widgets/currency_sheet.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
 import '../../analytics/analytics_providers.dart';
@@ -23,6 +24,8 @@ import '../add_subscription_controller.dart';
 import '../domain/subscription.dart';
 import '../domain/subscription_brand.dart';
 import '../subscriptions_providers.dart';
+import 'billing_cycle_sheet.dart';
+import 'category_sheet.dart';
 import 'popular_apps_scroller.dart';
 import 'subscription_labels.dart';
 
@@ -155,8 +158,9 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
             _SelectField(
               key: const Key('subscription-currency'),
               label: AppStrings.fieldCurrency,
-              value: form.currency,
-              onTap: () => _pickCurrency(controller),
+              value:
+                  '${MoneyFormat.symbolFor(form.currency)}  ${form.currency}',
+              onTap: () => _pickCurrency(form.currency),
             ),
             const SizedBox(height: AppSpacing.lg),
             _SelectField(
@@ -164,7 +168,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
               label: AppStrings.fieldBillingCycle,
               value: form.billingCycle?.label,
               errorText: form.errors.billingCycle,
-              onTap: () => _pickBillingCycle(controller),
+              onTap: () => _pickBillingCycle(form.billingCycle),
             ),
             if (form.billingCycle == BillingCycle.weekly) ...[
               const SizedBox(height: AppSpacing.sm),
@@ -189,7 +193,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
               label: AppStrings.fieldCategory,
               value: form.category?.label,
               errorText: form.errors.category,
-              onTap: () => _pickCategory(controller),
+              onTap: () => _pickCategory(form.category),
             ),
             const SizedBox(height: AppSpacing.xl),
             if (!_isEditing) ...[
@@ -278,71 +282,40 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
     }
   }
 
-  Future<void> _pickCurrency(AddSubscriptionController controller) async {
-    final selected = await _pickItem(
-      title: AppStrings.fieldCurrency,
-      options: MoneyFormat.supportedCurrencyCodes.toList(),
-      labelFor: (code) => code,
-    );
-    if (selected != null) {
-      controller.setCurrency(selected);
-    }
-  }
-
-  Future<void> _pickBillingCycle(AddSubscriptionController controller) async {
-    final selected = await _pickItem(
-      title: AppStrings.fieldBillingCycle,
-      options: BillingCycle.values,
-      labelFor: (cycle) => cycle.label,
-    );
-    if (selected != null) {
-      controller.setBillingCycle(selected);
-    }
-  }
-
-  Future<void> _pickCategory(AddSubscriptionController controller) async {
-    final selected = await _pickItem(
-      title: AppStrings.fieldCategory,
-      options: SubscriptionCategory.values
-          .where((category) => category != SubscriptionCategory.software)
-          .toList(),
-      labelFor: (category) => category.label,
-    );
-    if (selected != null) {
-      controller.setCategory(selected);
-    }
-  }
-
-  Future<T?> _pickItem<T>({
-    required String title,
-    required List<T> options,
-    required String Function(T) labelFor,
-  }) {
-    return showModalBottomSheet<T>(
+  Future<void> _pickCurrency(String current) async {
+    final selected = await showCurrencySheet(
       context: context,
-      showDragHandle: true,
-      builder: (context) {
-        return SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.all(AppSpacing.page),
-            children: [
-              Text(title, style: Theme.of(context).textTheme.titleSmall),
-              const SizedBox(height: AppSpacing.lg),
-              for (final option in options) ...[
-                AppCard(
-                  onTap: () => Navigator.of(context).pop(option),
-                  child: Text(
-                    labelFor(option),
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-              ],
-            ],
-          ),
-        );
-      },
+      current: current,
     );
+    if (selected != null) {
+      ref
+          .read(addSubscriptionControllerProvider.notifier)
+          .setCurrency(selected);
+    }
+  }
+
+  Future<void> _pickBillingCycle(BillingCycle? current) async {
+    final selected = await showBillingCycleSheet(
+      context: context,
+      current: current,
+    );
+    if (selected != null) {
+      ref
+          .read(addSubscriptionControllerProvider.notifier)
+          .setBillingCycle(selected);
+    }
+  }
+
+  Future<void> _pickCategory(SubscriptionCategory? current) async {
+    final selected = await showCategorySheet(
+      context: context,
+      current: current,
+    );
+    if (selected != null) {
+      ref
+          .read(addSubscriptionControllerProvider.notifier)
+          .setCategory(selected);
+    }
   }
 }
 

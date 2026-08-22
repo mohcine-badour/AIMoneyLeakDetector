@@ -7,6 +7,7 @@ import '../../features/before_subscribe/domain/subscription_candidate.dart';
 import '../../features/before_subscribe/presentation/before_you_subscribe_screen.dart';
 import '../../features/cancellation/presentation/cancellation_guide_screen.dart';
 import '../../features/dashboard/presentation/dashboard_screen.dart';
+import '../../features/auth/presentation/register_screen.dart';
 import '../../features/auth/presentation/sign_in_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
 import '../../features/welcome/presentation/welcome_screen.dart';
@@ -42,6 +43,10 @@ abstract final class AppRouter {
         GoRoute(
           path: AppRoutes.signIn,
           builder: (context, state) => const SignInScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.register,
+          builder: (context, state) => const RegisterScreen(),
         ),
         GoRoute(
           path: AppRoutes.dashboard,
@@ -138,20 +143,22 @@ abstract final class AppRouter {
               key: state.pageKey,
               fullscreenDialog: true,
               child: PaywallScreen(source: source),
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                return SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(0, 1),
-                    end: Offset.zero,
-                  ).animate(
-                    CurvedAnimation(
-                      parent: animation,
-                      curve: Curves.easeOutCubic,
-                    ),
-                  ),
-                  child: child,
-                );
-              },
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                    return SlideTransition(
+                      position:
+                          Tween<Offset>(
+                            begin: const Offset(0, 1),
+                            end: Offset.zero,
+                          ).animate(
+                            CurvedAnimation(
+                              parent: animation,
+                              curve: Curves.easeOutCubic,
+                            ),
+                          ),
+                      child: child,
+                    );
+                  },
             );
           },
         ),

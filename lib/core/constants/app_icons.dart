@@ -50,4 +50,20 @@ abstract final class AppIcons {
   static const IconData infinity = Icons.all_inclusive_rounded;
   static const IconData wifiOff = Icons.wifi_off_rounded;
   static const IconData apple = Icons.apple;
+
+  static const IconData categoryEntertainment = Icons.movie_outlined;
+  static const IconData categoryProductivity = Icons.work_outline_rounded;
+  static const IconData categoryCloudStorage = Icons.cloud_outlined;
+  static const IconData categoryFitness = Icons.fitness_center_outlined;
+  static const IconData categoryEducation = Icons.school_outlined;
+  static const IconData categorySoftware = Icons.terminal_outlined;
+  static const IconData categoryNews = Icons.newspaper_outlined;
+  static const IconData categoryGaming = Icons.sports_esports_outlined;
+  static const IconData categoryFinance = Icons.account_balance_wallet_outlined;
+  static const IconData categoryOther = Icons.more_horiz_rounded;
+  static const IconData share = Icons.ios_share_rounded;
+  static const IconData mail = Icons.mail_outline_rounded;
+  static const IconData ads = Icons.ad_units_outlined;
+  static const IconData visibility = Icons.visibility_outlined;
+  static const IconData visibilityOff = Icons.visibility_off_outlined;
 }

@@ -56,6 +56,10 @@ void main() {
       expect(find.text(AppStrings.privacyPolicy), findsWidgets);
       expect(find.text(PrivacyPolicy.sections.first.title), findsOneWidget);
       expect(
+        find.text(PrivacyPolicy.groupDevice.toUpperCase()),
+        findsOneWidget,
+      );
+      expect(
         find.textContaining('do not put financial amounts', findRichText: true),
         findsOneWidget,
       );

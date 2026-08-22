@@ -11,7 +11,7 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/providers/clock_provider.dart';
 import '../../../core/utils/app_date_format.dart';
 import '../../../core/utils/money_format.dart';
-import '../../../core/widgets/app_button.dart';
+import '../../../core/widgets/confirm_dialog.dart';
 import '../domain/subscription.dart';
 import '../domain/subscription_brand.dart';
 import '../subscription_detail_controller.dart';
@@ -190,28 +190,10 @@ class SubscriptionListRow extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(BuildContext context, WidgetRef ref) async {
-    final confirmed = await showDialog<bool>(
+    final confirmed = await showConfirmDialog(
       context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text(AppStrings.deleteSubscriptionTitle),
-          content: const Text(AppStrings.deleteSubscriptionMessage),
-          actions: [
-            AppButton(
-              label: AppStrings.cancel,
-              expand: false,
-              variant: AppButtonVariant.tertiary,
-              onPressed: () => Navigator.of(context).pop(false),
-            ),
-            AppButton(
-              label: AppStrings.delete,
-              expand: false,
-              variant: AppButtonVariant.danger,
-              onPressed: () => Navigator.of(context).pop(true),
-            ),
-          ],
-        );
-      },
+      title: AppStrings.deleteSubscriptionTitle,
+      message: AppStrings.deleteSubscriptionMessage,
     );
     if (confirmed == true) {
       await ref

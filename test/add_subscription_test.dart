@@ -129,4 +129,69 @@ void main() {
     );
     expect(find.text(AppStrings.categoryEntertainment), findsOneWidget);
   });
+
+  testWidgets('currency sheet shows names and keeps the selected code', (
+    tester,
+  ) async {
+    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+
+    await tester.ensureVisible(find.byKey(const Key('subscription-currency')));
+    await tester.tap(find.byKey(const Key('subscription-currency')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('US dollar'), findsOneWidget);
+    expect(find.text('Euro'), findsOneWidget);
+    expect(find.text('Swiss franc'), findsOneWidget);
+    expect(find.byKey(const Key('currency-USD')), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('currency-EUR')));
+    await tester.pumpAndSettle();
+
+    expect(find.text('€  EUR'), findsOneWidget);
+    expect(find.text('US dollar'), findsNothing);
+  });
+
+  testWidgets('billing cycle sheet shows cadence and selects weekly', (
+    tester,
+  ) async {
+    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+
+    await tester.ensureVisible(find.byKey(const Key('subscription-cycle')));
+    await tester.tap(find.byKey(const Key('subscription-cycle')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.billingHintWeekly), findsOneWidget);
+    expect(find.text(AppStrings.billingHintMonthly), findsOneWidget);
+    expect(find.text(AppStrings.billingHintCustom), findsOneWidget);
+    expect(find.byKey(const Key('billing-cycle-monthly')), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('billing-cycle-weekly')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.billingWeekly), findsOneWidget);
+    expect(find.text(AppStrings.weeklyTypicalWarning), findsOneWidget);
+    expect(find.text(AppStrings.billingHintMonthly), findsNothing);
+  });
+
+  testWidgets('category sheet shows options and hides software', (
+    tester,
+  ) async {
+    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+
+    await tester.ensureVisible(find.byKey(const Key('subscription-category')));
+    await tester.tap(find.byKey(const Key('subscription-category')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.categoryEntertainment), findsOneWidget);
+    expect(find.text(AppStrings.categoryGaming), findsOneWidget);
+    expect(find.text(AppStrings.categoryOther), findsOneWidget);
+    expect(find.text(AppStrings.categorySoftware), findsNothing);
+    expect(find.byKey(const Key('category-entertainment')), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('category-gaming')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.categoryGaming), findsOneWidget);
+    expect(find.text(AppStrings.categoryEntertainment), findsNothing);
+  });
 }

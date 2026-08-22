@@ -10,6 +10,14 @@ extension BillingCycleLabel on BillingCycle {
     BillingCycle.custom => AppStrings.billingCustom,
   };
 
+  String get hint => switch (this) {
+    BillingCycle.weekly => AppStrings.billingHintWeekly,
+    BillingCycle.monthly => AppStrings.billingHintMonthly,
+    BillingCycle.quarterly => AppStrings.billingHintQuarterly,
+    BillingCycle.yearly => AppStrings.billingHintYearly,
+    BillingCycle.custom => AppStrings.billingHintCustom,
+  };
+
   String get periodSuffix => switch (this) {
     BillingCycle.weekly => AppStrings.perWeek,
     BillingCycle.monthly => AppStrings.perMonth,

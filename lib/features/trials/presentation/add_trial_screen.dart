@@ -11,6 +11,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/app_text_field.dart';
+import '../../../core/widgets/currency_sheet.dart';
 import '../add_trial_controller.dart';
 
 class AddTrialScreen extends ConsumerStatefulWidget {
@@ -61,8 +62,8 @@ class _AddTrialScreenState extends ConsumerState<AddTrialScreen> {
           _SelectField(
             key: const Key('trial-currency'),
             label: AppStrings.fieldCurrency,
-            value: form.currency,
-            onTap: () => _pickCurrency(controller),
+            value: '${MoneyFormat.symbolFor(form.currency)}  ${form.currency}',
+            onTap: () => _pickCurrency(form.currency),
           ),
           const SizedBox(height: AppSpacing.lg),
           _SelectField(
@@ -109,37 +110,13 @@ class _AddTrialScreenState extends ConsumerState<AddTrialScreen> {
     }
   }
 
-  Future<void> _pickCurrency(AddTrialController controller) async {
-    final selected = await showModalBottomSheet<String>(
+  Future<void> _pickCurrency(String current) async {
+    final selected = await showCurrencySheet(
       context: context,
-      showDragHandle: true,
-      builder: (context) {
-        return SafeArea(
-          child: ListView(
-            padding: const EdgeInsets.all(AppSpacing.page),
-            children: [
-              Text(
-                AppStrings.fieldCurrency,
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              for (final code in MoneyFormat.supportedCurrencyCodes) ...[
-                AppCard(
-                  onTap: () => Navigator.of(context).pop(code),
-                  child: Text(
-                    code,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-              ],
-            ],
-          ),
-        );
-      },
+      current: current,
     );
     if (selected != null) {
-      controller.setCurrency(selected);
+      ref.read(addTrialControllerProvider.notifier).setCurrency(selected);
     }
   }
 }

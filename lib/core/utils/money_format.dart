@@ -59,5 +59,26 @@ abstract final class MoneyFormat {
     'CHF': 'CHF ',
   };
 
+  static const Map<String, String> _names = {
+    'USD': 'US dollar',
+    'CAD': 'Canadian dollar',
+    'AUD': 'Australian dollar',
+    'GBP': 'British pound',
+    'EUR': 'Euro',
+    'CHF': 'Swiss franc',
+  };
+
   static Iterable<String> get supportedCurrencyCodes => _symbols.keys;
+
+  static String symbolFor(String currencyCode) {
+    final symbol = _symbols[currencyCode];
+    if (symbol == null) {
+      return currencyCode;
+    }
+    return symbol.trim();
+  }
+
+  static String nameFor(String currencyCode) {
+    return _names[currencyCode] ?? currencyCode;
+  }
 }
