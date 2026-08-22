@@ -6,7 +6,6 @@ import '../../../app/router/app_routes.dart';
 import '../../../app/theme/app_tokens.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/providers/clock_provider.dart';
-import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
@@ -20,6 +19,7 @@ import '../domain/home_insight.dart';
 import '../domain/spending_summary.dart';
 import '../home_scroll.dart';
 import '../../trials/trials_providers.dart';
+import 'home_add_subscription_cta.dart';
 import 'home_greeting.dart';
 import 'home_insight_card.dart';
 import 'home_list_sections.dart';
@@ -122,12 +122,8 @@ class _HomeBody extends ConsumerWidget {
           ),
         MonthlyHeroCard(summary: summary, now: now),
         if (summary.activeCount == 0)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 8, 20, 0),
-            child: AppButton(
-              label: AppStrings.addSubscriptionTitle,
-              onPressed: () => PaywallNavigation.addSubscription(context, ref),
-            ),
+          HomeAddSubscriptionCta(
+            onPressed: () => PaywallNavigation.addSubscription(context, ref),
           )
         else ...[
           RenewingSoonSection(subscriptions: split.soon, now: now),

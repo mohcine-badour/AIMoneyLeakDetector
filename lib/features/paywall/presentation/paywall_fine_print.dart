@@ -96,11 +96,18 @@ class _Link extends StatelessWidget {
             ? SizedBox(
                 width: 12,
                 height: 12,
-                child: CircularProgressIndicator(strokeWidth: 1.5, color: color),
+                child: CircularProgressIndicator(
+                  strokeWidth: 1.5,
+                  color: color,
+                ),
               )
             : Text(
                 label,
-                style: TextStyle(fontSize: 11, fontWeight: weight, color: color),
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: weight,
+                  color: color,
+                ),
               ),
       ),
     );

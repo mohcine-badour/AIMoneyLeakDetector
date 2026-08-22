@@ -53,7 +53,9 @@ void main() {
     expect(find.text('.00'), findsWidgets);
     expect(find.text(AppStrings.renewingSoon), findsNothing);
     expect(find.text(AppStrings.emptyLeaksMessage), findsNothing);
-    expect(find.text(AppStrings.addSubscriptionTitle), findsOneWidget);
+    expect(find.text(AppStrings.addSubscriptionCta), findsOneWidget);
+    expect(find.text(AppStrings.addFirstSubscriptionMessage), findsOneWidget);
+    expect(find.byKey(const Key('dashboard-add-subscription')), findsOneWidget);
   });
 
   testWidgets('dashboard totals and upcoming payments use local data', (
@@ -80,7 +82,8 @@ void main() {
     expect(find.text(AppStrings.categoryProductivity), findsOneWidget);
     expect(find.text(AppStrings.renewingSoon), findsOneWidget);
     expect(find.text(AppStrings.allSubscriptions), findsOneWidget);
-    expect(find.text(AppStrings.addSubscriptionTitle), findsNothing);
+    expect(find.text(AppStrings.addSubscriptionCta), findsNothing);
+    expect(find.byKey(const Key('dashboard-add-subscription')), findsNothing);
     expect(find.text(AppStrings.emptyLeaksMessage), findsNothing);
     expect(find.text(r'You could save $0.00/month'), findsNothing);
   });
@@ -127,6 +130,8 @@ void main() {
 
     expect(find.text(AppStrings.trialsTitle), findsOneWidget);
     expect(find.text(AppStrings.trackAFreeTrial), findsOneWidget);
+    expect(find.text(AppStrings.emptyTrialsMessage), findsOneWidget);
+    expect(find.byKey(const Key('track-free-trial')), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('open-trials')));
     await tester.pumpAndSettle();

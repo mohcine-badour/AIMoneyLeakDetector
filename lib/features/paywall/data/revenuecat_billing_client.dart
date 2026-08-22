@@ -138,9 +138,6 @@ class RevenueCatBillingClient implements BillingClient {
       return const BillingException('', isCancelled: true);
     }
     final mapped = BillingCopy.forCode(code.name);
-    return BillingException(
-      mapped ?? fallback,
-      code: code.name,
-    );
+    return BillingException(mapped ?? fallback, code: code.name);
   }
 }

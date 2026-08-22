@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/router/app_routes.dart';
+import '../../../app/theme/app_tokens.dart';
 import '../../../core/brand/brand_registry.dart';
-import '../../../core/constants/app_spacing.dart';
+import '../../../core/constants/app_icons.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/app_date_format.dart';
 import '../../../core/utils/money_format.dart';
-import '../../../core/widgets/app_button.dart';
-import '../../../core/widgets/app_card.dart';
+import '../../../core/widgets/app_form_field.dart';
 import '../../../core/widgets/app_scaffold.dart';
-import '../../../core/widgets/app_text_field.dart';
 import '../../../core/widgets/currency_sheet.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
@@ -69,6 +69,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final tokens = AppTokens.of(context);
     final form = ref.watch(addSubscriptionControllerProvider);
     final controller = ref.read(addSubscriptionControllerProvider.notifier);
 
@@ -116,107 +117,135 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
       title: _isEditing
           ? AppStrings.editSubscriptionTitle
           : AppStrings.addSubscriptionTitle,
-      padding: const EdgeInsets.all(AppSpacing.page),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (!_isEditing) ...[
-              PopularAppsScroller(
-                selectedSlug: _selectedBrandSlug,
-                onSelected: _selectBrand,
+      padding: EdgeInsets.zero,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (!_isEditing) ...[
+                    Text(
+                      AppStrings.emptySubscriptionsMessage,
+                      style: TextStyle(
+                        fontSize: 14,
+                        height: 1.35,
+                        color: tokens.textSecondary,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    PopularAppsScroller(
+                      selectedSlug: _selectedBrandSlug,
+                      onSelected: _selectBrand,
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                  AppFilledField(
+                    fieldKey: const Key('subscription-name'),
+                    label: AppStrings.fieldName,
+                    controller: _nameController,
+                    errorText: form.errors.name,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  const SizedBox(height: 14),
+                  AppFilledField(
+                    fieldKey: const Key('subscription-merchant'),
+                    label: AppStrings.fieldMerchant,
+                    hint: AppStrings.fieldMerchantHint,
+                    controller: _merchantController,
+                    textInputAction: TextInputAction.next,
+                  ),
+                  const SizedBox(height: 14),
+                  AppFilledField(
+                    fieldKey: const Key('subscription-amount'),
+                    label: AppStrings.fieldAmount,
+                    hint: '0.00',
+                    controller: _amountController,
+                    errorText: form.errors.amount,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    textInputAction: TextInputAction.done,
+                    suffix: AppCurrencyChip(
+                      key: const Key('subscription-currency'),
+                      value:
+                          '${MoneyFormat.symbolFor(form.currency)}  ${form.currency}',
+                      onTap: () => _pickCurrency(form.currency),
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  AppPickerField(
+                    fieldKey: const Key('subscription-cycle'),
+                    label: AppStrings.fieldBillingCycle,
+                    value: form.billingCycle?.label,
+                    icon: AppIcons.subscriptions,
+                    errorText: form.errors.billingCycle,
+                    onTap: () => _pickBillingCycle(form.billingCycle),
+                  ),
+                  if (form.billingCycle == BillingCycle.weekly) ...[
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4),
+                      child: Text(
+                        AppStrings.weeklyTypicalWarning,
+                        style: TextStyle(
+                          fontSize: 12,
+                          height: 1.35,
+                          color: tokens.warningText,
+                        ),
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 14),
+                  AppPickerField(
+                    fieldKey: const Key('subscription-date'),
+                    label: AppStrings.fieldNextBillingDate,
+                    value: form.nextBillingDate == null
+                        ? null
+                        : AppDateFormat.short(form.nextBillingDate!),
+                    placeholder: AppStrings.chooseDate,
+                    icon: AppIcons.upcoming,
+                    errorText: form.errors.nextBillingDate,
+                    onTap: () => _pickDate(),
+                  ),
+                  const SizedBox(height: 14),
+                  AppPickerField(
+                    fieldKey: const Key('subscription-category'),
+                    label: AppStrings.fieldCategory,
+                    value: form.category?.label,
+                    icon: AppIcons.apps,
+                    errorText: form.errors.category,
+                    onTap: () => _pickCategory(form.category),
+                  ),
+                  if (!_isEditing) ...[
+                    const SizedBox(height: 20),
+                    _ScanReceiptRow(
+                      onTap: () => PaywallNavigation.scanReceipt(context, ref),
+                    ),
+                  ],
+                ],
               ),
-              const SizedBox(height: AppSpacing.xl),
-            ],
-            AppTextField(
-              key: const Key('subscription-name'),
-              label: AppStrings.fieldName,
-              controller: _nameController,
-              textInputAction: TextInputAction.next,
-              errorText: form.errors.name,
             ),
-            const SizedBox(height: AppSpacing.lg),
-            AppTextField(
-              key: const Key('subscription-merchant'),
-              label: AppStrings.fieldMerchant,
-              hint: AppStrings.fieldMerchantHint,
-              controller: _merchantController,
-              textInputAction: TextInputAction.next,
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            AppTextField(
-              key: const Key('subscription-amount'),
-              label: AppStrings.fieldAmount,
-              controller: _amountController,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
+          ),
+          SafeArea(
+            top: false,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+              child: AppAccentButton(
+                key: Key(
+                  _isEditing ? 'save-subscription' : 'review-before-adding',
+                ),
+                label: _isEditing
+                    ? AppStrings.save
+                    : AppStrings.reviewBeforeAdding,
+                pending: form.isSaving,
+                onPressed: form.isSaving ? null : () => _save(controller),
               ),
-              textInputAction: TextInputAction.done,
-              errorText: form.errors.amount,
             ),
-            const SizedBox(height: AppSpacing.lg),
-            _SelectField(
-              key: const Key('subscription-currency'),
-              label: AppStrings.fieldCurrency,
-              value:
-                  '${MoneyFormat.symbolFor(form.currency)}  ${form.currency}',
-              onTap: () => _pickCurrency(form.currency),
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            _SelectField(
-              key: const Key('subscription-cycle'),
-              label: AppStrings.fieldBillingCycle,
-              value: form.billingCycle?.label,
-              errorText: form.errors.billingCycle,
-              onTap: () => _pickBillingCycle(form.billingCycle),
-            ),
-            if (form.billingCycle == BillingCycle.weekly) ...[
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                AppStrings.weeklyTypicalWarning,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-            const SizedBox(height: AppSpacing.lg),
-            _SelectField(
-              key: const Key('subscription-date'),
-              label: AppStrings.fieldNextBillingDate,
-              value: form.nextBillingDate == null
-                  ? null
-                  : AppDateFormat.short(form.nextBillingDate!),
-              errorText: form.errors.nextBillingDate,
-              onTap: () => _pickDate(),
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            _SelectField(
-              key: const Key('subscription-category'),
-              label: AppStrings.fieldCategory,
-              value: form.category?.label,
-              errorText: form.errors.category,
-              onTap: () => _pickCategory(form.category),
-            ),
-            const SizedBox(height: AppSpacing.xl),
-            if (!_isEditing) ...[
-              AppButton(
-                key: const Key('scan-receipt'),
-                label: AppStrings.entryScanReceipt,
-                variant: AppButtonVariant.secondary,
-                onPressed: () => PaywallNavigation.scanReceipt(context, ref),
-              ),
-              const SizedBox(height: AppSpacing.md),
-            ],
-            AppButton(
-              key: Key(
-                _isEditing ? 'save-subscription' : 'review-before-adding',
-              ),
-              label: _isEditing
-                  ? AppStrings.save
-                  : AppStrings.reviewBeforeAdding,
-              isLoading: form.isSaving,
-              onPressed: () => _save(controller),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -268,6 +297,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   }
 
   Future<void> _pickDate() async {
+    HapticFeedback.selectionClick();
     final current = ref.read(addSubscriptionControllerProvider).nextBillingDate;
     final selected = await showDatePicker(
       context: context,
@@ -283,6 +313,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   }
 
   Future<void> _pickCurrency(String current) async {
+    HapticFeedback.selectionClick();
     final selected = await showCurrencySheet(
       context: context,
       current: current,
@@ -295,6 +326,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   }
 
   Future<void> _pickBillingCycle(BillingCycle? current) async {
+    HapticFeedback.selectionClick();
     final selected = await showBillingCycleSheet(
       context: context,
       current: current,
@@ -307,6 +339,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   }
 
   Future<void> _pickCategory(SubscriptionCategory? current) async {
+    HapticFeedback.selectionClick();
     final selected = await showCategorySheet(
       context: context,
       current: current,
@@ -319,47 +352,37 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   }
 }
 
-class _SelectField extends StatelessWidget {
-  const _SelectField({
-    required this.label,
-    required this.onTap,
-    this.value,
-    this.errorText,
-    super.key,
-  });
+class _ScanReceiptRow extends StatelessWidget {
+  const _ScanReceiptRow({required this.onTap});
 
-  final String label;
-  final String? value;
-  final String? errorText;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text(label, style: textTheme.labelMedium),
-        const SizedBox(height: AppSpacing.sm),
-        AppCard(
-          onTap: onTap,
-          child: Text(
-            value ?? AppStrings.select,
-            style: textTheme.bodyLarge?.copyWith(
-              color: value == null ? colorScheme.onSurfaceVariant : null,
+    final tokens = AppTokens.of(context);
+    return InkWell(
+      key: const Key('scan-receipt'),
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+        child: Row(
+          children: [
+            Icon(AppIcons.scan, size: 18, color: tokens.textMuted),
+            const SizedBox(width: 10),
+            Text(
+              AppStrings.entryScanReceipt,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: tokens.textSecondary,
+              ),
             ),
-          ),
+            const Spacer(),
+            Icon(AppIcons.chevronRight, size: 16, color: tokens.textMuted),
+          ],
         ),
-        if (errorText != null) ...[
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            errorText!,
-            style: textTheme.bodySmall?.copyWith(color: colorScheme.error),
-          ),
-        ],
-      ],
+      ),
     );
   }
 }

@@ -44,7 +44,7 @@ abstract final class AppStrings {
   static const String onboardingTitle = 'Onboarding';
   static const String dashboardTitle = 'Dashboard';
   static const String subscriptionsTitle = 'Subscriptions';
-  static const String addSubscriptionTitle = 'Add Subscription';
+  static const String addSubscriptionTitle = 'Add subscription';
   static const String subscriptionDetailTitle = 'Subscription';
   static const String trialsTitle = 'Trials';
   static const String savingsTitle = 'Savings';
@@ -257,7 +257,7 @@ abstract final class AppStrings {
   static const String sourceImport = 'Import';
 
   static const String edit = 'Edit';
-  static const String editSubscriptionTitle = 'Edit Subscription';
+  static const String editSubscriptionTitle = 'Edit subscription';
   static const String delete = 'Delete';
   static const String cancel = 'Cancel';
   static const String deleteSubscriptionTitle = 'Delete this subscription?';
@@ -341,7 +341,9 @@ abstract final class AppStrings {
   static const String emptyCategoryBreakdown =
       'Add a subscription to see where the money goes.';
 
-  static const String addTrialTitle = 'Add Trial';
+  static const String addTrialTitle = 'Add trial';
+  static const String trialNameHint = 'ChatGPT, Hulu, Disney+';
+  static const String chooseDate = 'Choose a date';
   static const String fieldAmountAfterTrial = 'Amount after trial';
   static const String fieldTrialEndDate = 'Trial end date';
   static const String errorTrialEndRequired = 'Choose the trial end date.';

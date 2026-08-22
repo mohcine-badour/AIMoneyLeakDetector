@@ -19,8 +19,8 @@ final monetizationConfigProvider = Provider<MonetizationConfig>((ref) {
   return MonetizationConfig.defaults;
 });
 
-/// Production overrides this with [RevenueCatBillingClient] when a public SDK
-/// key is present. The default never grants Pro from the client.
+/// Production overrides this with RevenueCat or StoreKit at startup.
+/// The default never grants Pro from the client.
 final billingClientProvider = Provider<BillingClient>((ref) {
   return const UnconfiguredBillingClient();
 });

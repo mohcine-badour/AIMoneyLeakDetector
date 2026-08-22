@@ -26,9 +26,7 @@ class PaywallCta extends StatelessWidget {
     final label = yearly && offerings.hasYearlyTrial
         ? AppStrings.startFreeTrial(offerings.yearlyIntroTrialDays!)
         : AppStrings.continueWithPrice(
-            yearly
-                ? offerings.yearlyPriceString
-                : offerings.monthlyPriceString,
+            yearly ? offerings.yearlyPriceString : offerings.monthlyPriceString,
             yearly ? AppStrings.compactPerYear : AppStrings.compactPerMonth,
           );
 

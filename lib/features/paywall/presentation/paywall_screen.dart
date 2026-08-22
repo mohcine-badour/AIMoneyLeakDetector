@@ -43,9 +43,9 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         return;
       }
       if (ref.read(entitlementProvider).isPro) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(AppStrings.alreadyPro)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.alreadyPro)));
         _leave();
         return;
       }
@@ -53,10 +53,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
         return;
       }
       _viewTracked = true;
-      ref.read(analyticsProvider).track(
-        AnalyticsEvent.paywallViewed,
-        properties: {'source': widget.source.query},
-      );
+      ref
+          .read(analyticsProvider)
+          .track(
+            AnalyticsEvent.paywallViewed,
+            properties: {'source': widget.source.query},
+          );
     });
   }
 
@@ -81,10 +83,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
           children: [
             PaywallHeader(
               onDismiss: () {
-                ref.read(analyticsProvider).track(
-                  AnalyticsEvent.paywallDismissed,
-                  properties: {'source': widget.source.query},
-                );
+                ref
+                    .read(analyticsProvider)
+                    .track(
+                      AnalyticsEvent.paywallDismissed,
+                      properties: {'source': widget.source.query},
+                    );
                 _leave();
               },
             ),
@@ -122,9 +126,7 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
                 child: Text(
                   AppStrings.trialNotChargedToday(
                     AppDateFormat.monthDayShort(
-                      now.add(
-                        Duration(days: offerings.yearlyIntroTrialDays!),
-                      ),
+                      now.add(Duration(days: offerings.yearlyIntroTrialDays!)),
                     ),
                   ),
                   textAlign: TextAlign.center,
@@ -146,10 +148,12 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
 
   void _select(PaywallPlan plan) {
     ref.read(paywallPlanProvider.notifier).select(plan);
-    ref.read(analyticsProvider).track(
-      AnalyticsEvent.paywallPlanToggled,
-      properties: {'plan': plan.name},
-    );
+    ref
+        .read(analyticsProvider)
+        .track(
+          AnalyticsEvent.paywallPlanToggled,
+          properties: {'plan': plan.name},
+        );
   }
 
   Future<void> _purchase(PaywallPlan plan) async {
@@ -195,11 +199,13 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
   }
 
   Future<void> _openLegal({required bool privacy}) async {
-    ref.read(analyticsProvider).track(
-      privacy
-          ? AnalyticsEvent.paywallPrivacyOpened
-          : AnalyticsEvent.paywallTermsOpened,
-    );
+    ref
+        .read(analyticsProvider)
+        .track(
+          privacy
+              ? AnalyticsEvent.paywallPrivacyOpened
+              : AnalyticsEvent.paywallTermsOpened,
+        );
     final raw = privacy ? AppConfig.privacyPolicyUrl : AppConfig.termsUrl;
     if (raw.isNotEmpty) {
       await ref.read(cancellationLinkOpenerProvider).open(Uri.parse(raw));

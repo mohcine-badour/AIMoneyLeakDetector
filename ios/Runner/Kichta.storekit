@@ -1,0 +1,80 @@
+{
+  "identifier" : "C8E1A4B2",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "47B2A1C3",
+      "localizations" : [
+
+      ],
+      "name" : "Kichta Pro",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "39.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "A11Y0010",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Trial alerts, unlimited tracking, and no ads.",
+              "displayName" : "Yearly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "billkiller_pro_yearly",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Pro Yearly",
+          "subscriptionGroupID" : "47B2A1C3",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "5.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "A11M0010",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Trial alerts, unlimited tracking, and no ads.",
+              "displayName" : "Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "billkiller_pro_monthly",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Pro Monthly",
+          "subscriptionGroupID" : "47B2A1C3",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

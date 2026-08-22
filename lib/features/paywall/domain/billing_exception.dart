@@ -1,9 +1,5 @@
 class BillingException implements Exception {
-  const BillingException(
-    this.message, {
-    this.isCancelled = false,
-    this.code,
-  });
+  const BillingException(this.message, {this.isCancelled = false, this.code});
 
   final String message;
   final bool isCancelled;
@@ -12,4 +8,3 @@ class BillingException implements Exception {
   @override
   String toString() => 'BillingException: $message';
 }
-

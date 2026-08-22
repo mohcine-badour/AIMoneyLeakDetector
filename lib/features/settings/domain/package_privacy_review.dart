@@ -76,6 +76,12 @@ abstract final class PackagePrivacyReview {
       leavesDevice: true,
     ),
     PackagePrivacyNote(
+      package: 'in_app_purchase',
+      purpose: 'App Store purchase sheet, restore, and owned product IDs',
+      data: 'Store account and product identifiers via Apple. No amounts',
+      leavesDevice: true,
+    ),
+    PackagePrivacyNote(
       package: 'url_launcher',
       purpose: 'Open official cancellation pages and future policy URLs',
       data: 'HTTPS URLs only; no request body',

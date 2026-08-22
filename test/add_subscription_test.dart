@@ -4,7 +4,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kichta/app/router/app_routes.dart';
 import 'package:kichta/core/brand/brand_registry.dart';
 import 'package:kichta/core/constants/app_strings.dart';
-import 'package:kichta/core/widgets/app_text_field.dart';
 import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
 import 'package:kichta/features/subscriptions/domain/popular_apps.dart';
 import 'package:kichta/features/subscriptions/domain/subscription.dart';
@@ -115,14 +114,14 @@ void main() {
 
     expect(
       tester
-          .widget<AppTextField>(find.byKey(const Key('subscription-name')))
+          .widget<TextField>(find.byKey(const Key('subscription-name')))
           .controller
           ?.text,
       BrandRegistry.bySlug['netflix']!.displayName,
     );
     expect(
       tester
-          .widget<AppTextField>(find.byKey(const Key('subscription-merchant')))
+          .widget<TextField>(find.byKey(const Key('subscription-merchant')))
           .controller
           ?.text,
       BrandRegistry.bySlug['netflix']!.displayName,
