@@ -20,7 +20,9 @@ void main() {
     );
     expect(SecureStorePolicy.isAllowedKey('merchant'), isFalse);
 
+    await store.write(key: SecureStorePolicy.databaseKey, value: 'keep');
     await store.clear();
     expect(await store.read('token.session'), isNull);
+    expect(await store.read(SecureStorePolicy.databaseKey), 'keep');
   });
 }

@@ -11,6 +11,8 @@ import 'package:kichta/app/router/app_routes.dart';
 import 'package:kichta/core/database/app_database.dart';
 import 'package:kichta/core/providers/app_database_provider.dart';
 import 'package:kichta/core/providers/shared_preferences_provider.dart';
+import 'package:kichta/core/security/in_memory_secure_store.dart';
+import 'package:kichta/core/security/security_providers.dart';
 import 'package:kichta/core/providers/clock_provider.dart';
 import 'package:kichta/features/cancellation/cancellation_providers.dart';
 import 'package:kichta/features/cancellation/domain/cancellation_link_opener.dart';
@@ -69,6 +71,7 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpKichtaApp(
     ProviderScope(
       overrides: [
         sharedPreferencesProvider.overrideWithValue(sharedPreferences),
+        secureStoreProvider.overrideWithValue(InMemorySecureStore()),
         appDatabaseProvider.overrideWithValue(database),
         if (now != null) appNowProvider.overrideWithValue(now),
         if (reminderScheduler != null)

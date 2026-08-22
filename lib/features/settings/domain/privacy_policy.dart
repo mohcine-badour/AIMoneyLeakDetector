@@ -31,7 +31,7 @@ abstract final class PrivacyPolicy {
       title: 'Data stored on this device',
       group: groupDevice,
       body:
-          'Subscriptions, trials, usage counts, and onboarding answers stay in local storage on your phone. They are used to calculate spend, upcoming payments, and reminders.',
+          'Subscriptions, trials, usage counts, and onboarding answers stay in an encrypted local database on your phone. The encryption key is stored in the system Keychain, not in SharedPreferences. They are used to calculate spend, upcoming payments, and reminders.',
     ),
     PrivacyPolicySection(
       title: 'Data we do not collect',

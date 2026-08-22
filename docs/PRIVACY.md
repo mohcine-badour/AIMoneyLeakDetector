@@ -8,7 +8,7 @@ Kichta tracks subscriptions on this device. We collect as little as we can and d
 
 ## On this device
 
-Subscriptions, trials, usage counts, and onboarding answers stay in local storage on your phone. They are used to calculate spend, upcoming payments, and reminders.
+Subscriptions, trials, usage counts, and onboarding answers stay in an encrypted local database on your phone. The encryption key is stored in the system Keychain, not in SharedPreferences. They are used to calculate spend, upcoming payments, and reminders.
 
 ## What we do not collect
 

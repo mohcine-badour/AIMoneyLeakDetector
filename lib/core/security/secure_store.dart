@@ -13,9 +13,14 @@ abstract class SecureStore {
 abstract final class SecureStorePolicy {
   static const String tokenPrefix = 'token.';
   static const String sessionPrefix = 'session.';
+  static const String databaseKey = 'token.dbKey';
 
   static bool isAllowedKey(String key) {
     return key.startsWith(tokenPrefix) || key.startsWith(sessionPrefix);
+  }
+
+  static bool shouldClear(String key) {
+    return isAllowedKey(key) && key != databaseKey;
   }
 
   static void assertAllowedKey(String key) {

@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:drift_flutter/drift_flutter.dart';
+
+import 'database_encryption.dart';
 
 part 'app_database.g.dart';
 
@@ -59,7 +60,27 @@ class UsageEntries extends Table {
 @DriftDatabase(tables: [SubscriptionEntries, TrialEntries, UsageEntries])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
-    : super(executor ?? driftDatabase(name: 'billkiller'));
+    : super(executor ?? DatabaseEncryption.open(_requireKey()));
+
+  factory AppDatabase.encrypted(String key) {
+    return AppDatabase(DatabaseEncryption.open(key));
+  }
+
+  static String? _encryptionKey;
+
+  static void bindEncryptionKey(String key) {
+    _encryptionKey = key;
+  }
+
+  static String _requireKey() {
+    final key = _encryptionKey;
+    if (key == null || key.isEmpty) {
+      throw StateError(
+        'Open AppDatabase.encrypted after loading the Keychain key.',
+      );
+    }
+    return key;
+  }
 
   @override
   int get schemaVersion => 3;

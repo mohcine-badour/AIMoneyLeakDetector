@@ -42,6 +42,10 @@ dependencies:
   in_app_purchase: ^3.2.3
   url_launcher: ^6.3.2
   flutter_svg: ^2.2.3
+  flutter_secure_storage: ^9.2.4
+  path: ^1.9.1
+  path_provider: ^2.1.5
+  sqlite3: ^3.5.2
 
 dev_dependencies:
   flutter_test:
@@ -106,3 +110,8 @@ flutter_launcher_icons:
   adaptive_icon_background: "#080E1E"
   adaptive_icon_foreground: assets/brand/app_icon.png
   adaptive_icon_foreground_inset: 0
+
+hooks:
+  user_defines:
+    sqlite3:
+      source: sqlite3mc

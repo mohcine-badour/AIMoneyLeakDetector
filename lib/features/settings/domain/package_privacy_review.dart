@@ -87,6 +87,30 @@ abstract final class PackagePrivacyReview {
       data: 'SVG path data shipped in the app. No network calls',
       leavesDevice: false,
     ),
+    PackagePrivacyNote(
+      package: 'flutter_secure_storage',
+      purpose: 'System Keychain and Keystore for the database key',
+      data: 'Encryption key and session tokens on this phone only',
+      leavesDevice: false,
+    ),
+    PackagePrivacyNote(
+      package: 'path',
+      purpose: 'Join local file paths for the encrypted database',
+      data: 'Does not persist or transmit user data',
+      leavesDevice: false,
+    ),
+    PackagePrivacyNote(
+      package: 'path_provider',
+      purpose: 'Find the app documents folder for the database file',
+      data: 'Local directory path. No network',
+      leavesDevice: false,
+    ),
+    PackagePrivacyNote(
+      package: 'sqlite3',
+      purpose: 'Encrypted on-device SQLite engine',
+      data: 'Same local subscription records as drift. No network',
+      leavesDevice: false,
+    ),
   ];
 
   static Set<String> get packageNames => {

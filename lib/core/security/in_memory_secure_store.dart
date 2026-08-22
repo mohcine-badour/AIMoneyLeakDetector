@@ -24,6 +24,6 @@ class InMemorySecureStore implements SecureStore {
 
   @override
   Future<void> clear() async {
-    _values.clear();
+    _values.removeWhere((key, _) => SecureStorePolicy.shouldClear(key));
   }
 }
