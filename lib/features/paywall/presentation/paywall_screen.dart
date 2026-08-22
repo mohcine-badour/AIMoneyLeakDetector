@@ -2,100 +2,141 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../app/config/app_config.dart';
 import '../../../app/router/app_routes.dart';
-import '../../../core/constants/app_icons.dart';
-import '../../../core/constants/app_spacing.dart';
+import '../../../app/theme/app_tokens.dart';
 import '../../../core/constants/app_strings.dart';
-import '../../../core/widgets/app_button.dart';
-import '../../../core/widgets/app_card.dart';
+import '../../../core/providers/clock_provider.dart';
+import '../../../core/utils/app_date_format.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../analytics/analytics_providers.dart';
 import '../../analytics/domain/analytics_event.dart';
-import '../domain/entitlement_copy.dart';
+import '../../cancellation/cancellation_providers.dart';
 import '../domain/paywall_plan.dart';
+import '../domain/paywall_source.dart';
 import '../paywall_providers.dart';
+import 'paywall_cta.dart';
+import 'paywall_feature_list.dart';
+import 'paywall_fine_print.dart';
+import 'paywall_header.dart';
+import 'paywall_hero.dart';
+import 'paywall_pricing_card.dart';
+import 'paywall_trust_row.dart';
 
-class PaywallScreen extends ConsumerWidget {
-  const PaywallScreen({super.key});
+class PaywallScreen extends ConsumerStatefulWidget {
+  const PaywallScreen({this.source = PaywallSource.settings, super.key});
+
+  final PaywallSource source;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(analyticsScreenViewProvider(AnalyticsEvent.paywallViewed));
-    final config = ref.watch(monetizationConfigProvider);
+  ConsumerState<PaywallScreen> createState() => _PaywallScreenState();
+}
+
+class _PaywallScreenState extends ConsumerState<PaywallScreen> {
+  var _viewTracked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+      if (ref.read(entitlementProvider).isPro) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text(AppStrings.alreadyPro)),
+        );
+        _leave();
+        return;
+      }
+      if (_viewTracked) {
+        return;
+      }
+      _viewTracked = true;
+      ref.read(analyticsProvider).track(
+        AnalyticsEvent.paywallViewed,
+        properties: {'source': widget.source.query},
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tokens = AppTokens.of(context);
+    final offerings = ref.watch(paywallOfferingsProvider);
     final selected = ref.watch(paywallPlanProvider);
     final action = ref.watch(paywallActionProvider);
-    final entitlement = ref.watch(entitlementProvider);
-    final status = EntitlementCopy.status(entitlement);
-    final textTheme = Theme.of(context).textTheme;
-    final colorScheme = Theme.of(context).colorScheme;
+    final now = ref.watch(appNowProvider);
+
+    if (ref.watch(entitlementProvider).isPro) {
+      return ColoredBox(color: tokens.bgApp, child: const SizedBox.expand());
+    }
 
     return AppScaffold(
-      title: AppStrings.paywallTitle,
-      padding: const EdgeInsets.all(AppSpacing.page),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      showAppBar: false,
+      padding: EdgeInsets.zero,
+      body: ColoredBox(
+        color: tokens.bgApp,
+        child: ListView(
           children: [
-            Text(AppStrings.paywallHeadline, style: textTheme.headlineMedium),
-            const SizedBox(height: AppSpacing.xl),
-            Text(AppStrings.paywallUnlock, style: textTheme.titleSmall),
-            const SizedBox(height: AppSpacing.md),
-            for (var i = 0; i < config.unlockPerks.length; i++) ...[
-              if (i > 0) const SizedBox(height: AppSpacing.md),
-              _PerkRow(label: config.unlockPerks[i]),
-            ],
-            const SizedBox(height: AppSpacing.xl),
-            _PlanCard(
-              key: const Key('paywall-plan-monthly'),
-              label: config.monthlyPriceLabel,
-              selected: selected == PaywallPlan.monthly,
-              onTap: action.isBusy
-                  ? null
-                  : () => ref
-                        .read(paywallPlanProvider.notifier)
-                        .select(PaywallPlan.monthly),
+            PaywallHeader(
+              onDismiss: () {
+                ref.read(analyticsProvider).track(
+                  AnalyticsEvent.paywallDismissed,
+                  properties: {'source': widget.source.query},
+                );
+                _leave();
+              },
             ),
-            const SizedBox(height: AppSpacing.md),
-            _PlanCard(
-              key: const Key('paywall-plan-yearly'),
-              label: config.yearlyPriceLabel,
-              selected: selected == PaywallPlan.yearly,
-              onTap: action.isBusy
-                  ? null
-                  : () => ref
-                        .read(paywallPlanProvider.notifier)
-                        .select(PaywallPlan.yearly),
+            const PaywallHero(),
+            const PaywallFeatureList(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+              child: Column(
+                children: [
+                  PaywallPricingCard(
+                    plan: PaywallPlan.yearly,
+                    offerings: offerings,
+                    selected: selected == PaywallPlan.yearly,
+                    onPress: () => _select(PaywallPlan.yearly),
+                  ),
+                  const SizedBox(height: 8),
+                  PaywallPricingCard(
+                    plan: PaywallPlan.monthly,
+                    offerings: offerings,
+                    selected: selected == PaywallPlan.monthly,
+                    onPress: () => _select(PaywallPlan.monthly),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: AppSpacing.md),
-            Text(AppStrings.introOfferAvailable, style: textTheme.bodyLarge),
-            if (status != null) ...[
-              const SizedBox(height: AppSpacing.lg),
-              Text(status, style: textTheme.bodyLarge),
-            ],
-            if (action.error != null) ...[
-              const SizedBox(height: AppSpacing.lg),
-              Text(
-                action.error!,
-                style: textTheme.bodySmall?.copyWith(color: colorScheme.error),
+            PaywallCta(
+              plan: selected,
+              offerings: offerings,
+              purchasing: action.isPurchasing,
+              onPressed: action.isBusy ? null : () => _purchase(selected),
+            ),
+            if (selected == PaywallPlan.yearly && offerings.hasYearlyTrial)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 6, 20, 0),
+                child: Text(
+                  AppStrings.trialNotChargedToday(
+                    AppDateFormat.monthDayShort(
+                      now.add(
+                        Duration(days: offerings.yearlyIntroTrialDays!),
+                      ),
+                    ),
+                  ),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 10.5, color: tokens.textMuted),
+                ),
               ),
-            ],
-            const SizedBox(height: AppSpacing.xl),
-            if (!entitlement.isPro)
-              AppButton(
-                key: const Key('unlock-pro'),
-                label: AppStrings.unlockPro,
-                isLoading: action.isPurchasing,
-                onPressed: action.isBusy
-                    ? null
-                    : () => _purchase(context, ref, selected),
-              ),
-            if (!entitlement.isPro) const SizedBox(height: AppSpacing.md),
-            AppButton(
-              key: const Key('restore-purchases'),
-              label: AppStrings.restorePurchases,
-              variant: AppButtonVariant.secondary,
-              isLoading: action.isRestoring,
-              onPressed: action.isBusy ? null : () => _restore(context, ref),
+            const PaywallTrustRow(),
+            PaywallFinePrint(
+              restoring: action.isRestoring,
+              onRestore: _restore,
+              onTerms: () => _openLegal(privacy: false),
+              onPrivacy: () => _openLegal(privacy: true),
             ),
           ],
         ),
@@ -103,77 +144,95 @@ class PaywallScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _purchase(
-    BuildContext context,
-    WidgetRef ref,
-    PaywallPlan plan,
-  ) async {
+  void _select(PaywallPlan plan) {
+    ref.read(paywallPlanProvider.notifier).select(plan);
+    ref.read(analyticsProvider).track(
+      AnalyticsEvent.paywallPlanToggled,
+      properties: {'plan': plan.name},
+    );
+  }
+
+  Future<void> _purchase(PaywallPlan plan) async {
     final unlocked = await ref
         .read(paywallActionProvider.notifier)
         .purchase(plan);
-    if (unlocked && context.mounted) {
-      _leave(context);
+    if (!mounted) {
+      return;
+    }
+    if (unlocked) {
+      _leave();
+      return;
+    }
+    final error = ref.read(paywallActionProvider).error;
+    if (error != null) {
+      await _alert(AppStrings.purchaseFailedTitle, error);
     }
   }
 
-  Future<void> _restore(BuildContext context, WidgetRef ref) async {
+  Future<void> _restore() async {
     final unlocked = await ref.read(paywallActionProvider.notifier).restore();
-    if (unlocked && context.mounted) {
-      _leave(context);
+    if (!mounted) {
+      return;
+    }
+    if (unlocked) {
+      await _alert(
+        AppStrings.restoreSuccessTitle,
+        AppStrings.restoreSuccessMessage,
+      );
+      if (mounted) {
+        _leave();
+      }
+      return;
+    }
+    final error = ref.read(paywallActionProvider).error;
+    if (error == AppStrings.restoreNone) {
+      await _alert(AppStrings.restoreNoneTitle, AppStrings.restoreNone);
+      return;
+    }
+    if (error != null) {
+      await _alert(AppStrings.restoreFailedTitle, error);
     }
   }
 
-  void _leave(BuildContext context) {
+  Future<void> _openLegal({required bool privacy}) async {
+    ref.read(analyticsProvider).track(
+      privacy
+          ? AnalyticsEvent.paywallPrivacyOpened
+          : AnalyticsEvent.paywallTermsOpened,
+    );
+    final raw = privacy ? AppConfig.privacyPolicyUrl : AppConfig.termsUrl;
+    if (raw.isNotEmpty) {
+      await ref.read(cancellationLinkOpenerProvider).open(Uri.parse(raw));
+      return;
+    }
+    if (mounted) {
+      context.push(AppRoutes.privacyPolicy);
+    }
+  }
+
+  Future<void> _alert(String title, String message) {
+    return showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(AppStrings.continueLabel),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _leave() {
     if (context.canPop()) {
       context.pop();
       return;
     }
     context.go(AppRoutes.dashboard);
-  }
-}
-
-class _PerkRow extends StatelessWidget {
-  const _PerkRow({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(
-          AppIcons.check,
-          size: AppIcons.md,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        const SizedBox(width: AppSpacing.md),
-        Expanded(
-          child: Text(label, style: Theme.of(context).textTheme.bodyLarge),
-        ),
-      ],
-    );
-  }
-}
-
-class _PlanCard extends StatelessWidget {
-  const _PlanCard({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-    super.key,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return AppCard(
-      selected: selected,
-      onTap: onTap,
-      child: Text(label, style: Theme.of(context).textTheme.titleSmall),
-    );
   }
 }

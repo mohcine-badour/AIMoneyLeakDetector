@@ -11,6 +11,7 @@ import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../paywall/domain/paywall_source.dart';
 import '../../paywall/paywall_providers.dart';
 import '../../savings/domain/leak_copy.dart';
 import '../../subscriptions/subscriptions_providers.dart';
@@ -140,7 +141,9 @@ class _ImpactBody extends ConsumerWidget {
 
   Future<void> _confirm(BuildContext context, WidgetRef ref) async {
     if (!ref.read(featureAccessProvider).canAddSubscription) {
-      context.push(AppRoutes.paywall);
+      context.push(
+        AppRoutes.paywallLocation(source: PaywallSource.unlimitedGate),
+      );
       return;
     }
     await ref

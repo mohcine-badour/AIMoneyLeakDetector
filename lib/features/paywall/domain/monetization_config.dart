@@ -16,6 +16,7 @@ class MonetizationConfig {
     this.scannerRequiresPro = true,
     this.aiAnalysisRequiresPro = true,
     this.trialProtectionRequiresPro = true,
+    this.yearlyIntroTrialDays,
     this.monthlyProductId = 'billkiller_pro_monthly',
     this.yearlyProductId = 'billkiller_pro_yearly',
     this.proEntitlementId = 'pro',
@@ -34,6 +35,9 @@ class MonetizationConfig {
   final bool scannerRequiresPro;
   final bool aiAnalysisRequiresPro;
   final bool trialProtectionRequiresPro;
+
+  /// Store-confirmed free trial length in days. Null or 0 means no trial copy.
+  final int? yearlyIntroTrialDays;
 
   /// App Store product identifiers. Keep these out of widgets.
   final String monthlyProductId;
@@ -81,14 +85,4 @@ class MonetizationConfig {
       PaywallPlan.yearly => yearlyPriceLabel,
     };
   }
-
-  List<String> get unlockPerks => const [
-    AppStrings.perkUnlimitedSubscriptions,
-    AppStrings.perkAiMoneyAnalysis,
-    AppStrings.perkReceiptScanner,
-    AppStrings.perkTrialProtection,
-    AppStrings.perkAdvancedSavings,
-    AppStrings.perkPriceMonitoring,
-    AppStrings.perkNoAds,
-  ];
 }

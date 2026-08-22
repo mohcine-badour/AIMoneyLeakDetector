@@ -36,4 +36,10 @@ abstract final class AppIcons {
   static const IconData check = Icons.check_rounded;
   static const IconData sparkles = Icons.auto_awesome_outlined;
   static const IconData chartLine = Icons.show_chart_rounded;
+  static const IconData shieldCheck = Icons.verified_user_outlined;
+  static const IconData bellRinging = Icons.notifications_active_outlined;
+  static const IconData scan = Icons.document_scanner_outlined;
+  static const IconData infinity = Icons.all_inclusive_rounded;
+  static const IconData wifiOff = Icons.wifi_off_rounded;
+  static const IconData apple = Icons.apple;
 }

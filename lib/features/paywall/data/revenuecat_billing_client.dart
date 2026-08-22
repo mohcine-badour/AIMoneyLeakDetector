@@ -5,6 +5,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 
 import '../../../core/constants/app_strings.dart';
 import '../domain/billing_client.dart';
+import '../domain/billing_copy.dart';
 import '../domain/billing_exception.dart';
 import '../domain/billing_snapshot.dart';
 import '../domain/entitlement.dart';
@@ -134,11 +135,12 @@ class RevenueCatBillingClient implements BillingClient {
   static BillingException _wrap(PlatformException error, String fallback) {
     final code = PurchasesErrorHelper.getErrorCode(error);
     if (code == PurchasesErrorCode.purchaseCancelledError) {
-      return BillingException(fallback, isCancelled: true);
+      return const BillingException('', isCancelled: true);
     }
-    final message = error.message?.trim();
+    final mapped = BillingCopy.forCode(code.name);
     return BillingException(
-      message == null || message.isEmpty ? fallback : message,
+      mapped ?? fallback,
+      code: code.name,
     );
   }
 }

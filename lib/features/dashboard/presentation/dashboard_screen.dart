@@ -10,6 +10,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../paywall/domain/paywall_source.dart';
 import '../../paywall/paywall_navigation.dart';
 import '../../paywall/paywall_providers.dart';
 import '../../subscriptions/domain/subscription.dart';
@@ -116,7 +117,9 @@ class _HomeBody extends ConsumerWidget {
               key: const Key('dashboard-unlock-pro'),
               label: AppStrings.unlockPro,
               variant: AppButtonVariant.tertiary,
-              onPressed: () => context.push(AppRoutes.paywall),
+              onPressed: () => context.push(
+                AppRoutes.paywallLocation(source: PaywallSource.settings),
+              ),
             ),
           ),
         MonthlyHeroCard(summary: summary, now: now),

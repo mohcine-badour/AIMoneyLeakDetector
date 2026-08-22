@@ -36,7 +36,7 @@ void main() {
       AppRoutes.addTrial: AppStrings.addTrialTitle,
       AppRoutes.savings: AppStrings.insightsTitle,
       AppRoutes.settings: AppStrings.settingsTitle,
-      AppRoutes.paywall: AppStrings.paywallTitle,
+      AppRoutes.paywall: AppStrings.paywallHeadline,
     };
 
     for (final entry in routes.entries) {

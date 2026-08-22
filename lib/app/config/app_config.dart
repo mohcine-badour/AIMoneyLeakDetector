@@ -9,4 +9,5 @@ abstract final class AppConfig {
   static const bool adsEnabled = true;
   static const bool allowCleartextTraffic = false;
   static const String privacyPolicyUrl = '';
+  static const String termsUrl = '';
 }

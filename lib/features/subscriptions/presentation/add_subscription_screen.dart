@@ -13,6 +13,7 @@ import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../paywall/domain/paywall_source.dart';
 import '../../paywall/paywall_navigation.dart';
 import '../../paywall/paywall_providers.dart';
 import '../add_subscription_controller.dart';
@@ -226,7 +227,9 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
       return;
     }
     if (!ref.read(featureAccessProvider).canAddSubscription) {
-      context.push(AppRoutes.paywall);
+      context.push(
+        AppRoutes.paywallLocation(source: PaywallSource.unlimitedGate),
+      );
       return;
     }
     context.push(AppRoutes.beforeYouSubscribe, extra: candidate);

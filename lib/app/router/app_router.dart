@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/constants/app_strings.dart';
@@ -8,6 +9,7 @@ import '../../features/cancellation/presentation/cancellation_guide_screen.dart'
 import '../../features/dashboard/presentation/dashboard_screen.dart';
 import '../../features/launch/launch_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
+import '../../features/paywall/domain/paywall_source.dart';
 import '../../features/paywall/presentation/paywall_screen.dart';
 import '../../features/upcoming/presentation/upcoming_payments_screen.dart';
 import '../../features/insights/presentation/insights_screen.dart';
@@ -123,7 +125,30 @@ abstract final class AppRouter {
         ),
         GoRoute(
           path: AppRoutes.paywall,
-          builder: (context, state) => const PaywallScreen(),
+          pageBuilder: (context, state) {
+            final source = PaywallSourceX.parse(
+              state.uri.queryParameters['source'],
+            );
+            return CustomTransitionPage<void>(
+              key: state.pageKey,
+              fullscreenDialog: true,
+              child: PaywallScreen(source: source),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0, 1),
+                    end: Offset.zero,
+                  ).animate(
+                    CurvedAnimation(
+                      parent: animation,
+                      curve: Curves.easeOutCubic,
+                    ),
+                  ),
+                  child: child,
+                );
+              },
+            );
+          },
         ),
       ],
       errorBuilder: (context, state) => PlaceholderScreen(

@@ -9,6 +9,7 @@ import 'package:billkiller_ai/features/paywall/data/unconfigured_billing_client.
 import 'package:billkiller_ai/features/paywall/domain/billing_exception.dart';
 import 'package:billkiller_ai/features/paywall/domain/entitlement.dart';
 import 'package:billkiller_ai/features/paywall/domain/monetization_config.dart';
+import 'package:billkiller_ai/features/paywall/domain/paywall_features.dart';
 import 'package:billkiller_ai/features/paywall/domain/paywall_plan.dart';
 import 'package:billkiller_ai/features/subscriptions/data/drift_subscription_repository.dart';
 import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
@@ -43,20 +44,25 @@ void main() {
     _largeScreen(tester);
     await pumpBillKillerApp(tester, location: AppRoutes.paywall);
 
+    expect(find.text(AppStrings.paywallTitle), findsNothing);
     expect(find.text(AppStrings.paywallHeadline), findsOneWidget);
-    expect(find.text(AppStrings.paywallUnlock), findsOneWidget);
-    expect(find.text(AppStrings.perkUnlimitedSubscriptions), findsOneWidget);
-    expect(find.text(AppStrings.perkAiMoneyAnalysis), findsOneWidget);
-    expect(find.text(AppStrings.perkReceiptScanner), findsOneWidget);
-    expect(find.text(AppStrings.perkTrialProtection), findsOneWidget);
-    expect(find.text(AppStrings.perkAdvancedSavings), findsOneWidget);
-    expect(find.text(AppStrings.perkPriceMonitoring), findsOneWidget);
-    expect(find.text(AppStrings.perkNoAds), findsOneWidget);
-    expect(find.text(r'$5.99/month'), findsOneWidget);
-    expect(find.text(r'$39.99/year'), findsOneWidget);
-    expect(find.text(AppStrings.introOfferAvailable), findsOneWidget);
-    expect(find.text(AppStrings.unlockPro), findsOneWidget);
+    expect(find.text(AppStrings.paywallSubheadline), findsOneWidget);
+    expect(find.text(AppStrings.paywallUnlock), findsNothing);
+    expect(find.text(AppStrings.introOfferAvailable), findsNothing);
+    for (final feature in PaywallFeatures.all) {
+      expect(find.text(feature.title), findsOneWidget);
+      expect(find.text(feature.description), findsOneWidget);
+    }
+    expect(find.text(r'$39.99'), findsWidgets);
+    expect(find.text(r'$5.99'), findsOneWidget);
+    expect(find.text('SAVE 44%'), findsOneWidget);
+    expect(
+      find.text(AppStrings.continueWithPrice(r'$39.99', '/year')),
+      findsOneWidget,
+    );
+    expect(find.text(AppStrings.unlockPro), findsNothing);
     expect(find.text(AppStrings.restorePurchases), findsOneWidget);
+    expect(find.text(AppStrings.cancelAnytime), findsOneWidget);
   });
 
   testWidgets('unlock purchases the selected plan and grants Pro', (
@@ -72,12 +78,12 @@ void main() {
 
     await tester.tap(find.byKey(const Key('paywall-plan-monthly')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(AppStrings.unlockPro));
+    await tester.tap(find.byKey(const Key('unlock-pro')));
     await tester.pumpAndSettle();
 
     expect(billing.lastPurchased, PaywallPlan.monthly);
     expect(billing.current.isPro, isTrue);
-    expect(find.text(AppStrings.unlockPro), findsNothing);
+    expect(find.byKey(const Key('unlock-pro')), findsNothing);
   });
 
   testWidgets('restore grants Pro when the store account has a subscription', (
@@ -92,7 +98,7 @@ void main() {
       billingClient: billing,
     );
 
-    expect(find.text(AppStrings.unlockPro), findsOneWidget);
+    expect(find.byKey(const Key('unlock-pro')), findsOneWidget);
 
     await tester.ensureVisible(find.text(AppStrings.restorePurchases));
     await tester.tap(find.text(AppStrings.restorePurchases));
@@ -113,7 +119,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text(AppStrings.restoreNone), findsOneWidget);
-    expect(find.text(AppStrings.unlockPro), findsOneWidget);
+    expect(find.byKey(const Key('unlock-pro')), findsOneWidget);
   });
 
   testWidgets('cancelled purchases stay on the paywall without an error', (
@@ -129,11 +135,12 @@ void main() {
       billingClient: billing,
     );
 
-    await tester.tap(find.text(AppStrings.unlockPro));
+    await tester.tap(find.byKey(const Key('unlock-pro')));
     await tester.pumpAndSettle();
 
     expect(find.text(AppStrings.paywallHeadline), findsOneWidget);
     expect(find.text('cancelled'), findsNothing);
+    expect(find.text(AppStrings.purchaseFailedTitle), findsNothing);
     expect(billing.current.isPro, isFalse);
   });
 
@@ -147,11 +154,11 @@ void main() {
       billingClient: const UnconfiguredBillingClient(),
     );
 
-    await tester.tap(find.text(AppStrings.unlockPro));
+    await tester.tap(find.byKey(const Key('unlock-pro')));
     await tester.pumpAndSettle();
 
     expect(find.text(AppStrings.billingNotConfigured), findsOneWidget);
-    expect(find.text(AppStrings.unlockPro), findsOneWidget);
+    expect(find.byKey(const Key('unlock-pro')), findsOneWidget);
   });
 
   testWidgets('free subscription limit opens the paywall', (tester) async {
@@ -183,5 +190,18 @@ void main() {
 
     expect(find.text(AppStrings.addSubscriptionTitle), findsOneWidget);
     expect(find.text(AppStrings.paywallHeadline), findsNothing);
+  });
+
+  testWidgets('selecting monthly updates the CTA amount', (tester) async {
+    _largeScreen(tester);
+    await pumpBillKillerApp(tester, location: AppRoutes.paywall);
+
+    await tester.tap(find.byKey(const Key('paywall-plan-monthly')));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.text(AppStrings.continueWithPrice(r'$5.99', '/month')),
+      findsOneWidget,
+    );
   });
 }

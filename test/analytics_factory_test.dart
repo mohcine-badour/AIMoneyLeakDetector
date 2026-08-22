@@ -22,6 +22,10 @@ void main() {
       'trial_reminder_triggered',
     );
     expect(AnalyticsEvent.paywallViewed.name, 'paywall_viewed');
+    expect(AnalyticsEvent.paywallDismissed.name, 'paywall_dismissed');
+    expect(AnalyticsEvent.paywallPlanToggled.name, 'paywall_plan_toggled');
+    expect(AnalyticsEvent.paywallTermsOpened.name, 'paywall_terms_opened');
+    expect(AnalyticsEvent.paywallPrivacyOpened.name, 'paywall_privacy_opened');
     expect(AnalyticsEvent.purchaseStarted.name, 'purchase_started');
     expect(AnalyticsEvent.purchaseCompleted.name, 'purchase_completed');
     expect(AnalyticsEvent.purchaseRestored.name, 'purchase_restored');

@@ -462,9 +462,36 @@ abstract final class AppStrings {
   }) =>
       'This would add $monthly/month ($annual/year). No overlapping $category subscriptions are on file.';
 
-  static const String paywallHeadline = 'Stop wasting money.';
+  static String continueWithPrice(String price, String period) =>
+      '${AppStrings.continueLabel} · $price$period';
+
+  static String savePercent(int percent) => 'Save $percent%';
+
+  static String justPerMonth(String amount) =>
+      'Just $amount/month · billed annually';
+
+  static String trialThenYearly(int days, String price) =>
+      '$days-day free trial · then $price/year';
+
+  static String startFreeTrial(int days) => 'Start $days-day free trial';
+
+  static String trialNotChargedToday(String date) =>
+      "You won't be charged today. Cancel anytime before $date to avoid the charge.";
+
+  static const String paywallHeadline = 'Everything, in one place.';
+  static const String paywallSubheadline =
+      'AI insights, trial alerts, and unlimited tracking — for less than most subscriptions you track.';
+  static const String paywallProBadge = 'Pro';
   static const String paywallUnlock = 'Unlock:';
   static const String unlockPro = 'Unlock Pro';
+  static const String yearlyPlan = 'Yearly';
+  static const String monthlyPlan = 'Monthly';
+  static const String billedAnnually = 'billed annually';
+  static const String cancelAnytime = 'Cancel anytime';
+  static const String securedByAppStore = 'Secured by App Store';
+  static const String securedByGooglePlay = 'Secured by Google Play';
+  static const String terms = 'Terms';
+  static const String privacyShort = 'Privacy';
   static const String perkUnlimitedSubscriptions = 'Unlimited subscriptions';
   static const String perkAiMoneyAnalysis = 'AI money analysis';
   static const String perkReceiptScanner = 'Receipt scanner';
@@ -473,13 +500,31 @@ abstract final class AppStrings {
   static const String perkPriceMonitoring = 'Price monitoring';
   static const String perkNoAds = 'No ads';
   static const String restorePurchases = 'Restore purchases';
+  static const String restoreSuccessTitle = 'Purchases restored';
+  static const String restoreSuccessMessage = 'You now have Pro access.';
+  static const String restoreNoneTitle = 'Nothing to restore';
+  static const String restoreNone =
+      "We couldn't find a previous purchase on this account.";
+  static const String purchaseFailedTitle = 'Purchase failed';
+  static const String restoreFailedTitle = 'Restore failed';
   static const String billingNotConfigured =
       'App Store billing is not configured yet.';
   static const String purchaseFailed = 'The purchase could not be completed.';
+  static const String purchaseSomethingWrong =
+      'Something went wrong. Try again in a moment.';
+  static const String purchaseNotAllowed =
+      "This device isn't allowed to make purchases. Check Screen Time or family settings.";
+  static const String purchaseNetwork =
+      "Couldn't reach the App Store. Check your connection and try again.";
+  static const String purchasePending =
+      "Your purchase is pending approval. You'll get access once it's approved.";
+  static const String purchaseStoreProblem =
+      "The App Store had a problem. Try again in a moment.";
   static const String restoreFailed = 'Purchases could not be restored.';
-  static const String restoreNone =
-      'No Pro subscription was found for this Apple ID.';
-  static const String alreadyPro = "You're Pro.";
+  static const String alreadyPro = "You're already on Pro.";
+  static const String offersLoadTitle = "Can't load offers";
+  static const String offersLoadMessage =
+      'Check your connection and try again.';
   static const String billingGrace =
       'Billing is retrying. Pro stays active during the grace period.';
   static const String wontRenew =

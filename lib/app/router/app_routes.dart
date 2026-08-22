@@ -1,3 +1,5 @@
+import '../../features/paywall/domain/paywall_source.dart';
+
 /// Named route paths used by go_router.
 abstract final class AppRoutes {
   static const String launch = '/';
@@ -18,6 +20,13 @@ abstract final class AppRoutes {
   static const String settings = '/settings';
   static const String privacyPolicy = '/settings/privacy';
   static const String paywall = '/paywall';
+
+  static String paywallLocation({PaywallSource? source}) {
+    if (source == null) {
+      return paywall;
+    }
+    return '$paywall?source=${source.query}';
+  }
 
   static String subscriptionDetailLocation(String id) => '/subscriptions/$id';
 

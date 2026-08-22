@@ -7,10 +7,12 @@ import '../subscriptions/subscriptions_providers.dart';
 import '../trials/trials_providers.dart';
 import 'data/unconfigured_billing_client.dart';
 import 'domain/billing_client.dart';
+import 'domain/billing_copy.dart';
 import 'domain/billing_exception.dart';
 import 'domain/entitlement.dart';
 import 'domain/feature_access.dart';
 import 'domain/monetization_config.dart';
+import 'domain/paywall_offerings.dart';
 import 'domain/paywall_plan.dart';
 
 final monetizationConfigProvider = Provider<MonetizationConfig>((ref) {
@@ -40,6 +42,10 @@ final featureAccessProvider = Provider<FeatureAccess>((ref) {
         ref.watch(subscriptionsProvider).asData?.value.length ?? 0,
     trialCount: ref.watch(trialsProvider).asData?.value.length ?? 0,
   );
+});
+
+final paywallOfferingsProvider = Provider<PaywallOfferings>((ref) {
+  return PaywallOfferings.fromConfig(ref.watch(monetizationConfigProvider));
 });
 
 final paywallPlanProvider =
@@ -102,12 +108,14 @@ class PaywallActionController extends Notifier<PaywallActionState> {
       action: () => ref.read(billingClientProvider).purchase(plan),
       emptyRestore: false,
     );
-    await ref
-        .read(analyticsProvider)
-        .track(
-          AnalyticsEvent.purchaseCompleted,
-          properties: {'plan': plan.name, 'success': success},
-        );
+    if (success || state.error != null) {
+      await ref
+          .read(analyticsProvider)
+          .track(
+            AnalyticsEvent.purchaseCompleted,
+            properties: {'plan': plan.name, 'success': success},
+          );
+    }
     return success;
   }
 
@@ -145,7 +153,7 @@ class PaywallActionController extends Notifier<PaywallActionState> {
         state = const PaywallActionState();
         return false;
       }
-      state = PaywallActionState(error: error.message);
+      state = PaywallActionState(error: BillingCopy.forException(error));
       return false;
     }
   }

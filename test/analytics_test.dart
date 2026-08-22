@@ -367,7 +367,7 @@ void main() {
 
     await tester.tap(find.byKey(const Key('paywall-plan-monthly')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text(AppStrings.unlockPro));
+    await tester.tap(find.byKey(const Key('unlock-pro')));
     await tester.pumpAndSettle();
 
     expect(analytics.propertiesFor(AnalyticsEvent.purchaseStarted), {
