@@ -91,17 +91,12 @@ abstract final class AppTheme {
         primary: textPrimary,
         secondary: textSecondary,
       ),
-      iconTheme: IconThemeData(
-        color: textPrimary,
-        size: AppIcons.lg,
-      ),
+      iconTheme: IconThemeData(color: textPrimary, size: AppIcons.lg),
       cardTheme: CardThemeData(
         color: colorScheme.surface,
         elevation: 0,
         margin: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(
-          borderRadius: AppRadius.card,
-        ),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadius.card),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
@@ -133,9 +128,9 @@ abstract final class AppTheme {
           foregroundColor: buttonForeground,
           minimumSize: const Size.fromHeight(AppSpacing.buttonHeight),
           textStyle: const TextStyle(
-            fontSize: 16,
+            fontSize: 15,
             fontWeight: FontWeight.w600,
-            letterSpacing: 0.2,
+            letterSpacing: 0.1,
           ),
           shape: buttonShape,
         ),
@@ -145,9 +140,9 @@ abstract final class AppTheme {
           foregroundColor: textPrimary,
           minimumSize: const Size.fromHeight(AppSpacing.buttonHeight),
           textStyle: const TextStyle(
-            fontSize: 16,
+            fontSize: 15,
             fontWeight: FontWeight.w600,
-            letterSpacing: 0.2,
+            letterSpacing: 0.1,
           ),
           side: BorderSide(color: colorScheme.outline),
           shape: buttonShape,
@@ -157,10 +152,58 @@ abstract final class AppTheme {
         style: TextButton.styleFrom(
           foregroundColor: textPrimary,
           textStyle: const TextStyle(
-            fontSize: 16,
+            fontSize: 15,
             fontWeight: FontWeight.w600,
-            letterSpacing: 0.2,
+            letterSpacing: 0.1,
           ),
+        ),
+      ),
+      dividerTheme: DividerThemeData(
+        color: colorScheme.outline.withValues(alpha: 0.55),
+        thickness: 0.5,
+        space: 0,
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        height: 64,
+        elevation: 0,
+        backgroundColor: scaffoldBackground,
+        surfaceTintColor: Colors.transparent,
+        indicatorColor: Colors.transparent,
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return TextStyle(
+            fontSize: 11,
+            fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
+            color: selected ? textPrimary : textSecondary,
+          );
+        }),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return IconThemeData(
+            size: AppIcons.lg,
+            color: selected ? textPrimary : textSecondary,
+          );
+        }),
+      ),
+      chipTheme: ChipThemeData(
+        backgroundColor: Colors.transparent,
+        selectedColor: Colors.transparent,
+        disabledColor: Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 2),
+        labelPadding: const EdgeInsets.symmetric(horizontal: 8),
+        side: BorderSide.none,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(AppRadius.sm)),
+        ),
+        labelStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: textSecondary,
+        ),
+        secondaryLabelStyle: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: textPrimary,
         ),
       ),
     );

@@ -66,10 +66,11 @@ void main() {
   });
 
   test('can cap the list for dashboard previews', () {
-    final result = UpcomingPayments.fromSubscriptions(
-      [spotify, adobe, netflix],
-      limit: 2,
-    );
+    final result = UpcomingPayments.fromSubscriptions([
+      spotify,
+      adobe,
+      netflix,
+    ], limit: 2);
 
     expect(result.map((item) => item.subscriptionId), ['netflix', 'adobe']);
   });

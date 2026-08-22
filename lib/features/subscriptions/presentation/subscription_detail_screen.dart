@@ -12,7 +12,7 @@ import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
-import '../../../core/widgets/money_text.dart';
+import '../../../core/widgets/merchant_mark.dart';
 import '../domain/subscription.dart';
 import '../domain/subscription_cost.dart';
 import '../subscription_detail_controller.dart';
@@ -38,7 +38,8 @@ class SubscriptionDetailScreen extends ConsumerWidget {
         title: AppStrings.subscriptionDetailTitle,
         body: ErrorState(
           message: AppStrings.errorLoadSubscriptions,
-          onRetry: () => ref.invalidate(subscriptionByIdProvider(subscriptionId)),
+          onRetry: () =>
+              ref.invalidate(subscriptionByIdProvider(subscriptionId)),
         ),
       ),
       data: (subscription) {
@@ -73,93 +74,135 @@ class _SubscriptionDetailBody extends ConsumerWidget {
 
     return AppScaffold(
       title: subscription.name,
-      padding: const EdgeInsets.all(AppSpacing.page),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.page,
+        AppSpacing.sm,
+        AppSpacing.page,
+        AppSpacing.lg,
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-          AppCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
-                Text(billed, style: textTheme.headlineMedium),
-                const SizedBox(height: AppSpacing.lg),
-                Text(AppStrings.annualLabel, style: textTheme.labelMedium),
-                const SizedBox(height: AppSpacing.xs),
-                MoneyText(
-                  amount: annual,
-                  currencyCode: subscription.currency,
+                MerchantMark(name: subscription.name, size: 48),
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(billed, style: textTheme.headlineSmall),
+                      const SizedBox(height: 2),
+                      Text(
+                        subscription.billingCycle.label,
+                        style: textTheme.bodySmall,
+                      ),
+                      Text(
+                        subscription.category.label,
+                        style: textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          SubscriptionUsageCard(subscription: subscription),
-          const SizedBox(height: AppSpacing.xl),
-          _DetailRow(label: AppStrings.fieldMerchant, value: subscription.merchant),
-          _DetailRow(
-            label: AppStrings.fieldAmount,
-            value: MoneyFormat.format(
-              subscription.amount,
-              currencyCode: subscription.currency,
+            const SizedBox(height: AppSpacing.xl),
+            Text(
+              AppStrings.fieldMonthlyEquivalent,
+              style: textTheme.labelMedium,
             ),
-          ),
-          _DetailRow(
-            label: AppStrings.fieldBillingCycle,
-            value: subscription.billingCycle.label,
-          ),
-          _DetailRow(
-            label: AppStrings.fieldMonthlyEquivalent,
-            value: MoneyFormat.format(
-              monthly,
-              currencyCode: subscription.currency,
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              MoneyFormat.format(monthly, currencyCode: subscription.currency),
+              style: textTheme.headlineSmall,
             ),
-          ),
-          _DetailRow(
-            label: AppStrings.fieldAnnualEquivalent,
-            value: MoneyFormat.format(
-              annual,
-              currencyCode: subscription.currency,
+            Text(AppStrings.compactPerMonth, style: textTheme.bodySmall),
+            const SizedBox(height: AppSpacing.lg),
+            Text(AppStrings.annualLabel, style: textTheme.labelMedium),
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              MoneyFormat.format(annual, currencyCode: subscription.currency),
+              style: textTheme.titleLarge,
             ),
-          ),
-          _DetailRow(
-            label: AppStrings.fieldNextBillingDate,
-            value: AppDateFormat.short(subscription.nextBillingDate),
-          ),
-          _DetailRow(
-            label: AppStrings.fieldCategory,
-            value: subscription.category.label,
-          ),
-          _DetailRow(
-            label: AppStrings.fieldCreated,
-            value: AppDateFormat.short(subscription.createdAt),
-          ),
-          _DetailRow(
-            label: AppStrings.fieldSource,
-            value: subscription.source.label,
-          ),
-          const SizedBox(height: AppSpacing.md),
-          AppButton(
-            label: AppStrings.edit,
-            onPressed: () => context.push(
-              AppRoutes.editSubscriptionLocation(subscription.id),
+            Text(AppStrings.compactPerYear, style: textTheme.bodySmall),
+            const SizedBox(height: AppSpacing.lg),
+            AppCard(
+              tone: AppCardTone.insight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppStrings.potentialSavings,
+                    style: textTheme.labelMedium,
+                  ),
+                  const SizedBox(height: AppSpacing.xs),
+                  Text(
+                    MoneyFormat.format(
+                      annual,
+                      currencyCode: subscription.currency,
+                    ),
+                    style: textTheme.titleLarge,
+                  ),
+                  Text(AppStrings.compactPerYear, style: textTheme.bodySmall),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          AppButton(
-            label: AppStrings.cancellationGuide,
-            variant: AppButtonVariant.secondary,
-            onPressed: () => context.push(
-              AppRoutes.cancellationGuideLocation(subscription.id),
+            const SizedBox(height: AppSpacing.lg),
+            AppButton(
+              label: AppStrings.cancellationGuide,
+              onPressed: () => context.push(
+                AppRoutes.cancellationGuideLocation(subscription.id),
+              ),
             ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          AppButton(
-            label: AppStrings.delete,
-            variant: AppButtonVariant.danger,
-            onPressed: () => _confirmDelete(context, ref),
-          ),
-        ],
+            const SizedBox(height: AppSpacing.sm),
+            AppButton(
+              label: AppStrings.edit,
+              variant: AppButtonVariant.secondary,
+              onPressed: () => context.push(
+                AppRoutes.editSubscriptionLocation(subscription.id),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            AppButton(
+              label: AppStrings.delete,
+              variant: AppButtonVariant.tertiary,
+              onPressed: () => _confirmDelete(context, ref),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            _DetailRow(
+              label: AppStrings.fieldMerchant,
+              value: subscription.merchant,
+            ),
+            _DetailRow(
+              label: AppStrings.fieldAmount,
+              value: MoneyFormat.format(
+                subscription.amount,
+                currencyCode: subscription.currency,
+              ),
+            ),
+            _DetailRow(
+              label: AppStrings.fieldNextBillingDate,
+              value: AppDateFormat.short(subscription.nextBillingDate),
+            ),
+            _DetailRow(
+              label: AppStrings.fieldCreated,
+              value: AppDateFormat.short(subscription.createdAt),
+            ),
+            _DetailRow(
+              label: AppStrings.fieldSource,
+              value: subscription.source.label,
+            ),
+            _DetailRow(
+              label: AppStrings.fieldAnnualEquivalent,
+              value: MoneyFormat.format(
+                annual,
+                currencyCode: subscription.currency,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            SubscriptionUsageCard(subscription: subscription),
+          ],
         ),
       ),
     );
@@ -192,7 +235,9 @@ class _SubscriptionDetailBody extends ConsumerWidget {
     if (confirmed != true) {
       return;
     }
-    await ref.read(subscriptionDetailControllerProvider).delete(subscription.id);
+    await ref
+        .read(subscriptionDetailControllerProvider)
+        .delete(subscription.id);
     if (context.mounted) {
       context.go(AppRoutes.subscriptions);
     }
@@ -210,13 +255,18 @@ class _DetailRow extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
-      child: Column(
+      padding: const EdgeInsets.only(bottom: AppSpacing.md),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: textTheme.labelMedium),
-          const SizedBox(height: AppSpacing.xs),
-          Text(value, style: textTheme.bodyLarge),
+          Expanded(child: Text(label, style: textTheme.bodySmall)),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: textTheme.bodyMedium,
+            ),
+          ),
         ],
       ),
     );

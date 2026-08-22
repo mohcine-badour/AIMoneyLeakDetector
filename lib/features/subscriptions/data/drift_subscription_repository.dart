@@ -38,9 +38,9 @@ class DriftSubscriptionRepository implements SubscriptionRepository {
 
   @override
   Future<void> deleteById(String id) async {
-    await (_db.delete(_db.subscriptionEntries)
-          ..where((row) => row.id.equals(id)))
-        .go();
+    await (_db.delete(
+      _db.subscriptionEntries,
+    )..where((row) => row.id.equals(id))).go();
   }
 
   @override

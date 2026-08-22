@@ -15,6 +15,37 @@ abstract final class AppStrings {
   static const String trialsTitle = 'Trials';
   static const String savingsTitle = 'Savings';
   static const String settingsTitle = 'Settings';
+  static const String tabHome = 'Home';
+  static const String tabSubscriptions = 'Subscriptions';
+  static const String tabInsights = 'Insights';
+  static const String tabSettings = 'Settings';
+  static const String insightsTitle = 'Insights';
+  static const String attentionSubtitle =
+      "Here's what deserves your attention today.";
+  static const String youCouldSave = 'You could save';
+  static const String reviewSubscription = 'Review subscription';
+  static const String sortByPrefix = 'Sort:';
+  static const String sortBy = 'Sort by';
+  static const String privacyPolicy = 'Privacy Policy';
+  static const String privacySection = 'Privacy';
+  static const String yourDataSection = 'Your data';
+  static const String privacyLastUpdated = 'Last updated';
+  static const String privacyMinimalCollection =
+      'We keep collection small. Analytics never receive amounts, merchants, or receipts.';
+  static const String deleteMyData = 'Delete my data';
+  static const String deleteAccount = 'Delete account';
+  static const String deleteMyDataTitle = 'Delete data on this device?';
+  static const String deleteMyDataMessage =
+      'Subscriptions, trials, usage, and onboarding answers on this phone will be removed. App Store billing does not change.';
+  static const String deleteAccountTitle = 'Delete your account?';
+  static const String deleteAccountMessage =
+      'This removes data on this device. There is no cloud account yet. A server deletion request will be sent when cloud sync exists. App Store subscriptions stay with Apple until you cancel them there.';
+  static const String deleteDataExplanation =
+      'You can remove the information stored on this phone at any time.';
+  static const String appStoreBillingNotice =
+      'Pro is billed by Apple. Deleting app data does not cancel an App Store subscription.';
+  static const String deleteDataFailed =
+      'Could not delete data on this device.';
   static const String paywallTitle = 'Paywall';
 
   static const String placeholderBody = 'This screen is a placeholder.';
@@ -58,6 +89,10 @@ abstract final class AppStrings {
   static const String categoryGaming = 'Gaming';
   static const String categoryFinance = 'Finance';
   static const String categoryOther = 'Other';
+  static const String categoryMusic = 'Music';
+  static const String categoryAi = 'AI';
+  static const String categoryStorage = 'Storage';
+  static const String categoryDeveloper = 'Developer';
 
   static const String save = 'Save';
   static const String select = 'Select';
@@ -82,19 +117,40 @@ abstract final class AppStrings {
   static const String errorDateRequired = 'Choose the next billing date.';
   static const String errorCategoryRequired = 'Choose a category.';
 
-  static const String searchSubscriptions = 'Search';
+  static const String searchSubscriptions = 'Search subscriptions';
   static const String filterAll = 'All';
+  static const String sortNextPayment = 'Next payment';
+  static const String sortHighestCost = 'Highest cost';
+  static const String sortAlphabetical = 'Alphabetical';
+  static const String sortRecentlyAdded = 'Recently added';
   static const String sortNextDate = 'Next date';
   static const String sortMonthlyCost = 'Monthly cost';
   static const String nextPayment = 'Next payment:';
   static const String emptySubscriptionsTitle = 'No subscriptions yet';
+  static const String addFirstSubscriptionTitle = 'Add your first subscription';
+  static const String addFirstSubscriptionMessage =
+      'Track renewals, spot forgotten trials.';
   static const String emptySubscriptionsMessage =
       'Add a recurring payment to see where your money goes.';
-  static const String noMatchingSubscriptionsTitle = 'No matches';
+  static const String noMatchingSubscriptionsTitle = 'No subscriptions match';
   static const String noMatchingSubscriptionsMessage =
-      'Try a different search or category.';
-  static const String errorLoadSubscriptions =
-      'Could not load subscriptions.';
+      'Try a different category or search';
+  static const String noSearchMatchesTitle = 'No matches';
+  static const String noSearchMatchesMessage =
+      'Try a different name or category';
+  static const String resetFilters = 'Reset filters';
+  static const String filterAndSort = 'Filter and sort';
+  static const String showInactive = 'Show inactive';
+  static const String applyFilters = 'Apply';
+  static const String recentSearches = 'Recent searches';
+  static const String comingSoon = 'Coming soon';
+  static const String pause = 'Pause';
+  static const String resume = 'Resume';
+  static const String totalLabel = 'Total';
+  static const String perYearFooterLabel = 'Per year';
+  static const String weeklyTypicalWarning =
+      'Most of these services bill monthly. Confirm this is billed weekly.';
+  static const String errorLoadSubscriptions = 'Could not load subscriptions.';
 
   static const String perWeek = '/ week';
   static const String perMonth = '/ month';
@@ -117,8 +173,7 @@ abstract final class AppStrings {
   static const String usesLabel = 'Uses';
   static const String costPerUseLabel = 'Cost per use';
   static const String logAUse = 'Log a use';
-  static const String costPerUseUnavailable =
-      'Add uses to see cost per use.';
+  static const String costPerUseUnavailable = 'Add uses to see cost per use.';
   static const String usesHint = 'Not recorded';
   static const String errorUsesInvalid = 'Enter a whole number of 0 or more.';
 
@@ -164,6 +219,43 @@ abstract final class AppStrings {
   static const String viewAll = 'View all';
   static const String today = 'Today';
   static const String tomorrow = 'Tomorrow';
+  static const String relativeToday = 'today';
+  static const String relativeTomorrow = 'tomorrow';
+  static const String relativeYesterday = 'yesterday';
+  static String daysAgo(int days) => '$days days ago';
+  static const String thisMonth = 'This month';
+  static const String perYearLabel = 'Per year';
+  static const String activeLabel = 'Active';
+  static const String highestLabel = 'Highest';
+  static const String renewingSoon = 'Renewing soon';
+  static const String next7Days = 'Next 7 days';
+  static const String allSubscriptions = 'All subscriptions';
+  static const String noRenewalsThisWeek =
+      'No renewals this week — enjoy the quiet';
+  static const String noActiveSubscriptionsYet = 'No active subscriptions yet';
+  static String renewalCount(int count) {
+    if (count == 1) {
+      return '1 renewal in the next 7 days';
+    }
+    return '$count renewals in the next 7 days';
+  }
+
+  static String activeCountLabel(int count) => '$count active';
+  static String seeAllSubscriptions(int count) =>
+      'See all $count subscriptions';
+  static String unusedInsightTitle(String name, int days) =>
+      "You haven't opened $name in $days days";
+  static String unusedInsightSubtitle(String amount) =>
+      'Cancel to save $amount/month.';
+  static String priceHikeTitle(String name, String delta) =>
+      '$name went up $delta this month';
+  static const String priceHikeSubtitle = 'Review the new pricing.';
+  static String overlapTitle(int count, String category) =>
+      'You have $count ${category.toLowerCase()} subs';
+  static String overlapSubtitle(String amount) =>
+      'Save $amount/month by consolidating.';
+
+  static String inDays(int days) => 'in $days days';
   static const String noUpcomingPayments = 'No upcoming payments.';
   static const String emptyUpcomingTitle = 'Nothing coming up';
   static const String emptyUpcomingMessage =
@@ -270,7 +362,8 @@ abstract final class AppStrings {
   static const String analysisReadOnlyNotice =
       'This report does not change your subscriptions.';
   static const String analysisProcessing = 'Analyzing your money leaks…';
-  static const String errorLoadAnalysis = 'Could not load the money leak report.';
+  static const String errorLoadAnalysis =
+      'Could not load the money leak report.';
   static const String analysisOverlapExplanation =
       'These services sit in the same category. Confirm you still need each one before the next renewal.';
   static const String analysisExpensiveExplanation =
@@ -338,4 +431,33 @@ abstract final class AppStrings {
     required String category,
   }) =>
       'This would add $monthly/month ($annual/year). No overlapping $category subscriptions are on file.';
+
+  static const String paywallHeadline = 'Stop wasting money.';
+  static const String paywallUnlock = 'Unlock:';
+  static const String unlockPro = 'Unlock Pro';
+  static const String perkUnlimitedSubscriptions = 'Unlimited subscriptions';
+  static const String perkAiMoneyAnalysis = 'AI money analysis';
+  static const String perkReceiptScanner = 'Receipt scanner';
+  static const String perkTrialProtection = 'Trial protection';
+  static const String perkAdvancedSavings = 'Advanced savings insights';
+  static const String perkPriceMonitoring = 'Price monitoring';
+  static const String perkNoAds = 'No ads';
+  static const String restorePurchases = 'Restore purchases';
+  static const String billingNotConfigured =
+      'App Store billing is not configured yet.';
+  static const String purchaseFailed = 'The purchase could not be completed.';
+  static const String restoreFailed = 'Purchases could not be restored.';
+  static const String restoreNone =
+      'No Pro subscription was found for this Apple ID.';
+  static const String alreadyPro = "You're Pro.";
+  static const String billingGrace =
+      'Billing is retrying. Pro stays active during the grace period.';
+  static const String wontRenew =
+      'Auto-renew is off. Pro stays active until the period ends.';
+  static const String expiredPro = 'Your Pro subscription has ended.';
+  static const String introOfferActive = "You're on an introductory offer.";
+  static const String introOfferAvailable =
+      'Introductory pricing applies when offered by the App Store.';
+  static const String adLabel = 'Ad';
+  static const String adRemoveHint = 'Upgrade to Pro to remove ads.';
 }

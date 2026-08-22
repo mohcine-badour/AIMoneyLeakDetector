@@ -4,6 +4,9 @@
 /// Never store AI API keys here.
 abstract final class AppConfig {
   static const String defaultLanguageCode = 'en';
-  static const bool analyticsEnabled = false;
-  static const bool monetizationEnabled = false;
+  static const bool analyticsEnabled = true;
+  static const bool monetizationEnabled = true;
+  static const bool adsEnabled = true;
+  static const bool allowCleartextTraffic = false;
+  static const String privacyPolicyUrl = '';
 }

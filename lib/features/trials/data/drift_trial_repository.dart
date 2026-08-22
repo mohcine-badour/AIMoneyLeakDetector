@@ -31,12 +31,16 @@ class DriftTrialRepository implements TrialRepository {
 
   @override
   Future<void> save(Trial trial) async {
-    await _db.into(_db.trialEntries).insertOnConflictUpdate(_toCompanion(trial));
+    await _db
+        .into(_db.trialEntries)
+        .insertOnConflictUpdate(_toCompanion(trial));
   }
 
   @override
   Future<void> deleteById(String id) async {
-    await (_db.delete(_db.trialEntries)..where((row) => row.id.equals(id))).go();
+    await (_db.delete(
+      _db.trialEntries,
+    )..where((row) => row.id.equals(id))).go();
   }
 
   TrialEntriesCompanion _toCompanion(Trial trial) {

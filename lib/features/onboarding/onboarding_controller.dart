@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../analytics/analytics_providers.dart';
+import '../analytics/domain/analytics_event.dart';
 import 'data/onboarding_repository.dart';
 import 'domain/onboarding_answers.dart';
 
@@ -52,13 +54,29 @@ class OnboardingController extends Notifier<OnboardingDraft> {
       return;
     }
 
-    await ref.read(onboardingRepositoryProvider).save(
-      OnboardingAnswers(
-        spendingRange: spending,
-        savingsGoal: savings,
-        entryPath: entryPath,
-        completedAt: DateTime.now().toUtc(),
-      ),
-    );
+    await ref
+        .read(onboardingRepositoryProvider)
+        .save(
+          OnboardingAnswers(
+            spendingRange: spending,
+            savingsGoal: savings,
+            entryPath: entryPath,
+            completedAt: DateTime.now().toUtc(),
+          ),
+        );
+    await ref
+        .read(analyticsProvider)
+        .track(
+          AnalyticsEvent.onboardingCompleted,
+          properties: {'source': _entrySource(entryPath)},
+        );
   }
+}
+
+String _entrySource(OnboardingEntryPath entryPath) {
+  return switch (entryPath) {
+    OnboardingEntryPath.addManually => 'manual',
+    OnboardingEntryPath.scanReceipt => 'scan',
+    OnboardingEntryPath.importLater => 'later',
+  };
 }

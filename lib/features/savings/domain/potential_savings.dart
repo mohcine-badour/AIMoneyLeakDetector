@@ -53,7 +53,9 @@ abstract final class PotentialSavingsCalculator {
       for (final item in group) SubscriptionCost.monthlyEquivalent(item),
     ];
     final total = amounts.fold<double>(0, (sum, amount) => sum + amount);
-    final highest = amounts.reduce((left, right) => left > right ? left : right);
+    final highest = amounts.reduce(
+      (left, right) => left > right ? left : right,
+    );
     return total - highest;
   }
 }

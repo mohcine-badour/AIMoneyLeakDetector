@@ -16,6 +16,17 @@ import 'package:billkiller_ai/features/cancellation/cancellation_providers.dart'
 import 'package:billkiller_ai/features/cancellation/domain/cancellation_link_opener.dart';
 import 'package:billkiller_ai/features/notifications/domain/reminder_scheduler.dart';
 import 'package:billkiller_ai/features/notifications/notifications_providers.dart';
+import 'package:billkiller_ai/features/ads/ads_providers.dart';
+import 'package:billkiller_ai/features/ads/domain/ad_config.dart';
+import 'package:billkiller_ai/features/ads/domain/ad_service.dart';
+import 'package:billkiller_ai/features/analytics/analytics_providers.dart';
+import 'package:billkiller_ai/features/analytics/data/disabled_analytics.dart';
+import 'package:billkiller_ai/features/analytics/domain/analytics.dart';
+import 'package:billkiller_ai/features/paywall/data/fake_billing_client.dart';
+import 'package:billkiller_ai/features/paywall/domain/billing_client.dart';
+import 'package:billkiller_ai/features/paywall/domain/entitlement.dart';
+import 'package:billkiller_ai/features/paywall/domain/monetization_config.dart';
+import 'package:billkiller_ai/features/paywall/paywall_providers.dart';
 import 'package:billkiller_ai/features/scanner/domain/receipt_extractor.dart';
 import 'package:billkiller_ai/features/scanner/domain/receipt_image.dart';
 import 'package:billkiller_ai/features/scanner/scan_flow_controller.dart';
@@ -30,6 +41,12 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpBillKillerApp(
   ReceiptImagePicker? imagePicker,
   ReceiptExtractor? extractor,
   CancellationLinkOpener? cancellationLinkOpener,
+  Entitlement? entitlement,
+  MonetizationConfig? monetizationConfig,
+  BillingClient? billingClient,
+  AdConfig? adConfig,
+  AdService? adService,
+  Analytics? analytics,
 }) async {
   SharedPreferences.setMockInitialValues(Map<String, Object>.from(prefs));
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
@@ -39,6 +56,10 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpBillKillerApp(
     await seed(database);
   }
   final router = AppRouter.create(initialLocation: location);
+  final billing = billingClient ?? FakeBillingClient();
+  final analyticsClient = SanitizingAnalytics(
+    analytics ?? const DisabledAnalytics(),
+  );
 
   await tester.pumpWidget(
     ProviderScope(
@@ -56,6 +77,14 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpBillKillerApp(
           cancellationLinkOpenerProvider.overrideWithValue(
             cancellationLinkOpener,
           ),
+        billingClientProvider.overrideWithValue(billing),
+        analyticsProvider.overrideWithValue(analyticsClient),
+        if (entitlement != null)
+          entitlementProvider.overrideWithValue(entitlement),
+        if (monetizationConfig != null)
+          monetizationConfigProvider.overrideWithValue(monetizationConfig),
+        if (adConfig != null) adConfigProvider.overrideWithValue(adConfig),
+        if (adService != null) adServiceProvider.overrideWithValue(adService),
       ],
       child: BillKillerApp(router: router),
     ),

@@ -24,6 +24,6 @@ void main() {
     expect(app.darkTheme, isNotNull);
     expect(app.theme!.useMaterial3, isTrue);
     expect(app.darkTheme!.useMaterial3, isTrue);
-    expect(app.themeMode, ThemeMode.system);
+    expect(app.themeMode, ThemeMode.dark);
   });
 }

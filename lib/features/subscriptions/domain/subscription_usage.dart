@@ -21,10 +21,7 @@ class SubscriptionUsage {
   final int useCount;
   final DateTime updatedAt;
 
-  SubscriptionUsage copyWith({
-    int? useCount,
-    DateTime? updatedAt,
-  }) {
+  SubscriptionUsage copyWith({int? useCount, DateTime? updatedAt}) {
     return SubscriptionUsage(
       subscriptionId: subscriptionId,
       useCount: useCount ?? this.useCount,

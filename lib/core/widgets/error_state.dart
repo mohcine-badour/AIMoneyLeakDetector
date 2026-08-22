@@ -27,11 +27,7 @@ class ErrorState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              AppIcons.error,
-              size: AppIcons.xl,
-              color: colorScheme.error,
-            ),
+            Icon(AppIcons.error, size: AppIcons.xl, color: colorScheme.error),
             const SizedBox(height: AppSpacing.lg),
             Text(
               message,

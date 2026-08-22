@@ -13,6 +13,8 @@ import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../paywall/paywall_navigation.dart';
+import '../../paywall/paywall_providers.dart';
 import '../add_subscription_controller.dart';
 import '../domain/subscription.dart';
 import '../subscriptions_providers.dart';
@@ -109,84 +111,93 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-          AppTextField(
-            key: const Key('subscription-name'),
-            label: AppStrings.fieldName,
-            controller: _nameController,
-            textInputAction: TextInputAction.next,
-            errorText: form.errors.name,
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          AppTextField(
-            key: const Key('subscription-merchant'),
-            label: AppStrings.fieldMerchant,
-            hint: AppStrings.fieldMerchantHint,
-            controller: _merchantController,
-            textInputAction: TextInputAction.next,
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          AppTextField(
-            key: const Key('subscription-amount'),
-            label: AppStrings.fieldAmount,
-            controller: _amountController,
-            keyboardType: const TextInputType.numberWithOptions(
-              decimal: true,
+            AppTextField(
+              key: const Key('subscription-name'),
+              label: AppStrings.fieldName,
+              controller: _nameController,
+              textInputAction: TextInputAction.next,
+              errorText: form.errors.name,
             ),
-            textInputAction: TextInputAction.done,
-            errorText: form.errors.amount,
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          _SelectField(
-            key: const Key('subscription-currency'),
-            label: AppStrings.fieldCurrency,
-            value: form.currency,
-            onTap: () => _pickCurrency(controller),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          _SelectField(
-            key: const Key('subscription-cycle'),
-            label: AppStrings.fieldBillingCycle,
-            value: form.billingCycle?.label,
-            errorText: form.errors.billingCycle,
-            onTap: () => _pickBillingCycle(controller),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          _SelectField(
-            key: const Key('subscription-date'),
-            label: AppStrings.fieldNextBillingDate,
-            value: form.nextBillingDate == null
-                ? null
-                : AppDateFormat.short(form.nextBillingDate!),
-            errorText: form.errors.nextBillingDate,
-            onTap: () => _pickDate(),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          _SelectField(
-            key: const Key('subscription-category'),
-            label: AppStrings.fieldCategory,
-            value: form.category?.label,
-            errorText: form.errors.category,
-            onTap: () => _pickCategory(controller),
-          ),
-          const SizedBox(height: AppSpacing.xl),
-          if (!_isEditing) ...[
+            const SizedBox(height: AppSpacing.lg),
+            AppTextField(
+              key: const Key('subscription-merchant'),
+              label: AppStrings.fieldMerchant,
+              hint: AppStrings.fieldMerchantHint,
+              controller: _merchantController,
+              textInputAction: TextInputAction.next,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            AppTextField(
+              key: const Key('subscription-amount'),
+              label: AppStrings.fieldAmount,
+              controller: _amountController,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              textInputAction: TextInputAction.done,
+              errorText: form.errors.amount,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            _SelectField(
+              key: const Key('subscription-currency'),
+              label: AppStrings.fieldCurrency,
+              value: form.currency,
+              onTap: () => _pickCurrency(controller),
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            _SelectField(
+              key: const Key('subscription-cycle'),
+              label: AppStrings.fieldBillingCycle,
+              value: form.billingCycle?.label,
+              errorText: form.errors.billingCycle,
+              onTap: () => _pickBillingCycle(controller),
+            ),
+            if (form.billingCycle == BillingCycle.weekly) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                AppStrings.weeklyTypicalWarning,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ],
+            const SizedBox(height: AppSpacing.lg),
+            _SelectField(
+              key: const Key('subscription-date'),
+              label: AppStrings.fieldNextBillingDate,
+              value: form.nextBillingDate == null
+                  ? null
+                  : AppDateFormat.short(form.nextBillingDate!),
+              errorText: form.errors.nextBillingDate,
+              onTap: () => _pickDate(),
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            _SelectField(
+              key: const Key('subscription-category'),
+              label: AppStrings.fieldCategory,
+              value: form.category?.label,
+              errorText: form.errors.category,
+              onTap: () => _pickCategory(controller),
+            ),
+            const SizedBox(height: AppSpacing.xl),
+            if (!_isEditing) ...[
+              AppButton(
+                key: const Key('scan-receipt'),
+                label: AppStrings.entryScanReceipt,
+                variant: AppButtonVariant.secondary,
+                onPressed: () => PaywallNavigation.scanReceipt(context, ref),
+              ),
+              const SizedBox(height: AppSpacing.md),
+            ],
             AppButton(
-              key: const Key('scan-receipt'),
-              label: AppStrings.entryScanReceipt,
-              variant: AppButtonVariant.secondary,
-              onPressed: () => context.push(AppRoutes.scanReceipt),
+              key: Key(
+                _isEditing ? 'save-subscription' : 'review-before-adding',
+              ),
+              label: _isEditing
+                  ? AppStrings.save
+                  : AppStrings.reviewBeforeAdding,
+              isLoading: form.isSaving,
+              onPressed: () => _save(controller),
             ),
-            const SizedBox(height: AppSpacing.md),
           ],
-          AppButton(
-            key: Key(_isEditing ? 'save-subscription' : 'review-before-adding'),
-            label: _isEditing
-                ? AppStrings.save
-                : AppStrings.reviewBeforeAdding,
-            isLoading: form.isSaving,
-            onPressed: () => _save(controller),
-          ),
-        ],
         ),
       ),
     );
@@ -212,6 +223,10 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
       amount: _amountController.text,
     );
     if (candidate == null || !mounted) {
+      return;
+    }
+    if (!ref.read(featureAccessProvider).canAddSubscription) {
+      context.push(AppRoutes.paywall);
       return;
     }
     context.push(AppRoutes.beforeYouSubscribe, extra: candidate);
@@ -257,7 +272,9 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   Future<void> _pickCategory(AddSubscriptionController controller) async {
     final selected = await _pickItem(
       title: AppStrings.fieldCategory,
-      options: SubscriptionCategory.values,
+      options: SubscriptionCategory.values
+          .where((category) => category != SubscriptionCategory.software)
+          .toList(),
       labelFor: (category) => category.label,
     );
     if (selected != null) {

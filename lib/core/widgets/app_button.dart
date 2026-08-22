@@ -40,25 +40,25 @@ class AppButton extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final button = switch (variant) {
       AppButtonVariant.primary => FilledButton(
-          onPressed: callback,
-          child: child,
-        ),
+        onPressed: callback,
+        child: child,
+      ),
       AppButtonVariant.secondary => OutlinedButton(
-          onPressed: callback,
-          child: child,
-        ),
+        onPressed: callback,
+        child: child,
+      ),
       AppButtonVariant.tertiary => TextButton(
-          onPressed: callback,
-          child: child,
-        ),
+        onPressed: callback,
+        child: child,
+      ),
       AppButtonVariant.danger => FilledButton(
-          onPressed: callback,
-          style: FilledButton.styleFrom(
-            backgroundColor: colorScheme.error,
-            foregroundColor: colorScheme.onError,
-          ),
-          child: child,
+        onPressed: callback,
+        style: FilledButton.styleFrom(
+          backgroundColor: colorScheme.error,
+          foregroundColor: colorScheme.onError,
         ),
+        child: child,
+      ),
     };
 
     if (!expand) {

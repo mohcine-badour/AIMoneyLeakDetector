@@ -1,10 +1,7 @@
 import 'subscribe_impact.dart';
 
 class SubscribeAdvice {
-  const SubscribeAdvice({
-    required this.impact,
-    required this.recommendation,
-  });
+  const SubscribeAdvice({required this.impact, required this.recommendation});
 
   final SubscribeImpact impact;
   final String recommendation;

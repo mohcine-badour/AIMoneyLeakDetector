@@ -49,7 +49,9 @@ abstract final class ReceiptExtractionValidator {
     final date = _date(_string(json, 'date'));
     final confidence = _number(json, 'confidence');
     if (confidence < minConfidence || confidence > maxConfidence) {
-      throw const ReceiptExtractionException('confidence must be between 0 and 1');
+      throw const ReceiptExtractionException(
+        'confidence must be between 0 and 1',
+      );
     }
 
     return ReceiptExtractionPayload(

@@ -60,7 +60,9 @@ void main() {
       now: now,
     );
 
-    final overlap = recs.where((item) => item.kind == LeakKind.overlappingCategory);
+    final overlap = recs.where(
+      (item) => item.kind == LeakKind.overlappingCategory,
+    );
     expect(overlap, hasLength(1));
     expect(
       overlap.single.title,
@@ -122,7 +124,9 @@ void main() {
       now: now,
     );
 
-    final duplicates = recs.where((item) => item.kind == LeakKind.suspiciousDuplicate);
+    final duplicates = recs.where(
+      (item) => item.kind == LeakKind.suspiciousDuplicate,
+    );
     expect(duplicates, hasLength(1));
     expect(duplicates.single.title, 'You have 2 active Netflix subscriptions.');
     expect(duplicates.single.reason, AppStrings.leakDuplicateReason);
@@ -143,7 +147,9 @@ void main() {
       now: now,
     );
 
-    final upcoming = recs.where((item) => item.kind == LeakKind.upcomingRenewal);
+    final upcoming = recs.where(
+      (item) => item.kind == LeakKind.upcomingRenewal,
+    );
     expect(upcoming.single.title, 'Netflix renews tomorrow.');
     expect(upcoming.single.reason, AppStrings.leakRenewalReason);
   });
@@ -165,10 +171,7 @@ void main() {
     expect(recs, hasLength(1));
     expect(recs.single.kind, LeakKind.trialConversion);
     expect(recs.single.title, 'ChatGPT trial ends in 5 days.');
-    expect(
-      recs.single.reason,
-      r'After the trial it converts to $20.00/month.',
-    );
+    expect(recs.single.reason, r'After the trial it converts to $20.00/month.');
     expect(recs.single.trialId, 'chatgpt');
   });
 

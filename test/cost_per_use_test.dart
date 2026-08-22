@@ -19,43 +19,28 @@ void main() {
   test('cost per use is monthly equivalent divided by uses', () {
     final snapshot = CostPerUse.from(
       subscription: netflix,
-      usage: SubscriptionUsage.create(
-        subscriptionId: 'netflix',
-        useCount: 8,
-      ),
+      usage: SubscriptionUsage.create(subscriptionId: 'netflix', useCount: 8),
     );
 
     expect(snapshot.monthlyAmount, closeTo(22.99, 0.0001));
     expect(snapshot.uses, 8);
     expect(snapshot.costPerUse, closeTo(22.99 / 8, 0.0001));
-    expect(
-      MoneyFormat.format(snapshot.costPerUse!),
-      r'$2.87',
-    );
+    expect(MoneyFormat.format(snapshot.costPerUse!), r'$2.87');
   });
 
   test('cost per use is missing when uses are not recorded or zero', () {
-    expect(
-      CostPerUse.from(subscription: netflix).costPerUse,
-      isNull,
-    );
+    expect(CostPerUse.from(subscription: netflix).costPerUse, isNull);
     expect(
       CostPerUse.from(
         subscription: netflix,
-        usage: SubscriptionUsage.create(
-          subscriptionId: 'netflix',
-          useCount: 0,
-        ),
+        usage: SubscriptionUsage.create(subscriptionId: 'netflix', useCount: 0),
       ).costPerUse,
       isNull,
     );
   });
 
   test('yearly subscriptions use the monthly equivalent', () {
-    final snapshot = CostPerUse.fromMonthly(
-      monthlyAmount: 10,
-      uses: 5,
-    );
+    final snapshot = CostPerUse.fromMonthly(monthlyAmount: 10, uses: 5);
 
     expect(snapshot.costPerUse, closeTo(2, 0.0001));
   });

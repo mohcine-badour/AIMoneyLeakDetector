@@ -12,6 +12,30 @@ abstract final class MoneyFormat {
     return '$sign$symbol${_groupThousands(parts[0])}.${parts[1]}';
   }
 
+  static String short(
+    double amount, {
+    String currencyCode = defaultCurrencyCode,
+  }) {
+    final symbol = _symbols[currencyCode] ?? '$currencyCode ';
+    final sign = amount < 0 ? '-' : '';
+    return '$sign$symbol${_groupThousands(amount.abs().round().toString())}';
+  }
+
+  static ({String whole, String cents}) split(
+    double amount, {
+    String currencyCode = defaultCurrencyCode,
+  }) {
+    final formatted = format(amount, currencyCode: currencyCode);
+    final dot = formatted.lastIndexOf('.');
+    if (dot < 0) {
+      return (whole: formatted, cents: '');
+    }
+    return (
+      whole: formatted.substring(0, dot),
+      cents: formatted.substring(dot),
+    );
+  }
+
   static String _groupThousands(String whole) {
     if (whole.length <= 3) {
       return whole;

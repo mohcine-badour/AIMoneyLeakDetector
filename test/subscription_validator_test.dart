@@ -27,16 +27,19 @@ void main() {
     );
 
     expect(errors.name, AppStrings.errorNameRequired);
-    expect(SubscriptionValidator.validateAndBuild(
-      SubscriptionFormInput(
-        name: '  ',
-        merchant: 'Netflix',
-        amount: '22.99',
-        billingCycle: BillingCycle.monthly,
-        nextBillingDate: DateTime.utc(2026, 9, 21),
-        category: SubscriptionCategory.entertainment,
+    expect(
+      SubscriptionValidator.validateAndBuild(
+        SubscriptionFormInput(
+          name: '  ',
+          merchant: 'Netflix',
+          amount: '22.99',
+          billingCycle: BillingCycle.monthly,
+          nextBillingDate: DateTime.utc(2026, 9, 21),
+          category: SubscriptionCategory.entertainment,
+        ),
       ),
-    ), isNull);
+      isNull,
+    );
   });
 
   test('rejects zero or negative amounts', () {

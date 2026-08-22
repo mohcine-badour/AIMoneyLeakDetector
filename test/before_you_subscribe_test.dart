@@ -71,28 +71,34 @@ void main() {
     expect(impact.isExpensive, isFalse);
   });
 
-  test('local advice explains overlap without changing money figures', () async {
-    final impact = SubscribeImpactCalculator.from(
-      subscriptions: [
-        _sub(
-          id: 'netflix',
-          name: 'Netflix',
-          amount: 22.99,
-          category: SubscriptionCategory.entertainment,
-        ),
-      ],
-      candidate: _candidate(),
-    );
-    final advice = await const ValidatedSubscribeAdvisor(
-      LocalSubscribeAdviceBackend(),
-    ).advise(impact);
+  test(
+    'local advice explains overlap without changing money figures',
+    () async {
+      final impact = SubscribeImpactCalculator.from(
+        subscriptions: [
+          _sub(
+            id: 'netflix',
+            name: 'Netflix',
+            amount: 22.99,
+            category: SubscriptionCategory.entertainment,
+          ),
+        ],
+        candidate: _candidate(),
+      );
+      final advice = await const ValidatedSubscribeAdvisor(
+        LocalSubscribeAdviceBackend(),
+      ).advise(impact);
 
-    expect(advice.impact.monthlyAmount, closeTo(impact.monthlyAmount, 0.0001));
-    expect(
-      advice.recommendation,
-      contains('You already spend \$22.99/month on Entertainment'),
-    );
-  });
+      expect(
+        advice.impact.monthlyAmount,
+        closeTo(impact.monthlyAmount, 0.0001),
+      );
+      expect(
+        advice.recommendation,
+        contains('You already spend \$22.99/month on Entertainment'),
+      );
+    },
+  );
 
   test('validator rejects advice that would mutate financial data', () {
     final impact = SubscribeImpactCalculator.from(

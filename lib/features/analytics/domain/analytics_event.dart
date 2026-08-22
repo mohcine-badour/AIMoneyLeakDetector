@@ -1,0 +1,24 @@
+/// Product events. Names stay stable; do not attach financial documents.
+enum AnalyticsEvent {
+  appOpened('app_opened'),
+  onboardingStarted('onboarding_started'),
+  onboardingCompleted('onboarding_completed'),
+  subscriptionCreated('subscription_created'),
+  subscriptionDeleted('subscription_deleted'),
+  subscriptionUpdated('subscription_updated'),
+  receiptScanStarted('receipt_scan_started'),
+  receiptScanCompleted('receipt_scan_completed'),
+  aiAnalysisStarted('ai_analysis_started'),
+  aiAnalysisCompleted('ai_analysis_completed'),
+  trialCreated('trial_created'),
+  trialReminderTriggered('trial_reminder_triggered'),
+  paywallViewed('paywall_viewed'),
+  purchaseStarted('purchase_started'),
+  purchaseCompleted('purchase_completed'),
+  purchaseRestored('purchase_restored'),
+  cancellationGuideOpened('cancellation_guide_opened');
+
+  const AnalyticsEvent(this.name);
+
+  final String name;
+}

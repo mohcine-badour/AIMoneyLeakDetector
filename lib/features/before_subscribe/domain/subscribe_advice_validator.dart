@@ -24,7 +24,9 @@ abstract final class SubscribeAdviceValidator {
 
     final currency = json['currency'];
     if (currency is! String || currency != impact.currencyCode) {
-      throw const SubscribeAdviceException('currency does not match local facts');
+      throw const SubscribeAdviceException(
+        'currency does not match local facts',
+      );
     }
 
     if (json['mutates_data'] == true) {

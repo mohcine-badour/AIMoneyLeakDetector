@@ -68,10 +68,7 @@ abstract final class LeakEngine {
       items.add(
         LeakRecommendation(
           kind: LeakKind.trialConversion,
-          title: LeakCopy.trialTitle(
-            name: trial.subscriptionName,
-            days: days,
-          ),
+          title: LeakCopy.trialTitle(name: trial.subscriptionName, days: days),
           reason: LeakCopy.trialReason(trial),
           trialId: trial.id,
         ),

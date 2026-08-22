@@ -4,10 +4,7 @@ import '../domain/trial.dart';
 import '../domain/trial_countdown.dart';
 
 abstract final class TrialLabels {
-  static String remaining({
-    required Trial trial,
-    required DateTime now,
-  }) {
+  static String remaining({required Trial trial, required DateTime now}) {
     final status = TrialCountdown.displayStatus(
       stored: trial.status,
       trialEndDate: trial.trialEndDate,

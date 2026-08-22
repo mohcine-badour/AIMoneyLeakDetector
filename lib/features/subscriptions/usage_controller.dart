@@ -5,8 +5,10 @@ import 'domain/subscription_usage.dart';
 
 final usageBySubscriptionProvider =
     FutureProvider.family<SubscriptionUsage?, String>((ref, subscriptionId) {
-  return ref.watch(usageRepositoryProvider).getBySubscriptionId(subscriptionId);
-});
+      return ref
+          .watch(usageRepositoryProvider)
+          .getBySubscriptionId(subscriptionId);
+    });
 
 final declaredUsageCountsProvider = FutureProvider<Map<String, int>>((ref) {
   return ref.watch(usageRepositoryProvider).declaredCounts();
@@ -14,8 +16,8 @@ final declaredUsageCountsProvider = FutureProvider<Map<String, int>>((ref) {
 
 final subscriptionUsageControllerProvider =
     Provider<SubscriptionUsageController>((ref) {
-  return SubscriptionUsageController(ref);
-});
+      return SubscriptionUsageController(ref);
+    });
 
 class SubscriptionUsageController {
   SubscriptionUsageController(this._ref);
@@ -23,12 +25,14 @@ class SubscriptionUsageController {
   final Ref _ref;
 
   Future<void> setUses(String subscriptionId, int useCount) async {
-    await _ref.read(usageRepositoryProvider).save(
-      SubscriptionUsage.create(
-        subscriptionId: subscriptionId,
-        useCount: useCount,
-      ),
-    );
+    await _ref
+        .read(usageRepositoryProvider)
+        .save(
+          SubscriptionUsage.create(
+            subscriptionId: subscriptionId,
+            useCount: useCount,
+          ),
+        );
     _invalidate(subscriptionId);
   }
 

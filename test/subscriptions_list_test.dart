@@ -9,10 +9,7 @@ import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
 
 import 'helpers/pump_app.dart';
 
-Future<void> _saveNetflix(
-  AppDatabase database, {
-  DateTime? nextBillingDate,
-}) {
+Future<void> _saveNetflix(AppDatabase database, {DateTime? nextBillingDate}) {
   return DriftSubscriptionRepository(database).save(
     Subscription.create(
       id: 'netflix',
@@ -40,11 +37,19 @@ Future<void> _saveAdobe(AppDatabase database) {
   );
 }
 
+void _largeScreen(WidgetTester tester) {
+  tester.view.physicalSize = const Size(800, 2000);
+  tester.view.devicePixelRatio = 1.0;
+  addTearDown(tester.view.resetPhysicalSize);
+  addTearDown(tester.view.resetDevicePixelRatio);
+}
+
 void main() {
   testWidgets('empty list shows an empty state', (tester) async {
     await pumpBillKillerApp(tester, location: AppRoutes.subscriptions);
 
     expect(find.text(AppStrings.emptySubscriptionsTitle), findsOneWidget);
+    expect(find.text(AppStrings.addFirstSubscriptionTitle), findsOneWidget);
     expect(find.text(AppStrings.addSubscriptionTitle), findsWidgets);
   });
 
@@ -54,52 +59,57 @@ void main() {
     await pumpBillKillerApp(
       tester,
       location: AppRoutes.subscriptions,
+      now: DateTime.utc(2026, 8, 21),
       seed: _saveNetflix,
     );
 
     expect(find.text('Netflix'), findsOneWidget);
-    expect(find.text(r'$22.99 / month'), findsOneWidget);
-    expect(find.text(AppStrings.categoryEntertainment), findsWidgets);
-    expect(find.text(AppStrings.nextPayment), findsOneWidget);
-    expect(find.text('Sep 21'), findsOneWidget);
+    expect(find.text(r'$22.99'), findsWidgets);
+    expect(find.text('monthly'), findsOneWidget);
+    expect(find.text('Entertainment · Sep 21'), findsOneWidget);
+    expect(find.text(AppStrings.categorySoftware), findsNothing);
+    expect(find.text(AppStrings.nextPayment), findsNothing);
+    expect(find.text(r'$22.99 / month'), findsNothing);
+    expect(find.text(AppStrings.adLabel), findsNothing);
   });
 
-  testWidgets('search and category filter hide non-matching cards', (
+  testWidgets('search overlay and category chips hide non-matching rows', (
     tester,
   ) async {
-    tester.view.physicalSize = const Size(800, 2000);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+    _largeScreen(tester);
 
     await pumpBillKillerApp(
       tester,
       location: AppRoutes.subscriptions,
+      now: DateTime.utc(2026, 8, 21),
       seed: (database) async {
-        await _saveNetflix(
-          database,
-          nextBillingDate: DateTime.utc(2026, 9, 3),
-        );
+        await _saveNetflix(database, nextBillingDate: DateTime.utc(2026, 9, 3));
         await _saveAdobe(database);
       },
     );
 
     expect(find.text('Netflix'), findsOneWidget);
     expect(find.text('Adobe'), findsOneWidget);
+    expect(find.textContaining('2 active'), findsOneWidget);
 
+    await tester.tap(find.byKey(const Key('open-search')));
+    await tester.pumpAndSettle();
     await tester.enterText(find.byKey(const Key('subscriptions-search')), 'ado');
+    await tester.pump(const Duration(milliseconds: 200));
     await tester.pumpAndSettle();
     expect(find.text('Adobe'), findsOneWidget);
     expect(find.text('Netflix'), findsNothing);
 
-    await tester.enterText(find.byKey(const Key('subscriptions-search')), '');
+    await tester.tap(find.text(AppStrings.cancel));
     await tester.pumpAndSettle();
 
-    await tester.tap(
-      find.widgetWithText(FilterChip, AppStrings.categoryEntertainment),
-    );
+    expect(find.text('Netflix'), findsOneWidget);
+    expect(find.text('Adobe'), findsOneWidget);
+
+    await tester.tap(find.text(AppStrings.categoryEntertainment));
     await tester.pumpAndSettle();
     expect(find.text('Netflix'), findsOneWidget);
     expect(find.text('Adobe'), findsNothing);
+    expect(find.textContaining('1 active'), findsOneWidget);
   });
 }

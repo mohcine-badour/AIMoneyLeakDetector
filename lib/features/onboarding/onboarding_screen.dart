@@ -9,6 +9,9 @@ import '../../core/constants/app_strings.dart';
 import '../../core/widgets/app_button.dart';
 import '../../core/widgets/app_card.dart';
 import '../../core/widgets/app_scaffold.dart';
+import '../analytics/analytics_providers.dart';
+import '../analytics/domain/analytics_event.dart';
+import '../paywall/paywall_navigation.dart';
 import 'domain/onboarding_answers.dart';
 import 'onboarding_controller.dart';
 
@@ -17,6 +20,7 @@ class OnboardingScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(analyticsScreenViewProvider(AnalyticsEvent.onboardingStarted));
     final draft = ref.watch(onboardingControllerProvider);
     final controller = ref.read(onboardingControllerProvider.notifier);
 
@@ -49,7 +53,7 @@ class OnboardingScreen extends ConsumerWidget {
           children: [
             _StepIndicator(step: draft.step),
             const SizedBox(height: AppSpacing.xl),
-            Expanded(child: _stepBody(context, draft, controller)),
+            Expanded(child: _stepBody(context, ref, draft, controller)),
           ],
         ),
       ),
@@ -58,47 +62,49 @@ class OnboardingScreen extends ConsumerWidget {
 
   Widget _stepBody(
     BuildContext context,
+    WidgetRef ref,
     OnboardingDraft draft,
     OnboardingController controller,
   ) {
     return switch (draft.step) {
       0 => _IntroStep(onContinue: controller.goToSpendingStep),
       1 => _ChoiceStep(
-          title: AppStrings.onboardingSpendingTitle,
-          options: [
-            for (final range in SpendingRange.values)
-              _Option(
-                label: range.label,
-                selected: draft.spendingRange == range,
-                onTap: () => controller.selectSpendingRange(range),
-              ),
-          ],
-          onContinue: draft.canContinueSpending
-              ? controller.goToSavingsStep
-              : null,
-        ),
+        title: AppStrings.onboardingSpendingTitle,
+        options: [
+          for (final range in SpendingRange.values)
+            _Option(
+              label: range.label,
+              selected: draft.spendingRange == range,
+              onTap: () => controller.selectSpendingRange(range),
+            ),
+        ],
+        onContinue: draft.canContinueSpending
+            ? controller.goToSavingsStep
+            : null,
+      ),
       2 => _ChoiceStep(
-          title: AppStrings.onboardingSavingsTitle,
-          options: [
-            for (final goal in SavingsGoal.values)
-              _Option(
-                label: goal.label,
-                selected: draft.savingsGoal == goal,
-                onTap: () => controller.selectSavingsGoal(goal),
-              ),
-          ],
-          onContinue: draft.canContinueSavings
-              ? controller.goToEntryPathStep
-              : null,
-        ),
+        title: AppStrings.onboardingSavingsTitle,
+        options: [
+          for (final goal in SavingsGoal.values)
+            _Option(
+              label: goal.label,
+              selected: draft.savingsGoal == goal,
+              onTap: () => controller.selectSavingsGoal(goal),
+            ),
+        ],
+        onContinue: draft.canContinueSavings
+            ? controller.goToEntryPathStep
+            : null,
+      ),
       _ => _EntryPathStep(
-          onSelected: (path) => _complete(context, controller, path),
-        ),
+        onSelected: (path) => _complete(context, ref, controller, path),
+      ),
     };
   }
 
   Future<void> _complete(
     BuildContext context,
+    WidgetRef ref,
     OnboardingController controller,
     OnboardingEntryPath path,
   ) async {
@@ -109,9 +115,9 @@ class OnboardingScreen extends ConsumerWidget {
 
     switch (path) {
       case OnboardingEntryPath.addManually:
-        context.go(AppRoutes.addSubscription);
+        PaywallNavigation.addSubscription(context, ref, replace: true);
       case OnboardingEntryPath.scanReceipt:
-        context.go(AppRoutes.scanReceipt);
+        PaywallNavigation.scanReceipt(context, ref, replace: true);
       case OnboardingEntryPath.importLater:
         context.go(AppRoutes.dashboard);
     }
@@ -134,10 +140,7 @@ class _IntroStep extends StatelessWidget {
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         const Spacer(flex: 3),
-        AppButton(
-          label: AppStrings.onboardingFindOut,
-          onPressed: onContinue,
-        ),
+        AppButton(label: AppStrings.onboardingFindOut, onPressed: onContinue),
       ],
     );
   }
@@ -159,10 +162,7 @@ class _ChoiceStep extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.headlineSmall,
-        ),
+        Text(title, style: Theme.of(context).textTheme.headlineSmall),
         const SizedBox(height: AppSpacing.xl),
         Expanded(
           child: ListView.separated(
@@ -182,10 +182,7 @@ class _ChoiceStep extends StatelessWidget {
             },
           ),
         ),
-        AppButton(
-          label: AppStrings.continueLabel,
-          onPressed: onContinue,
-        ),
+        AppButton(label: AppStrings.continueLabel, onPressed: onContinue),
       ],
     );
   }
@@ -256,7 +253,9 @@ class _StepIndicator extends StatelessWidget {
           Expanded(
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: index <= step ? colorScheme.primary : colorScheme.outline,
+                color: index <= step
+                    ? colorScheme.primary
+                    : colorScheme.outline,
                 borderRadius: AppRadius.button,
               ),
               child: const SizedBox(height: AppSpacing.xs),
@@ -282,19 +281,19 @@ class _Option {
 
 extension on SpendingRange {
   String get label => switch (this) {
-        SpendingRange.under25 => AppStrings.spendingUnder25,
-        SpendingRange.from25to50 => AppStrings.spending25to50,
-        SpendingRange.from50to100 => AppStrings.spending50to100,
-        SpendingRange.from100to200 => AppStrings.spending100to200,
-        SpendingRange.over200 => AppStrings.spendingOver200,
-      };
+    SpendingRange.under25 => AppStrings.spendingUnder25,
+    SpendingRange.from25to50 => AppStrings.spending25to50,
+    SpendingRange.from50to100 => AppStrings.spending50to100,
+    SpendingRange.from100to200 => AppStrings.spending100to200,
+    SpendingRange.over200 => AppStrings.spendingOver200,
+  };
 }
 
 extension on SavingsGoal {
   String get label => switch (this) {
-        SavingsGoal.amount25 => AppStrings.savings25,
-        SavingsGoal.amount50 => AppStrings.savings50,
-        SavingsGoal.amount100 => AppStrings.savings100,
-        SavingsGoal.amount200 => AppStrings.savings200,
-      };
+    SavingsGoal.amount25 => AppStrings.savings25,
+    SavingsGoal.amount50 => AppStrings.savings50,
+    SavingsGoal.amount100 => AppStrings.savings100,
+    SavingsGoal.amount200 => AppStrings.savings200,
+  };
 }

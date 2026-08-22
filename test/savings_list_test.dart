@@ -48,57 +48,59 @@ Future<void> _seed(AppDatabase database) async {
 }
 
 void main() {
-  testWidgets('empty savings screen shows a zero report and empty suggestions', (
-    tester,
-  ) async {
-    await pumpBillKillerApp(tester, location: AppRoutes.savings, now: _now);
+  testWidgets(
+    'empty savings screen shows a zero report and empty suggestions',
+    (tester) async {
+      await pumpBillKillerApp(tester, location: AppRoutes.savings, now: _now);
 
-    expect(find.text(AppStrings.savingsTitle), findsOneWidget);
-    expect(find.text(AppStrings.moneyLeakReportTitle), findsOneWidget);
-    expect(find.text(AppStrings.youSpend), findsOneWidget);
-    expect(find.text(r'$0.00/month'), findsWidgets);
-    expect(find.text(AppStrings.analysisReadOnlyNotice), findsOneWidget);
-    expect(find.text(AppStrings.subscriptionsToReview(0)), findsOneWidget);
-    expect(find.text(AppStrings.emptyLeaksTitle), findsOneWidget);
-    expect(find.text(AppStrings.emptyLeaksMessage), findsOneWidget);
-  });
+      expect(find.text(AppStrings.insightsTitle), findsWidgets);
+      expect(find.text(AppStrings.moneyLeakReportTitle), findsOneWidget);
+      expect(find.text(AppStrings.youSpend), findsOneWidget);
+      expect(find.text(r'$0.00/month'), findsWidgets);
+      expect(find.text(AppStrings.analysisReadOnlyNotice), findsOneWidget);
+      expect(find.text(AppStrings.subscriptionsToReview(0)), findsOneWidget);
+      expect(find.text(AppStrings.emptyLeaksTitle), findsOneWidget);
+      expect(find.text(AppStrings.emptyLeaksMessage), findsOneWidget);
+    },
+  );
 
-  testWidgets('savings report shows spend, overlap extras, and AI explanations', (
-    tester,
-  ) async {
-    tester.view.physicalSize = const Size(800, 2000);
-    tester.view.devicePixelRatio = 1.0;
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
+  testWidgets(
+    'savings report shows spend, overlap extras, and AI explanations',
+    (tester) async {
+      tester.view.physicalSize = const Size(800, 2000);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
 
-    await pumpBillKillerApp(
-      tester,
-      location: AppRoutes.savings,
-      now: _now,
-      seed: _seed,
-    );
+      await pumpBillKillerApp(
+        tester,
+        location: AppRoutes.savings,
+        now: _now,
+        seed: _seed,
+      );
 
-    expect(find.text(AppStrings.moneyLeakReportTitle), findsOneWidget);
-    expect(find.text(r'$40.98/month'), findsOneWidget);
-    expect(find.text(r'$17.99/month'), findsOneWidget);
-    expect(find.text(AppStrings.subscriptionsToReview(2)), findsOneWidget);
-    expect(find.text(AppStrings.possibleOverlaps(1)), findsOneWidget);
-    expect(find.text(AppStrings.upcomingExpensiveRenewals(0)), findsOneWidget);
-    expect(find.text(AppStrings.analysisReadOnlyNotice), findsOneWidget);
-    expect(
-      find.text('ChatGPT trial ends in 5 days.'),
-      findsOneWidget,
-    );
-    expect(
-      find.text(r'After the trial it converts to $20.00/month.'),
-      findsOneWidget,
-    );
-    expect(find.text(AppStrings.analysisTrialExplanation), findsOneWidget);
-    expect(
-      find.text('You spend \$40.98/month on Entertainment subscriptions.'),
-      findsOneWidget,
-    );
-    expect(find.text(AppStrings.leakOverlappingReason), findsOneWidget);
-    expect(find.text(AppStrings.analysisOverlapExplanation), findsOneWidget);
-  });
+      expect(find.text(AppStrings.moneyLeakReportTitle), findsOneWidget);
+      expect(find.text(r'$40.98/month'), findsOneWidget);
+      expect(find.text(r'$17.99/month'), findsOneWidget);
+      expect(find.text(AppStrings.subscriptionsToReview(2)), findsOneWidget);
+      expect(find.text(AppStrings.possibleOverlaps(1)), findsOneWidget);
+      expect(
+        find.text(AppStrings.upcomingExpensiveRenewals(0)),
+        findsOneWidget,
+      );
+      expect(find.text(AppStrings.analysisReadOnlyNotice), findsOneWidget);
+      expect(find.text('ChatGPT trial ends in 5 days.'), findsOneWidget);
+      expect(
+        find.text(r'After the trial it converts to $20.00/month.'),
+        findsOneWidget,
+      );
+      expect(find.text(AppStrings.analysisTrialExplanation), findsOneWidget);
+      expect(
+        find.text('You spend \$40.98/month on Entertainment subscriptions.'),
+        findsOneWidget,
+      );
+      expect(find.text(AppStrings.leakOverlappingReason), findsOneWidget);
+      expect(find.text(AppStrings.analysisOverlapExplanation), findsOneWidget);
+    },
+  );
 }

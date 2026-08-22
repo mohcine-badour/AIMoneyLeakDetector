@@ -39,8 +39,8 @@ abstract final class ReminderCopy {
     return switch (kind) {
       ReminderKind.renewal => AppStrings.renewalReminderBody(formatted),
       ReminderKind.trialEnding => AppStrings.trialReminderBody(
-          '$formatted${AppStrings.compactPerMonth}',
-        ),
+        '$formatted${AppStrings.compactPerMonth}',
+      ),
     };
   }
 }

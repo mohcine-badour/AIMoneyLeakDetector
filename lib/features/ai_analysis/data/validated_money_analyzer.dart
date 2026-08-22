@@ -11,10 +11,7 @@ class ValidatedMoneyAnalyzer implements MoneyAnalyzer {
   @override
   Future<MoneyLeakReport> analyze(MoneyAnalysisFacts facts) async {
     final json = await _backend.analyze(facts);
-    final explanations = MoneyAnalysisValidator.parse(
-      json: json,
-      facts: facts,
-    );
+    final explanations = MoneyAnalysisValidator.parse(json: json, facts: facts);
     return MoneyLeakReport(
       monthlySpend: facts.monthlySpend,
       potentialSavings: facts.potentialSavings,

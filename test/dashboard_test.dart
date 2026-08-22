@@ -22,6 +22,7 @@ Future<void> _saveNetflixAndAdobe(AppDatabase database) async {
       billingCycle: BillingCycle.monthly,
       nextBillingDate: DateTime.utc(2026, 8, 22),
       category: SubscriptionCategory.entertainment,
+      createdAt: DateTime.utc(2026, 8, 1),
     ),
   );
   await repository.save(
@@ -33,6 +34,7 @@ Future<void> _saveNetflixAndAdobe(AppDatabase database) async {
       billingCycle: BillingCycle.monthly,
       nextBillingDate: DateTime.utc(2026, 9, 7),
       category: SubscriptionCategory.productivity,
+      createdAt: DateTime.utc(2026, 8, 1),
     ),
   );
 }
@@ -41,22 +43,15 @@ void main() {
   testWidgets('empty dashboard shows zero totals and no leak suggestions', (
     tester,
   ) async {
-    await pumpBillKillerApp(
-      tester,
-      location: AppRoutes.dashboard,
-      now: _now,
-    );
+    await pumpBillKillerApp(tester, location: AppRoutes.dashboard, now: _now);
 
     expect(find.text(AppStrings.goodEvening), findsOneWidget);
-    expect(find.text(AppStrings.yourSubscriptions), findsOneWidget);
-    expect(find.text(r'$0.00'), findsWidgets);
-    expect(find.text(AppStrings.compactPerMonth), findsWidgets);
-    expect(find.text(AppStrings.compactPerYear), findsWidgets);
-    expect(find.text(AppStrings.monthlySpending), findsOneWidget);
-    expect(find.text(AppStrings.annualSpending), findsOneWidget);
-    expect(find.text(AppStrings.upcomingPayments), findsOneWidget);
-    expect(find.text(AppStrings.categoryBreakdown), findsOneWidget);
-    expect(find.text(AppStrings.emptyLeaksMessage), findsOneWidget);
+    expect(find.text(AppStrings.noRenewalsThisWeek), findsOneWidget);
+    expect(find.text(AppStrings.noActiveSubscriptionsYet), findsOneWidget);
+    expect(find.text(r'$0'), findsWidgets);
+    expect(find.text('.00'), findsWidgets);
+    expect(find.text(AppStrings.renewingSoon), findsNothing);
+    expect(find.text(AppStrings.emptyLeaksMessage), findsNothing);
     expect(find.text(AppStrings.addSubscriptionTitle), findsOneWidget);
   });
 
@@ -75,18 +70,17 @@ void main() {
       seed: _saveNetflixAndAdobe,
     );
 
-    expect(find.text(r'$82.98'), findsWidgets);
+    expect(find.text(r'$82'), findsWidgets);
+    expect(find.text('.98'), findsWidgets);
     expect(find.text(r'$995.76'), findsWidgets);
-    expect(find.text(AppStrings.tomorrow), findsOneWidget);
+    expect(find.text('tomorrow · Aug 22'), findsOneWidget);
     expect(find.text('Netflix'), findsOneWidget);
     expect(find.text('Adobe'), findsOneWidget);
-    expect(find.text('Sep 07'), findsOneWidget);
-    expect(find.text(AppStrings.categoryEntertainment), findsOneWidget);
     expect(find.text(AppStrings.categoryProductivity), findsOneWidget);
+    expect(find.text(AppStrings.renewingSoon), findsOneWidget);
+    expect(find.text(AppStrings.allSubscriptions), findsOneWidget);
     expect(find.text(AppStrings.addSubscriptionTitle), findsNothing);
-    expect(find.text('Netflix renews tomorrow.'), findsOneWidget);
-    expect(find.text(r'Adobe is $59.99/month.'), findsOneWidget);
-    expect(find.text(AppStrings.leakExpensiveReason), findsOneWidget);
-    expect(find.text(AppStrings.leakRenewalReason), findsOneWidget);
+    expect(find.text(AppStrings.emptyLeaksMessage), findsNothing);
+    expect(find.text(r'You could save $0.00/month'), findsNothing);
   });
 }

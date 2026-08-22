@@ -27,14 +27,14 @@ void main() {
 
   testWidgets('placeholder routes render their titles', (tester) async {
     const routes = <String, String>{
-      AppRoutes.dashboard: AppStrings.yourSubscriptions,
+      AppRoutes.dashboard: AppStrings.noRenewalsThisWeek,
       AppRoutes.upcoming: AppStrings.upcomingPayments,
       AppRoutes.subscriptions: AppStrings.subscriptionsTitle,
       AppRoutes.addSubscription: AppStrings.addSubscriptionTitle,
       AppRoutes.scanReceipt: AppStrings.scanReceiptTitle,
       AppRoutes.trials: AppStrings.trialsTitle,
       AppRoutes.addTrial: AppStrings.addTrialTitle,
-      AppRoutes.savings: AppStrings.savingsTitle,
+      AppRoutes.savings: AppStrings.insightsTitle,
       AppRoutes.settings: AppStrings.settingsTitle,
       AppRoutes.paywall: AppStrings.paywallTitle,
     };

@@ -11,6 +11,7 @@ import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../paywall/paywall_providers.dart';
 import '../../savings/domain/leak_copy.dart';
 import '../../subscriptions/subscriptions_providers.dart';
 import '../before_subscribe_providers.dart';
@@ -100,15 +101,9 @@ class _ImpactBody extends ConsumerWidget {
                     value: current,
                   ),
                   const SizedBox(height: AppSpacing.lg),
-                  _LabeledAmount(
-                    label: AppStrings.afterAdding,
-                    value: after,
-                  ),
+                  _LabeledAmount(label: AppStrings.afterAdding, value: after),
                   const SizedBox(height: AppSpacing.lg),
-                  _LabeledAmount(
-                    label: AppStrings.annualImpact,
-                    value: annual,
-                  ),
+                  _LabeledAmount(label: AppStrings.annualImpact, value: annual),
                 ],
               ),
             ),
@@ -144,6 +139,10 @@ class _ImpactBody extends ConsumerWidget {
   }
 
   Future<void> _confirm(BuildContext context, WidgetRef ref) async {
+    if (!ref.read(featureAccessProvider).canAddSubscription) {
+      context.push(AppRoutes.paywall);
+      return;
+    }
     await ref
         .read(beforeYouSubscribeControllerProvider)
         .confirm(impact.candidate);

@@ -11,7 +11,6 @@ import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
-import '../../../core/widgets/section_header.dart';
 import '../../ai_analysis/ai_analysis_providers.dart';
 import '../../ai_analysis/domain/money_leak_report.dart';
 import '../../subscriptions/subscriptions_providers.dart';
@@ -28,15 +27,17 @@ class SavingsScreen extends ConsumerWidget {
     final async = ref.watch(moneyLeakReportProvider);
 
     return AppScaffold(
-      title: AppStrings.savingsTitle,
+      title: AppStrings.insightsTitle,
+      showTabs: true,
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.page,
         AppSpacing.sm,
         AppSpacing.page,
-        AppSpacing.page,
+        AppSpacing.md,
       ),
       body: async.when(
-        loading: () => const LoadingState(message: AppStrings.analysisProcessing),
+        loading: () =>
+            const LoadingState(message: AppStrings.analysisProcessing),
         error: (error, stackTrace) => ErrorState(
           message: AppStrings.errorLoadAnalysis,
           onRetry: () {
@@ -71,62 +72,53 @@ class _ReportBody extends StatelessWidget {
 
     return ListView(
       children: [
-        Text(
-          AppStrings.moneyLeakReportTitle,
-          style: textTheme.headlineMedium,
-        ),
+        Text(AppStrings.moneyLeakReportTitle, style: textTheme.headlineMedium),
+        const SizedBox(height: AppSpacing.xs),
+        Text(AppStrings.analysisReadOnlyNotice, style: textTheme.bodySmall),
         const SizedBox(height: AppSpacing.xl),
+        Text(AppStrings.youSpend, style: textTheme.labelMedium),
+        const SizedBox(height: AppSpacing.xs),
+        Text(
+          '$spend${AppStrings.compactPerMonth}',
+          style: textTheme.displaySmall,
+        ),
+        const SizedBox(height: AppSpacing.lg),
         AppCard(
+          tone: AppCardTone.insight,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppStrings.youSpend, style: textTheme.labelMedium),
-              const SizedBox(height: AppSpacing.xs),
               Text(
-                '$spend${AppStrings.compactPerMonth}',
-                style: textTheme.headlineMedium,
+                AppStrings.potentialSavingsLabel,
+                style: textTheme.labelMedium,
               ),
-              const SizedBox(height: AppSpacing.lg),
-              Text(AppStrings.potentialSavingsLabel, style: textTheme.labelMedium),
               const SizedBox(height: AppSpacing.xs),
               Text(
                 '$savings${AppStrings.compactPerMonth}',
-                style: textTheme.headlineMedium,
+                style: textTheme.titleLarge,
               ),
             ],
           ),
         ),
         const SizedBox(height: AppSpacing.xl),
-        const SectionHeader(title: AppStrings.weFound),
-        const SizedBox(height: AppSpacing.md),
-        AppCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                AppStrings.subscriptionsToReview(
-                  report.summary.subscriptionsToReview,
-                ),
-                style: textTheme.bodyLarge,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                AppStrings.possibleOverlaps(report.summary.possibleOverlaps),
-                style: textTheme.bodyLarge,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                AppStrings.upcomingExpensiveRenewals(
-                  report.summary.upcomingExpensiveRenewals,
-                ),
-                style: textTheme.bodyLarge,
-              ),
-            ],
-          ),
-        ),
+        Text(AppStrings.weFound, style: textTheme.titleLarge),
         const SizedBox(height: AppSpacing.md),
         Text(
-          AppStrings.analysisReadOnlyNotice,
+          AppStrings.subscriptionsToReview(
+            report.summary.subscriptionsToReview,
+          ),
+          style: textTheme.bodyLarge,
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          AppStrings.possibleOverlaps(report.summary.possibleOverlaps),
+          style: textTheme.bodyLarge,
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Text(
+          AppStrings.upcomingExpensiveRenewals(
+            report.summary.upcomingExpensiveRenewals,
+          ),
           style: textTheme.bodyLarge,
         ),
         const SizedBox(height: AppSpacing.xl),
@@ -137,7 +129,7 @@ class _ReportBody extends StatelessWidget {
           )
         else
           for (var i = 0; i < report.items.length; i++) ...[
-            if (i > 0) const SizedBox(height: AppSpacing.md),
+            if (i > 0) const Divider(),
             LeakRecommendationCard(
               recommendation: report.items[i].recommendation,
               explanation: report.items[i].explanation,

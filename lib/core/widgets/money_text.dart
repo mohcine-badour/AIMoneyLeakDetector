@@ -27,7 +27,7 @@ class MoneyText extends StatelessWidget {
 
     return Text(
       label,
-      style: compact ? textTheme.titleSmall : textTheme.headlineMedium,
+      style: compact ? textTheme.bodyMedium : textTheme.headlineSmall,
     );
   }
 }

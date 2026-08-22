@@ -68,7 +68,10 @@ void main() {
       findsOneWidget,
     );
 
-    expect(await DriftSubscriptionRepository(harness.$3).getAll(), hasLength(1));
+    expect(
+      await DriftSubscriptionRepository(harness.$3).getAll(),
+      hasLength(1),
+    );
 
     await tester.ensureVisible(find.text(AppStrings.addThisSubscription));
     await tester.tap(find.text(AppStrings.addThisSubscription));

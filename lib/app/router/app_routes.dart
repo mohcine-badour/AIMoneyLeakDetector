@@ -16,10 +16,10 @@ abstract final class AppRoutes {
   static const String trialDetail = '/trials/:id';
   static const String savings = '/savings';
   static const String settings = '/settings';
+  static const String privacyPolicy = '/settings/privacy';
   static const String paywall = '/paywall';
 
-  static String subscriptionDetailLocation(String id) =>
-      '/subscriptions/$id';
+  static String subscriptionDetailLocation(String id) => '/subscriptions/$id';
 
   static String editSubscriptionLocation(String id) =>
       '/subscriptions/$id/edit';

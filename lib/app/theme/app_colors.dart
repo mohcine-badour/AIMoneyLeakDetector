@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 
-/// Centralized BillKiller AI color tokens.
-///
-/// Do not hard-code colors in widgets. Read from [AppColors] or
-/// [ThemeData.colorScheme] instead.
+/// Centralized BillKiller color tokens mapped from [AppTokens].
 abstract final class AppColors {
-  static const Color navy = Color(0xFF0B1F3A);
-  static const Color primary = Color(0xFF1A4B8C);
-  static const Color success = Color(0xFF1F7A4D);
-  static const Color warning = Color(0xFFC4841D);
-  static const Color danger = Color(0xFFB42318);
+  static const Color navy = Color(0xFF1A1A1A);
+  static const Color primary = Color(0xFF1A1A1A);
+  static const Color success = Color(0xFF27500A);
+  static const Color warning = Color(0xFF854F0B);
+  static const Color danger = Color(0xFFA32D2D);
   static const Color onPrimary = Color(0xFFFFFFFF);
   static const Color onNavy = Color(0xFFFFFFFF);
 
-  static const Color background = Color(0xFFF4F6F8);
+  static const Color background = Color(0xFFF7F5F0);
   static const Color surface = Color(0xFFFFFFFF);
-  static const Color mutedText = Color(0xFF5C6B7A);
-  static const Color border = Color(0xFFD8DEE6);
+  static const Color mutedText = Color(0xFF5F5E5A);
+  static const Color border = Color(0x17000000);
+  static const Color insightFill = Color(0xFFF1EFE8);
+  static const Color hairline = Color(0x0F000000);
 
-  static const Color backgroundDark = Color(0xFF071322);
-  static const Color surfaceDark = Color(0xFF122033);
-  static const Color onSurfaceDark = Color(0xFFF4F6F8);
-  static const Color mutedTextDark = Color(0xFF9AA8B5);
-  static const Color borderDark = Color(0xFF2A3B50);
+  static const Color backgroundDark = Color(0xFF0B0B0B);
+  static const Color surfaceDark = Color(0xFF161616);
+  static const Color onSurfaceDark = Color(0xFFF5F5F5);
+  static const Color mutedTextDark = Color(0xFFB4B2A9);
+  static const Color borderDark = Color(0x1CFFFFFF);
+  static const Color insightFillDark = Color(0xFF1F1F1F);
 }

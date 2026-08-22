@@ -11,6 +11,9 @@ import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../ads/domain/ad_placement.dart';
+import '../../ads/presentation/ad_banner_slot.dart';
+import '../../paywall/paywall_navigation.dart';
 import '../trials_providers.dart';
 import 'trial_list_card.dart';
 
@@ -24,17 +27,20 @@ class TrialsListScreen extends ConsumerWidget {
 
     return AppScaffold(
       title: AppStrings.trialsTitle,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push(AppRoutes.addTrial),
-        tooltip: AppStrings.addTrialTitle,
-        child: const Icon(AppIcons.add),
-      ),
+      actions: [
+        IconButton(
+          onPressed: () => PaywallNavigation.addTrial(context, ref),
+          tooltip: AppStrings.addTrialTitle,
+          icon: const Icon(AppIcons.add),
+        ),
+      ],
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.page,
         AppSpacing.sm,
         AppSpacing.page,
         AppSpacing.page,
       ),
+      bottomBanner: const AdBannerSlot(placement: AdPlacement.trials),
       body: visible.when(
         loading: () => const LoadingState(),
         error: (error, stackTrace) => ErrorState(
@@ -47,20 +53,20 @@ class TrialsListScreen extends ConsumerWidget {
               title: AppStrings.emptyTrialsTitle,
               message: AppStrings.emptyTrialsMessage,
               actionLabel: AppStrings.addTrialTitle,
-              onAction: () => context.push(AppRoutes.addTrial),
+              onAction: () => PaywallNavigation.addTrial(context, ref),
             );
           }
 
           return ListView.separated(
             itemCount: items.length,
-            separatorBuilder: (context, index) =>
-                const SizedBox(height: AppSpacing.md),
+            separatorBuilder: (context, index) => const Divider(),
             itemBuilder: (context, index) {
               final trial = items[index];
               return TrialListCard(
                 trial: trial,
                 now: now,
-                onTap: () => context.push(AppRoutes.trialDetailLocation(trial.id)),
+                onTap: () =>
+                    context.push(AppRoutes.trialDetailLocation(trial.id)),
               );
             },
           );

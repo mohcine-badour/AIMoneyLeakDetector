@@ -19,12 +19,16 @@ abstract final class MoneyAnalysisValidator {
 
     final mutates = json['mutates_data'];
     if (mutates == true) {
-      throw const MoneyAnalysisException('analysis must not mutate financial data');
+      throw const MoneyAnalysisException(
+        'analysis must not mutate financial data',
+      );
     }
 
     final mutations = json['mutations'];
     if (mutations is List && mutations.isNotEmpty) {
-      throw const MoneyAnalysisException('analysis must not mutate financial data');
+      throw const MoneyAnalysisException(
+        'analysis must not mutate financial data',
+      );
     }
 
     final explanations = json['explanations'];

@@ -19,10 +19,7 @@ void main() {
     await database.close();
   });
 
-  Subscription sample({
-    String id = 'sub-1',
-    String name = 'Netflix',
-  }) {
+  Subscription sample({String id = 'sub-1', String name = 'Netflix'}) {
     return Subscription.create(
       id: id,
       name: name,
@@ -88,10 +85,9 @@ void main() {
       for (final category in SubscriptionCategory.values) {
         index += 1;
         await repository.save(
-          sample(id: 'row-$index').copyWith(
-            billingCycle: cycle,
-            category: category,
-          ),
+          sample(
+            id: 'row-$index',
+          ).copyWith(billingCycle: cycle, category: category),
         );
       }
     }
@@ -99,7 +95,9 @@ void main() {
     final all = await repository.getAll();
     expect(
       all,
-      hasLength(BillingCycle.values.length * SubscriptionCategory.values.length),
+      hasLength(
+        BillingCycle.values.length * SubscriptionCategory.values.length,
+      ),
     );
     expect(
       all.map((item) => item.billingCycle).toSet(),

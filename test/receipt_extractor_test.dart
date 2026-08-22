@@ -95,10 +95,7 @@ void main() {
 
   test('validated extractor rejects invalid backend JSON', () async {
     final extractor = ValidatedReceiptExtractor(
-      _JsonBackend({
-        ...LocalReceiptExtractionBackend.sampleJson,
-        'amount': -1,
-      }),
+      _JsonBackend({...LocalReceiptExtractionBackend.sampleJson, 'amount': -1}),
     );
 
     await expectLater(
@@ -117,10 +114,7 @@ void main() {
 
     final json = await backend.extract(image);
     expect(json, LocalReceiptExtractionBackend.sampleJson);
-    expect(
-      () => ReceiptExtractionValidator.parse(json),
-      returnsNormally,
-    );
+    expect(() => ReceiptExtractionValidator.parse(json), returnsNormally);
   });
 
   test('mock extraction still matches the JSON contract', () async {

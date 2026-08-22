@@ -1,202 +1,159 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../app/router/app_routes.dart';
-import '../../../core/constants/app_icons.dart';
-import '../../../core/constants/app_spacing.dart';
+import '../../../app/theme/app_tokens.dart';
 import '../../../core/constants/app_strings.dart';
+import '../../../core/utils/money_format.dart';
 import '../../../core/widgets/app_scaffold.dart';
-import '../../../core/widgets/app_text_field.dart';
-import '../../../core/widgets/empty_state.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
 import '../domain/subscription.dart';
-import '../domain/subscription_list_filter.dart';
+import '../subs_scroll.dart';
 import '../subscriptions_providers.dart';
-import 'subscription_labels.dart';
-import 'subscription_list_card.dart';
+import 'category_filter_chips.dart';
+import 'empty_filter_state.dart';
+import 'filter_sheet.dart';
+import 'search_overlay.dart';
+import 'sort_view_controls.dart';
+import 'subscription_list_row.dart';
+import 'subscription_list_total.dart';
+import 'subscriptions_header.dart';
 
-class SubscriptionsListScreen extends ConsumerWidget {
+class SubscriptionsListScreen extends ConsumerStatefulWidget {
   const SubscriptionsListScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SubscriptionsListScreen> createState() =>
+      _SubscriptionsListScreenState();
+}
+
+class _SubscriptionsListScreenState
+    extends ConsumerState<SubscriptionsListScreen> {
+  final _scroll = ScrollController();
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final visible = ref.watch(visibleSubscriptionsProvider);
-    final query = ref.watch(subscriptionListQueryProvider);
     final all = ref.watch(subscriptionsProvider);
+    final totals = ref.watch(subscriptionListTotalsProvider);
+    final counts = ref.watch(subscriptionCategoryCountsProvider);
+    final tokens = AppTokens.of(context);
+
+    ref.listen(subscriptionsScrollToTopProvider, (previous, next) {
+      if (previous == next || !_scroll.hasClients) {
+        return;
+      }
+      _scroll.animateTo(
+        0,
+        duration: const Duration(milliseconds: 280),
+        curve: Curves.easeOutCubic,
+      );
+    });
 
     return AppScaffold(
-      title: AppStrings.subscriptionsTitle,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.push(AppRoutes.addSubscription),
-        tooltip: AppStrings.addSubscriptionTitle,
-        child: const Icon(AppIcons.add),
-      ),
-      padding: const EdgeInsets.fromLTRB(
-        AppSpacing.page,
-        AppSpacing.sm,
-        AppSpacing.page,
-        AppSpacing.page,
-      ),
-      body: visible.when(
-        loading: () => const LoadingState(),
-        error: (error, stackTrace) => ErrorState(
-          message: AppStrings.errorLoadSubscriptions,
-          onRetry: () => ref.invalidate(subscriptionsProvider),
-        ),
-        data: (items) {
-          final hasAny = all.asData?.value.isNotEmpty ?? false;
-          if (!hasAny) {
-            return EmptyState(
-              title: AppStrings.emptySubscriptionsTitle,
-              message: AppStrings.emptySubscriptionsMessage,
-              actionLabel: AppStrings.addSubscriptionTitle,
-              onAction: () => context.push(AppRoutes.addSubscription),
-            );
-          }
-
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              AppTextField(
-                key: const Key('subscriptions-search'),
-                label: AppStrings.searchSubscriptions,
-                prefixIcon: AppIcons.search,
-                onChanged: ref
-                    .read(subscriptionListQueryProvider.notifier)
-                    .setSearch,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              _CategoryFilters(
-                selected: query.category,
-                onSelected: ref
-                    .read(subscriptionListQueryProvider.notifier)
-                    .setCategory,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              _SortFilters(
-                selected: query.sort,
-                onSelected: ref
-                    .read(subscriptionListQueryProvider.notifier)
-                    .setSort,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              Expanded(
-                child: items.isEmpty
-                    ? const EmptyState(
-                        title: AppStrings.noMatchingSubscriptionsTitle,
-                        message: AppStrings.noMatchingSubscriptionsMessage,
-                      )
-                    : ListView.separated(
-                        itemCount: items.length,
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: AppSpacing.md),
-                        itemBuilder: (context, index) {
-                          final subscription = items[index];
-                          return SubscriptionListCard(
-                            subscription: subscription,
-                            onTap: () => context.push(
-                              AppRoutes.subscriptionDetailLocation(
-                                subscription.id,
+      showAppBar: false,
+      showTabs: true,
+      padding: EdgeInsets.zero,
+      body: ColoredBox(
+        color: tokens.bgApp,
+        child: visible.when(
+          loading: () => const LoadingState(),
+          error: (error, stackTrace) => ErrorState(
+            message: AppStrings.errorLoadSubscriptions,
+            onRetry: () => ref.invalidate(subscriptionsProvider),
+          ),
+          data: (items) {
+            final allItems = all.asData?.value ?? const <Subscription>[];
+            final currency = items.isNotEmpty
+                ? items.first.currency
+                : MoneyFormat.defaultCurrencyCode;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SubscriptionsHeader(
+                  activeCount: totals.count,
+                  monthly: totals.monthly,
+                  currencyCode: currency,
+                  hasAny: allItems.isNotEmpty,
+                  onSearchPress: () => _openSearch(allItems),
+                  onFilterPress: () => _openFilters(counts),
+                ),
+                if (allItems.isNotEmpty) ...[
+                  CategoryFilterChips(categoryCounts: counts),
+                  const SortViewControls(),
+                ],
+                Expanded(
+                  child: items.isEmpty
+                      ? ListView(
+                          controller: _scroll,
+                          children: [
+                            EmptyFilterState(
+                              hasAnySubscriptions: allItems.isNotEmpty,
+                            ),
+                          ],
+                        )
+                      : ListView(
+                          controller: _scroll,
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(14, 4, 14, 4),
+                              decoration: BoxDecoration(
+                                color: tokens.bgCard,
+                                borderRadius: BorderRadius.circular(14),
+                                border: Border.all(
+                                  color: tokens.border,
+                                  width: 0.5,
+                                ),
+                              ),
+                              child: Column(
+                                children: [
+                                  for (var i = 0; i < items.length; i++)
+                                    SubscriptionListRow(
+                                      subscription: items[i],
+                                      isLast: i == items.length - 1,
+                                    ),
+                                ],
                               ),
                             ),
-                          );
-                        },
-                      ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _CategoryFilters extends StatelessWidget {
-  const _CategoryFilters({
-    required this.selected,
-    required this.onSelected,
-  });
-
-  final SubscriptionCategory? selected;
-  final ValueChanged<SubscriptionCategory?> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
-          _FilterChip(
-            label: AppStrings.filterAll,
-            selected: selected == null,
-            onTap: () => onSelected(null),
-          ),
-          for (final category in SubscriptionCategory.values)
-            _FilterChip(
-              label: category.label,
-              selected: selected == category,
-              onTap: () => onSelected(category),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _SortFilters extends StatelessWidget {
-  const _SortFilters({
-    required this.selected,
-    required this.onSelected,
-  });
-
-  final SubscriptionSort selected;
-  final ValueChanged<SubscriptionSort> onSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: AppSpacing.sm,
-      children: [
-        _FilterChip(
-          label: AppStrings.sortNextDate,
-          selected: selected == SubscriptionSort.nextBillingDate,
-          onTap: () => onSelected(SubscriptionSort.nextBillingDate),
+                            SubscriptionListTotal(
+                              totals: totals,
+                              currencyCode: currency,
+                            ),
+                          ],
+                        ),
+                ),
+              ],
+            );
+          },
         ),
-        _FilterChip(
-          label: AppStrings.sortMonthlyCost,
-          selected: selected == SubscriptionSort.monthlyCost,
-          onTap: () => onSelected(SubscriptionSort.monthlyCost),
-        ),
-      ],
+      ),
     );
   }
-}
 
-class _FilterChip extends StatelessWidget {
-  const _FilterChip({
-    required this.label,
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: AppSpacing.sm),
-      child: FilterChip(
-        label: Text(label),
-        selected: selected,
-        onSelected: (_) => onTap(),
-        showCheckmark: false,
-        visualDensity: VisualDensity.compact,
+  Future<void> _openSearch(List<Subscription> subscriptions) {
+    return Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        fullscreenDialog: true,
+        builder: (context) => SearchOverlay(subscriptions: subscriptions),
       ),
+    );
+  }
+
+  Future<void> _openFilters(Map<String, int> counts) {
+    return showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (context) {
+        return FilterSheet(categoryCounts: counts);
+      },
     );
   }
 }

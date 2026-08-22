@@ -59,10 +59,18 @@ class UsageEntries extends Table {
 @DriftDatabase(tables: [SubscriptionEntries, TrialEntries, UsageEntries])
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
-      : super(executor ?? driftDatabase(name: 'billkiller'));
+    : super(executor ?? driftDatabase(name: 'billkiller'));
 
   @override
   int get schemaVersion => 3;
+
+  Future<void> eraseAllUserData() async {
+    await transaction(() async {
+      await delete(usageEntries).go();
+      await delete(trialEntries).go();
+      await delete(subscriptionEntries).go();
+    });
+  }
 
   @override
   MigrationStrategy get migration {

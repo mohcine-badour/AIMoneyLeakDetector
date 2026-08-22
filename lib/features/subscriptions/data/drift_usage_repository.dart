@@ -26,9 +26,7 @@ class DriftUsageRepository implements UsageRepository {
   @override
   Future<Map<String, int>> declaredCounts() async {
     final rows = await _db.select(_db.usageEntries).get();
-    return {
-      for (final row in rows) row.subscriptionId: row.useCount,
-    };
+    return {for (final row in rows) row.subscriptionId: row.useCount};
   }
 
   @override
@@ -40,9 +38,9 @@ class DriftUsageRepository implements UsageRepository {
 
   @override
   Future<void> deleteBySubscriptionId(String subscriptionId) async {
-    await (_db.delete(_db.usageEntries)
-          ..where((row) => row.subscriptionId.equals(subscriptionId)))
-        .go();
+    await (_db.delete(
+      _db.usageEntries,
+    )..where((row) => row.subscriptionId.equals(subscriptionId))).go();
   }
 
   UsageEntriesCompanion _toCompanion(SubscriptionUsage usage) {

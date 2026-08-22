@@ -26,7 +26,10 @@ class OnboardingRepository {
       return null;
     }
 
-    final spending = _byName(SpendingRange.values, _prefs.getString(spendingKey));
+    final spending = _byName(
+      SpendingRange.values,
+      _prefs.getString(spendingKey),
+    );
     final savings = _byName(SavingsGoal.values, _prefs.getString(savingsKey));
     final entryPath = _byName(
       OnboardingEntryPath.values,
@@ -61,6 +64,14 @@ class OnboardingRepository {
       completedAtKey,
       answers.completedAt.toUtc().toIso8601String(),
     );
+  }
+
+  Future<void> clear() async {
+    await _prefs.remove(completedKey);
+    await _prefs.remove(spendingKey);
+    await _prefs.remove(savingsKey);
+    await _prefs.remove(entryPathKey);
+    await _prefs.remove(completedAtKey);
   }
 
   T? _byName<T extends Enum>(List<T> values, String? name) {

@@ -11,6 +11,8 @@ import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../analytics/analytics_providers.dart';
+import '../../analytics/domain/analytics_event.dart';
 import '../../subscriptions/domain/subscription.dart';
 import '../../subscriptions/subscriptions_providers.dart';
 import '../cancellation_providers.dart';
@@ -25,6 +27,9 @@ class CancellationGuideScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(
+      analyticsScreenViewProvider(AnalyticsEvent.cancellationGuideOpened),
+    );
     final async = ref.watch(subscriptionByIdProvider(subscriptionId));
 
     return async.when(
@@ -55,10 +60,7 @@ class CancellationGuideScreen extends ConsumerWidget {
           merchant: subscription.merchant,
           name: subscription.name,
         );
-        return _CancellationGuideBody(
-          subscription: subscription,
-          guide: guide,
-        );
+        return _CancellationGuideBody(subscription: subscription, guide: guide);
       },
     );
   }

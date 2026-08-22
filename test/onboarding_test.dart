@@ -34,7 +34,9 @@ void main() {
     expect(stored.entryPath, OnboardingEntryPath.addManually);
   });
 
-  testWidgets('manual onboarding flow reaches add subscription', (tester) async {
+  testWidgets('manual onboarding flow reaches add subscription', (
+    tester,
+  ) async {
     final harness = await pumpBillKillerApp(tester);
     final prefs = harness.$2;
 
@@ -83,10 +85,10 @@ void main() {
     await tester.tap(find.text(AppStrings.entryImportLater));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.yourSubscriptions), findsOneWidget);
+    expect(find.text(AppStrings.noRenewalsThisWeek), findsOneWidget);
   });
 
-  testWidgets('scan a receipt completes onboarding and opens the scanner', (
+  testWidgets('scan a receipt completes onboarding and opens the paywall', (
     tester,
   ) async {
     await pumpBillKillerApp(tester, location: AppRoutes.onboarding);
@@ -104,7 +106,7 @@ void main() {
     await tester.tap(find.text(AppStrings.entryScanReceipt));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.scanReceiptTitle), findsOneWidget);
-    expect(find.text(AppStrings.scanUseCamera), findsOneWidget);
+    expect(find.text(AppStrings.paywallHeadline), findsOneWidget);
+    expect(find.text(AppStrings.perkReceiptScanner), findsOneWidget);
   });
 }

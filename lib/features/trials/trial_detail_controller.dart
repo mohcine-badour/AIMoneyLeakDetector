@@ -14,7 +14,9 @@ class TrialDetailController {
   final Ref _ref;
 
   Future<void> markCancelled(Trial trial) async {
-    await _ref.read(trialRepositoryProvider).save(
+    await _ref
+        .read(trialRepositoryProvider)
+        .save(
           trial.copyWith(
             status: TrialStatus.cancelled,
             updatedAt: DateTime.now().toUtc(),

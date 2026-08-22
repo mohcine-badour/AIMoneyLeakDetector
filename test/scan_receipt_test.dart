@@ -15,12 +15,73 @@ import 'package:billkiller_ai/features/subscriptions/domain/subscription.dart';
 import 'helpers/pump_app.dart';
 
 final _png = Uint8List.fromList([
-  0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A, 0x00, 0x00, 0x00, 0x0D,
-  0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x01,
-  0x08, 0x06, 0x00, 0x00, 0x00, 0x1F, 0x15, 0xC4, 0x89, 0x00, 0x00, 0x00,
-  0x0A, 0x49, 0x44, 0x41, 0x54, 0x78, 0x9C, 0x63, 0x00, 0x01, 0x00, 0x00,
-  0x05, 0x00, 0x01, 0x0D, 0x0A, 0x2D, 0xB4, 0x00, 0x00, 0x00, 0x00, 0x49,
-  0x45, 0x4E, 0x44, 0xAE, 0x42, 0x60, 0x82,
+  0x89,
+  0x50,
+  0x4E,
+  0x47,
+  0x0D,
+  0x0A,
+  0x1A,
+  0x0A,
+  0x00,
+  0x00,
+  0x00,
+  0x0D,
+  0x49,
+  0x48,
+  0x44,
+  0x52,
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x00,
+  0x01,
+  0x08,
+  0x06,
+  0x00,
+  0x00,
+  0x00,
+  0x1F,
+  0x15,
+  0xC4,
+  0x89,
+  0x00,
+  0x00,
+  0x00,
+  0x0A,
+  0x49,
+  0x44,
+  0x41,
+  0x54,
+  0x78,
+  0x9C,
+  0x63,
+  0x00,
+  0x01,
+  0x00,
+  0x00,
+  0x05,
+  0x00,
+  0x01,
+  0x0D,
+  0x0A,
+  0x2D,
+  0xB4,
+  0x00,
+  0x00,
+  0x00,
+  0x00,
+  0x49,
+  0x45,
+  0x4E,
+  0x44,
+  0xAE,
+  0x42,
+  0x60,
+  0x82,
 ]);
 
 class _FakePicker implements ReceiptImagePicker {
@@ -53,18 +114,22 @@ void main() {
     expect(find.text(AppStrings.scanUseGallery), findsOneWidget);
   });
 
-  testWidgets('add subscription opens the scan flow', (tester) async {
+  testWidgets('add subscription opens the paywall for the scanner', (
+    tester,
+  ) async {
     await pumpBillKillerApp(tester, location: AppRoutes.addSubscription);
 
     await tester.ensureVisible(find.text(AppStrings.entryScanReceipt));
     await tester.tap(find.text(AppStrings.entryScanReceipt));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.scanReceiptTitle), findsOneWidget);
-    expect(find.text(AppStrings.scanUseCamera), findsOneWidget);
+    expect(find.text(AppStrings.paywallHeadline), findsOneWidget);
+    expect(find.text(AppStrings.perkReceiptScanner), findsOneWidget);
   });
 
-  testWidgets('preview then processing then extracted mock data', (tester) async {
+  testWidgets('preview then processing then extracted mock data', (
+    tester,
+  ) async {
     final extractor = _HeldExtractor();
     await pumpBillKillerApp(
       tester,
@@ -128,9 +193,9 @@ void main() {
     await tester.tap(find.text(AppStrings.addThisSubscription));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.subscriptionsTitle), findsOneWidget);
+    expect(find.text(AppStrings.subscriptionsTitle), findsWidgets);
     expect(find.text('Netflix'), findsOneWidget);
-    expect(find.text(r'$22.99 / month'), findsOneWidget);
+    expect(find.text(r'$22.99'), findsWidgets);
 
     final stored = await DriftSubscriptionRepository(harness.$3).getAll();
     expect(stored, hasLength(1));

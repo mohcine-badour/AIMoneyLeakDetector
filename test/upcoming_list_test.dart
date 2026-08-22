@@ -50,11 +50,7 @@ Future<void> _savePayments(AppDatabase database) async {
 
 void main() {
   testWidgets('empty upcoming list shows an empty state', (tester) async {
-    await pumpBillKillerApp(
-      tester,
-      location: AppRoutes.upcoming,
-      now: _now,
-    );
+    await pumpBillKillerApp(tester, location: AppRoutes.upcoming, now: _now);
 
     expect(find.text(AppStrings.upcomingPayments), findsOneWidget);
     expect(find.text(AppStrings.emptyUpcomingTitle), findsOneWidget);
@@ -90,23 +86,18 @@ void main() {
     expect(adobeY, lessThan(spotifyY));
   });
 
-  testWidgets('dashboard view all opens the upcoming timeline', (tester) async {
+  testWidgets('dashboard subscriptions tab opens the list', (tester) async {
     tester.view.physicalSize = const Size(800, 2000);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await pumpBillKillerApp(
-      tester,
-      location: AppRoutes.dashboard,
-      now: _now,
-    );
+    await pumpBillKillerApp(tester, location: AppRoutes.dashboard, now: _now);
 
-    await tester.ensureVisible(find.text(AppStrings.viewAll).first);
-    await tester.tap(find.text(AppStrings.viewAll).first);
+    await tester.tap(find.text(AppStrings.tabSubscriptions));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.upcomingPayments), findsWidgets);
-    expect(find.text(AppStrings.emptyUpcomingTitle), findsOneWidget);
+    expect(find.text(AppStrings.subscriptionsTitle), findsWidgets);
+    expect(find.text(AppStrings.emptySubscriptionsTitle), findsOneWidget);
   });
 }

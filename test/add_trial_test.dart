@@ -21,7 +21,9 @@ void main() {
     expect(find.text(AppStrings.addTrialTitle), findsOneWidget);
   });
 
-  testWidgets('valid form saves and returns to the trials list', (tester) async {
+  testWidgets('valid form saves and returns to the trials list', (
+    tester,
+  ) async {
     final harness = await pumpBillKillerApp(
       tester,
       location: AppRoutes.addTrial,

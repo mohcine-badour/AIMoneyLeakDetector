@@ -5,7 +5,6 @@ import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/money_format.dart';
 import '../../../core/widgets/app_button.dart';
-import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_text_field.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
@@ -39,18 +38,17 @@ class _SubscriptionUsageCardState extends ConsumerState<SubscriptionUsageCard> {
 
   @override
   Widget build(BuildContext context) {
-    final async = ref.watch(usageBySubscriptionProvider(widget.subscription.id));
+    final async = ref.watch(
+      usageBySubscriptionProvider(widget.subscription.id),
+    );
     final textTheme = Theme.of(context).textTheme;
 
     return async.when(
-      loading: () => const AppCard(child: LoadingState()),
-      error: (error, stackTrace) => AppCard(
-        child: ErrorState(
-          message: AppStrings.errorLoadSubscriptions,
-          onRetry: () => ref.invalidate(
-            usageBySubscriptionProvider(widget.subscription.id),
-          ),
-        ),
+      loading: () => const LoadingState(),
+      error: (error, stackTrace) => ErrorState(
+        message: AppStrings.errorLoadSubscriptions,
+        onRetry: () =>
+            ref.invalidate(usageBySubscriptionProvider(widget.subscription.id)),
       ),
       data: (usage) {
         if (!_hydrated) {
@@ -62,55 +60,53 @@ class _SubscriptionUsageCardState extends ConsumerState<SubscriptionUsageCard> {
             ? parsed ?? usage?.useCount
             : usage?.useCount;
         final snapshot = CostPerUse.fromMonthly(
-          monthlyAmount: SubscriptionCost.monthlyEquivalent(widget.subscription),
+          monthlyAmount: SubscriptionCost.monthlyEquivalent(
+            widget.subscription,
+          ),
           uses: usesForPreview,
         );
 
-        return AppCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(AppStrings.monthlyLabel, style: textTheme.labelMedium),
-              const SizedBox(height: AppSpacing.xs),
-              MoneyText(
-                amount: snapshot.monthlyAmount,
-                currencyCode: widget.subscription.currency,
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              AppTextField(
-                key: const Key('subscription-uses'),
-                label: AppStrings.usesLabel,
-                hint: AppStrings.usesHint,
-                controller: _usesController,
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.done,
-                errorText: _usesError,
-                onChanged: _onUsesChanged,
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              Text(AppStrings.costPerUseLabel, style: textTheme.labelMedium),
-              const SizedBox(height: AppSpacing.xs),
-              if (snapshot.costPerUse == null)
-                Text(
-                  AppStrings.costPerUseUnavailable,
-                  style: textTheme.bodyLarge,
-                )
-              else
-                Text(
-                  MoneyFormat.format(
-                    snapshot.costPerUse!,
-                    currencyCode: widget.subscription.currency,
-                  ),
-                  style: textTheme.bodyLarge,
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(AppStrings.monthlyLabel, style: textTheme.labelMedium),
+            const SizedBox(height: AppSpacing.xs),
+            MoneyText(
+              amount: snapshot.monthlyAmount,
+              currencyCode: widget.subscription.currency,
+              compact: true,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            AppTextField(
+              key: const Key('subscription-uses'),
+              label: AppStrings.usesLabel,
+              hint: AppStrings.usesHint,
+              controller: _usesController,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              errorText: _usesError,
+              onChanged: _onUsesChanged,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            Text(AppStrings.costPerUseLabel, style: textTheme.labelMedium),
+            const SizedBox(height: AppSpacing.xs),
+            if (snapshot.costPerUse == null)
+              Text(AppStrings.costPerUseUnavailable, style: textTheme.bodyLarge)
+            else
+              Text(
+                MoneyFormat.format(
+                  snapshot.costPerUse!,
+                  currencyCode: widget.subscription.currency,
                 ),
-              const SizedBox(height: AppSpacing.lg),
-              AppButton(
-                label: AppStrings.logAUse,
-                variant: AppButtonVariant.secondary,
-                onPressed: _logUse,
+                style: textTheme.bodyLarge,
               ),
-            ],
-          ),
+            const SizedBox(height: AppSpacing.lg),
+            AppButton(
+              label: AppStrings.logAUse,
+              variant: AppButtonVariant.secondary,
+              onPressed: _logUse,
+            ),
+          ],
         );
       },
     );
@@ -137,9 +133,7 @@ class _SubscriptionUsageCardState extends ConsumerState<SubscriptionUsageCard> {
 
   Future<void> _logUse() async {
     final parsed = UsageValidator.parseCount(_usesController.text);
-    final current = UsageValidator.isValidCount(parsed)
-        ? parsed!
-        : 0;
+    final current = UsageValidator.isValidCount(parsed) ? parsed! : 0;
     final next = current + 1;
     _usesController.text = '$next';
     setState(() => _usesError = null);

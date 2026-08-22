@@ -57,31 +57,34 @@ void main() {
     );
   }
 
-  test('schedules 3-day, 24-hour, and 2-hour renewal reminders at 09:00 local', () {
-    final reminders = plan(
-      subscriptions: [
-        subscription(id: 'netflix', nextBillingDate: DateTime.utc(2026, 9, 3)),
-      ],
-    );
+  test(
+    'schedules 3-day, 24-hour, and 2-hour renewal reminders at 09:00 local',
+    () {
+      final reminders = plan(
+        subscriptions: [
+          subscription(
+            id: 'netflix',
+            nextBillingDate: DateTime.utc(2026, 9, 3),
+          ),
+        ],
+      );
 
-    expect(reminders, hasLength(3));
-    expect(
-      reminders.map((item) => item.offset),
-      [
+      expect(reminders, hasLength(3));
+      expect(reminders.map((item) => item.offset), [
         PaymentReminderOffsets.threeDays,
         PaymentReminderOffsets.twentyFourHours,
         PaymentReminderOffsets.twoHours,
-      ],
-    );
-    expect(reminders[0].fireAt, DateTime(2026, 8, 31, 9));
-    expect(reminders[1].fireAt, DateTime(2026, 9, 2, 9));
-    expect(reminders[2].fireAt, DateTime(2026, 9, 3, 7));
-    expect(reminders[0].title, 'Netflix renews in 3 days');
-    expect(reminders[1].title, 'Netflix renews tomorrow');
-    expect(reminders[2].title, 'Netflix renews in 2 hours');
-    expect(reminders.first.body, r'$22.99 will be charged.');
-    expect(reminders.first.kind, ReminderKind.renewal);
-  });
+      ]);
+      expect(reminders[0].fireAt, DateTime(2026, 8, 31, 9));
+      expect(reminders[1].fireAt, DateTime(2026, 9, 2, 9));
+      expect(reminders[2].fireAt, DateTime(2026, 9, 3, 7));
+      expect(reminders[0].title, 'Netflix renews in 3 days');
+      expect(reminders[1].title, 'Netflix renews tomorrow');
+      expect(reminders[2].title, 'Netflix renews in 2 hours');
+      expect(reminders.first.body, r'$22.99 will be charged.');
+      expect(reminders.first.kind, ReminderKind.renewal);
+    },
+  );
 
   test('skips fire times that are already in the past', () {
     final reminders = plan(
@@ -118,22 +121,28 @@ void main() {
     expect(reminders, isEmpty);
   });
 
-  test('schedules trial-ending reminders and drops them after a date edit moves the event', () {
-    final original = plan(
-      trials: [trial(id: 'chatgpt', end: DateTime.utc(2026, 8, 26))],
-    );
-    expect(original, hasLength(3));
-    expect(original.first.title, 'ChatGPT trial ends in 3 days');
-    expect(original.first.body, r'Cancel before it converts to $20.00/month.');
+  test(
+    'schedules trial-ending reminders and drops them after a date edit moves the event',
+    () {
+      final original = plan(
+        trials: [trial(id: 'chatgpt', end: DateTime.utc(2026, 8, 26))],
+      );
+      expect(original, hasLength(3));
+      expect(original.first.title, 'ChatGPT trial ends in 3 days');
+      expect(
+        original.first.body,
+        r'Cancel before it converts to $20.00/month.',
+      );
 
-    final edited = plan(
-      trials: [trial(id: 'chatgpt', end: DateTime.utc(2026, 8, 22))],
-    );
-    expect(edited.map((item) => item.fireAt), [DateTime(2026, 8, 22, 7)]);
+      final edited = plan(
+        trials: [trial(id: 'chatgpt', end: DateTime.utc(2026, 8, 22))],
+      );
+      expect(edited.map((item) => item.fireAt), [DateTime(2026, 8, 22, 7)]);
 
-    final deleted = plan(trials: const []);
-    expect(deleted, isEmpty);
-  });
+      final deleted = plan(trials: const []);
+      expect(deleted, isEmpty);
+    },
+  );
 
   test('notification ids stay stable for the same event and offset', () {
     expect(

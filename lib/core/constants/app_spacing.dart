@@ -6,7 +6,7 @@ abstract final class AppSpacing {
   static const double lg = 16;
   static const double xl = 24;
   static const double xxl = 32;
-  static const double page = 24;
-  static const double buttonHeight = 52;
-  static const double brandMark = 64;
+  static const double page = 20;
+  static const double buttonHeight = 48;
+  static const double brandMark = 56;
 }

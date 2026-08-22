@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/utils/money_format.dart';
+import '../analytics/analytics_providers.dart';
+import '../analytics/domain/analytics_event.dart';
 import '../before_subscribe/domain/subscription_candidate.dart';
 import 'data/drift_subscription_repository.dart';
 import 'domain/subscription.dart';
@@ -159,7 +161,10 @@ class AddSubscriptionController extends Notifier<AddSubscriptionFormState> {
       return false;
     }
 
-    state = state.copyWith(isSaving: true, errors: const SubscriptionFormErrors());
+    state = state.copyWith(
+      isSaving: true,
+      errors: const SubscriptionFormErrors(),
+    );
     final repository = ref.read(subscriptionRepositoryProvider);
     final editingId = state.editingId;
     if (editingId != null) {
@@ -181,6 +186,9 @@ class AddSubscriptionController extends Notifier<AddSubscriptionFormState> {
         ),
       );
       ref.invalidate(subscriptionByIdProvider(editingId));
+      await ref
+          .read(analyticsProvider)
+          .track(AnalyticsEvent.subscriptionUpdated);
     } else {
       await repository.save(
         Subscription.create(
@@ -194,6 +202,12 @@ class AddSubscriptionController extends Notifier<AddSubscriptionFormState> {
           source: SubscriptionSource.manual,
         ),
       );
+      await ref
+          .read(analyticsProvider)
+          .track(
+            AnalyticsEvent.subscriptionCreated,
+            properties: const {'source': 'manual'},
+          );
     }
     ref.invalidate(subscriptionsProvider);
     state = state.copyWith(isSaving: false);

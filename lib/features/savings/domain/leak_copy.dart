@@ -19,6 +19,7 @@ abstract final class LeakCopy {
       SubscriptionCategory.other => AppStrings.categoryOther,
     };
   }
+
   static String overlappingTitle({
     required String amount,
     required String category,
@@ -26,24 +27,15 @@ abstract final class LeakCopy {
     return AppStrings.leakOverlappingTitle(amount, category);
   }
 
-  static String expensiveTitle({
-    required String name,
-    required String amount,
-  }) {
+  static String expensiveTitle({required String name, required String amount}) {
     return AppStrings.leakExpensiveTitle(name, amount);
   }
 
-  static String duplicateTitle({
-    required String merchant,
-    required int count,
-  }) {
+  static String duplicateTitle({required String merchant, required int count}) {
     return AppStrings.leakDuplicateTitle(count, merchant);
   }
 
-  static String renewalTitle({
-    required String name,
-    required int days,
-  }) {
+  static String renewalTitle({required String name, required int days}) {
     if (days == 0) {
       return AppStrings.leakRenewsToday(name);
     }
@@ -53,10 +45,7 @@ abstract final class LeakCopy {
     return AppStrings.leakRenewsInDays(name, days);
   }
 
-  static String trialTitle({
-    required String name,
-    required int days,
-  }) {
+  static String trialTitle({required String name, required int days}) {
     if (days == 0) {
       return AppStrings.leakTrialEndsToday(name);
     }
@@ -76,10 +65,7 @@ abstract final class LeakCopy {
     return MoneyFormat.format(amount, currencyCode: currencyCode);
   }
 
-  static String lowUsageTitle({
-    required String name,
-    required int uses,
-  }) {
+  static String lowUsageTitle({required String name, required int uses}) {
     return AppStrings.leakLowUsageTitle(name, uses);
   }
 }

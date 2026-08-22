@@ -98,10 +98,7 @@ void main() {
 
     expect(find.text(AppStrings.openCancellationPage), findsNothing);
     expect(find.text(AppStrings.generateCancellationMessage), findsOneWidget);
-    expect(
-      find.textContaining('cannot cancel this merchant'),
-      findsOneWidget,
-    );
+    expect(find.textContaining('cannot cancel this merchant'), findsOneWidget);
 
     await tester.tap(find.byKey(const Key('generate-cancellation-message')));
     await tester.pumpAndSettle();

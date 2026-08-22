@@ -8,9 +8,12 @@ import '../../features/cancellation/presentation/cancellation_guide_screen.dart'
 import '../../features/dashboard/presentation/dashboard_screen.dart';
 import '../../features/launch/launch_screen.dart';
 import '../../features/onboarding/onboarding_screen.dart';
+import '../../features/paywall/presentation/paywall_screen.dart';
 import '../../features/upcoming/presentation/upcoming_payments_screen.dart';
 import '../../features/savings/presentation/savings_screen.dart';
 import '../../features/scanner/presentation/scan_receipt_screen.dart';
+import '../../features/settings/presentation/privacy_policy_screen.dart';
+import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/subscriptions/presentation/add_subscription_screen.dart';
 import '../../features/subscriptions/presentation/subscription_detail_screen.dart';
 import '../../features/subscriptions/presentation/subscriptions_list_screen.dart';
@@ -110,15 +113,17 @@ abstract final class AppRouter {
         ),
         GoRoute(
           path: AppRoutes.settings,
-          builder: (context, state) => const PlaceholderScreen(
-            title: AppStrings.settingsTitle,
-          ),
+          builder: (context, state) => const SettingsScreen(),
+          routes: [
+            GoRoute(
+              path: 'privacy',
+              builder: (context, state) => const PrivacyPolicyScreen(),
+            ),
+          ],
         ),
         GoRoute(
           path: AppRoutes.paywall,
-          builder: (context, state) => const PlaceholderScreen(
-            title: AppStrings.paywallTitle,
-          ),
+          builder: (context, state) => const PaywallScreen(),
         ),
       ],
       errorBuilder: (context, state) => PlaceholderScreen(

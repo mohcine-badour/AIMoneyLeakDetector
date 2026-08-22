@@ -49,13 +49,13 @@ class SubscriptionCandidate {
 
   @override
   int get hashCode => Object.hash(
-        name,
-        merchant,
-        amount,
-        currency,
-        billingCycle,
-        nextBillingDate,
-        category,
-        source,
-      );
+    name,
+    merchant,
+    amount,
+    currency,
+    billingCycle,
+    nextBillingDate,
+    category,
+    source,
+  );
 }

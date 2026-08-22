@@ -29,8 +29,7 @@ class SubscribeImpact {
 
   bool get wouldDuplicate => existingSameMerchant >= 1;
 
-  bool get isExpensive =>
-      monthlyAmount >= LeakEngine.expensiveMonthlyThreshold;
+  bool get isExpensive => monthlyAmount >= LeakEngine.expensiveMonthlyThreshold;
 
   @override
   bool operator ==(Object other) {
@@ -47,15 +46,15 @@ class SubscribeImpact {
 
   @override
   int get hashCode => Object.hash(
-        candidate,
-        monthlyAmount,
-        currentCategoryMonthly,
-        afterCategoryMonthly,
-        annualImpact,
-        currencyCode,
-        existingInCategory,
-        existingSameMerchant,
-      );
+    candidate,
+    monthlyAmount,
+    currentCategoryMonthly,
+    afterCategoryMonthly,
+    annualImpact,
+    currencyCode,
+    existingInCategory,
+    existingSameMerchant,
+  );
 }
 
 /// Deterministic add-impact math. Do not use AI for this.

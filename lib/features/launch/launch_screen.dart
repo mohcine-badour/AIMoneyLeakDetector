@@ -10,9 +10,6 @@ import '../../core/constants/app_strings.dart';
 import '../../core/widgets/app_button.dart';
 import '../../core/widgets/app_scaffold.dart';
 
-/// Minimal branded launch screen shown on first open.
-///
-/// Get Started currently opens the onboarding route placeholder.
 class LaunchScreen extends StatelessWidget {
   const LaunchScreen({super.key});
 
@@ -23,22 +20,15 @@ class LaunchScreen extends StatelessWidget {
     return AppScaffold(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.page),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Spacer(flex: 3),
+          const Spacer(flex: 2),
           const _BrandMark(),
-          const SizedBox(height: AppSpacing.xxl),
-          Text(
-            AppStrings.appName,
-            textAlign: TextAlign.center,
-            style: textTheme.displaySmall,
-          ),
+          const SizedBox(height: AppSpacing.xl),
+          Text(AppStrings.appName, style: textTheme.headlineMedium),
           const SizedBox(height: AppSpacing.md),
-          Text(
-            AppStrings.tagline,
-            textAlign: TextAlign.center,
-            style: textTheme.titleMedium,
-          ),
-          const Spacer(flex: 4),
+          Text(AppStrings.tagline, style: textTheme.titleMedium),
+          const Spacer(flex: 3),
           AppButton(
             label: AppStrings.getStarted,
             onPressed: () => context.push(AppRoutes.onboarding),
@@ -65,7 +55,7 @@ class _BrandMark extends StatelessWidget {
       child: const Icon(
         AppIcons.savings,
         color: AppColors.onNavy,
-        size: AppIcons.xl,
+        size: AppIcons.lg,
       ),
     );
   }

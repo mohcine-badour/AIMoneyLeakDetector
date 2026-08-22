@@ -70,14 +70,11 @@ void main() {
       scheduler.last.where((item) => item.kind == ReminderKind.trialEnding),
       hasLength(3),
     );
-    expect(
-      scheduler.last.map((item) => item.offset).toSet(),
-      {
-        PaymentReminderOffsets.threeDays,
-        PaymentReminderOffsets.twentyFourHours,
-        PaymentReminderOffsets.twoHours,
-      },
-    );
+    expect(scheduler.last.map((item) => item.offset).toSet(), {
+      PaymentReminderOffsets.threeDays,
+      PaymentReminderOffsets.twentyFourHours,
+      PaymentReminderOffsets.twoHours,
+    });
   });
 
   testWidgets('cancelling a trial removes its reminders on the next sync', (

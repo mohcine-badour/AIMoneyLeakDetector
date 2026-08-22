@@ -1,7 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../analytics/analytics_providers.dart';
+import '../analytics/domain/analytics_event.dart';
 import '../before_subscribe/domain/subscription_candidate.dart';
 import '../../core/constants/app_strings.dart';
+import '../../core/security/security_providers.dart';
 import '../subscriptions/domain/subscription.dart';
 import 'data/image_picker_receipt_source.dart';
 import 'data/local_receipt_extraction_backend.dart';
@@ -85,15 +88,29 @@ class ScanFlowController extends Notifier<ScanFlowState> {
     );
     try {
       final extracted = await ref.read(receiptExtractorProvider).extract(image);
+      await ref.read(documentStoreProvider).discard();
       state = state.copyWith(
         step: ScanFlowStep.extracted,
         extracted: extracted,
+        clearImage: true,
       );
+      await ref
+          .read(analyticsProvider)
+          .track(
+            AnalyticsEvent.receiptScanCompleted,
+            properties: const {'success': true},
+          );
     } on Object {
       state = state.copyWith(
         step: ScanFlowStep.preview,
         error: AppStrings.scanFailed,
       );
+      await ref
+          .read(analyticsProvider)
+          .track(
+            AnalyticsEvent.receiptScanCompleted,
+            properties: const {'success': false},
+          );
     }
   }
 
@@ -115,6 +132,7 @@ class ScanFlowController extends Notifier<ScanFlowState> {
   }
 
   void retake() {
+    ref.read(documentStoreProvider).discard();
     state = const ScanFlowState();
   }
 
@@ -125,6 +143,7 @@ class ScanFlowController extends Notifier<ScanFlowState> {
     if (image == null) {
       return;
     }
+    await ref.read(documentStoreProvider).hold(image.bytes);
     state = ScanFlowState(step: ScanFlowStep.preview, image: image);
   }
 }

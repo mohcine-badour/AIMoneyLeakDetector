@@ -15,10 +15,7 @@ import 'package:billkiller_ai/core/widgets/money_text.dart';
 import 'package:billkiller_ai/core/widgets/section_header.dart';
 
 Widget _wrap(Widget child) {
-  return MaterialApp(
-    theme: AppTheme.light(),
-    home: child,
-  );
+  return MaterialApp(theme: AppTheme.light(), home: child);
 }
 
 void main() {
@@ -27,6 +24,8 @@ void main() {
     expect(MoneyFormat.format(22.9, currencyCode: 'GBP'), '£22.90');
     expect(MoneyFormat.format(-5, currencyCode: 'EUR'), '-€5.00');
     expect(MoneyFormat.format(2249.16), r'$2,249.16');
+    expect(MoneyFormat.short(82.98), r'$83');
+    expect(MoneyFormat.short(22.99), r'$23');
   });
 
   testWidgets('AppButton invokes onPressed', (tester) async {
@@ -34,10 +33,7 @@ void main() {
     await tester.pumpWidget(
       _wrap(
         Scaffold(
-          body: AppButton(
-            label: 'Continue',
-            onPressed: () => tapped = true,
-          ),
+          body: AppButton(label: 'Continue', onPressed: () => tapped = true),
         ),
       ),
     );
@@ -48,11 +44,7 @@ void main() {
 
   testWidgets('AppTextField shows its label', (tester) async {
     await tester.pumpWidget(
-      _wrap(
-        const Scaffold(
-          body: AppTextField(label: 'Name'),
-        ),
-      ),
+      _wrap(const Scaffold(body: AppTextField(label: 'Name'))),
     );
 
     expect(find.text('Name'), findsOneWidget);
@@ -60,12 +52,7 @@ void main() {
 
   testWidgets('AppScaffold shows a title and body', (tester) async {
     await tester.pumpWidget(
-      _wrap(
-        const AppScaffold(
-          title: 'Subscriptions',
-          body: Text('List'),
-        ),
-      ),
+      _wrap(const AppScaffold(title: 'Subscriptions', body: Text('List'))),
     );
 
     expect(find.text('Subscriptions'), findsOneWidget);
@@ -92,17 +79,15 @@ void main() {
 
   testWidgets('MoneyText shows a formatted amount', (tester) async {
     await tester.pumpWidget(
-      _wrap(
-        const Scaffold(
-          body: MoneyText(amount: 22.99, suffix: '/month'),
-        ),
-      ),
+      _wrap(const Scaffold(body: MoneyText(amount: 22.99, suffix: '/month'))),
     );
 
     expect(find.text(r'$22.99 /month'), findsOneWidget);
   });
 
-  testWidgets('EmptyState, LoadingState, and ErrorState render', (tester) async {
+  testWidgets('EmptyState, LoadingState, and ErrorState render', (
+    tester,
+  ) async {
     await tester.pumpWidget(
       _wrap(
         const Scaffold(

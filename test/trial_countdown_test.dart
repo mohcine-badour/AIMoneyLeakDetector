@@ -22,18 +22,9 @@ void main() {
   }
 
   test('remaining days uses calendar dates only', () {
-    expect(
-      TrialCountdown.remainingDays(DateTime.utc(2026, 8, 26), now),
-      5,
-    );
-    expect(
-      TrialCountdown.remainingDays(DateTime.utc(2026, 8, 21), now),
-      0,
-    );
-    expect(
-      TrialCountdown.remainingDays(DateTime.utc(2026, 8, 20), now),
-      -1,
-    );
+    expect(TrialCountdown.remainingDays(DateTime.utc(2026, 8, 26), now), 5);
+    expect(TrialCountdown.remainingDays(DateTime.utc(2026, 8, 21), now), 0);
+    expect(TrialCountdown.remainingDays(DateTime.utc(2026, 8, 20), now), -1);
   });
 
   test('display status is derived from remaining days unless cancelled', () {
@@ -72,15 +63,16 @@ void main() {
   });
 
   test('sorts ending soon before active, then expired, then cancelled', () {
-    final sorted = TrialList.sorted(
-      [
-        trial(id: 'cancelled', end: DateTime.utc(2026, 8, 22), status: TrialStatus.cancelled),
-        trial(id: 'active', end: DateTime.utc(2026, 8, 30)),
-        trial(id: 'expired', end: DateTime.utc(2026, 8, 10)),
-        trial(id: 'soon', end: DateTime.utc(2026, 8, 23)),
-      ],
-      now,
-    );
+    final sorted = TrialList.sorted([
+      trial(
+        id: 'cancelled',
+        end: DateTime.utc(2026, 8, 22),
+        status: TrialStatus.cancelled,
+      ),
+      trial(id: 'active', end: DateTime.utc(2026, 8, 30)),
+      trial(id: 'expired', end: DateTime.utc(2026, 8, 10)),
+      trial(id: 'soon', end: DateTime.utc(2026, 8, 23)),
+    ], now);
 
     expect(sorted.map((item) => item.id).toList(), [
       'soon',

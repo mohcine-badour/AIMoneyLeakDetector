@@ -12,10 +12,7 @@ void main() {
 
     expect(guide.merchantLabel, 'Netflix');
     expect(guide.canOpenPage, isTrue);
-    expect(
-      guide.officialUrl,
-      Uri.parse('https://www.netflix.com/cancelplan'),
-    );
+    expect(guide.officialUrl, Uri.parse('https://www.netflix.com/cancelplan'));
     expect(guide.includeMessage, isTrue);
     expect(guide.notes.toLowerCase(), contains('does not cancel'));
   });

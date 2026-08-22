@@ -13,6 +13,8 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../analytics/analytics_providers.dart';
+import '../../analytics/domain/analytics_event.dart';
 import '../../subscriptions/presentation/subscription_labels.dart';
 import '../domain/extracted_receipt.dart';
 import '../domain/receipt_image.dart';
@@ -23,6 +25,7 @@ class ScanReceiptScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(analyticsScreenViewProvider(AnalyticsEvent.receiptScanStarted));
     final flow = ref.watch(scanFlowControllerProvider);
     final controller = ref.read(scanFlowControllerProvider.notifier);
 
@@ -32,22 +35,25 @@ class ScanReceiptScreen extends ConsumerWidget {
           : AppStrings.scanReceiptTitle,
       padding: const EdgeInsets.all(AppSpacing.page),
       body: switch (flow.step) {
-        ScanFlowStep.source => _SourceStep(onCamera: controller.pickFromCamera, onGallery: controller.pickFromGallery),
+        ScanFlowStep.source => _SourceStep(
+          onCamera: controller.pickFromCamera,
+          onGallery: controller.pickFromGallery,
+        ),
         ScanFlowStep.preview => _PreviewStep(
-            image: flow.image!,
-            error: flow.error,
-            onUse: controller.usePhoto,
-            onRetake: controller.retake,
-          ),
+          image: flow.image!,
+          error: flow.error,
+          onUse: controller.usePhoto,
+          onRetake: controller.retake,
+        ),
         ScanFlowStep.processing => const LoadingState(
-            message: AppStrings.scanProcessing,
-          ),
+          message: AppStrings.scanProcessing,
+        ),
         ScanFlowStep.extracted => _ExtractedStep(
-            receipt: flow.extracted!,
-            isSaving: flow.isSaving,
-            onConfirm: () => _confirm(context, controller),
-            onRetake: controller.retake,
-          ),
+          receipt: flow.extracted!,
+          isSaving: flow.isSaving,
+          onConfirm: () => _confirm(context, controller),
+          onRetake: controller.retake,
+        ),
       },
     );
   }
@@ -140,9 +146,9 @@ class _PreviewStep extends StatelessWidget {
           const SizedBox(height: AppSpacing.md),
           Text(
             error!,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: colorScheme.error,
-            ),
+            style: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.copyWith(color: colorScheme.error),
           ),
         ],
         const SizedBox(height: AppSpacing.xl),
@@ -179,10 +185,7 @@ class _ExtractedStep extends StatelessWidget {
         Expanded(
           child: ListView(
             children: [
-              _Field(
-                label: AppStrings.fieldMerchant,
-                value: receipt.merchant,
-              ),
+              _Field(label: AppStrings.fieldMerchant, value: receipt.merchant),
               _Field(
                 label: AppStrings.fieldAmount,
                 value: MoneyFormat.format(

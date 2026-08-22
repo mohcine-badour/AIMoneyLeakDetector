@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/utils/money_format.dart';
+import '../analytics/analytics_providers.dart';
+import '../analytics/domain/analytics_event.dart';
 import 'data/drift_trial_repository.dart';
 import 'domain/trial.dart';
 import 'domain/trial_validator.dart';
@@ -74,7 +76,9 @@ class AddTrialController extends Notifier<AddTrialFormState> {
     }
 
     state = state.copyWith(isSaving: true, errors: const TrialFormErrors());
-    await ref.read(trialRepositoryProvider).save(
+    await ref
+        .read(trialRepositoryProvider)
+        .save(
           Trial.create(
             subscriptionName: draft.subscriptionName,
             amountAfterTrial: draft.amountAfterTrial,
@@ -83,6 +87,7 @@ class AddTrialController extends Notifier<AddTrialFormState> {
           ),
         );
     ref.invalidate(trialsProvider);
+    await ref.read(analyticsProvider).track(AnalyticsEvent.trialCreated);
     state = state.copyWith(isSaving: false);
     return true;
   }

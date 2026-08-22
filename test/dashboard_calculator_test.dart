@@ -59,12 +59,18 @@ void main() {
   );
 
   test('greeting period follows the hour of day', () {
-    expect(GreetingPeriodResolver.from(DateTime(2026, 8, 21, 8)), GreetingPeriod.morning);
+    expect(
+      GreetingPeriodResolver.from(DateTime(2026, 8, 21, 8)),
+      GreetingPeriod.morning,
+    );
     expect(
       GreetingPeriodResolver.from(DateTime(2026, 8, 21, 14)),
       GreetingPeriod.afternoon,
     );
-    expect(GreetingPeriodResolver.from(DateTime(2026, 8, 21, 20)), GreetingPeriod.evening);
+    expect(
+      GreetingPeriodResolver.from(DateTime(2026, 8, 21, 20)),
+      GreetingPeriod.evening,
+    );
   });
 
   test('totals include only active subscriptions', () {
@@ -78,7 +84,11 @@ void main() {
     expect(snapshot.monthlyTotal, closeTo(22.99 + 59.99 + 10, 0.0001));
     expect(snapshot.annualTotal, closeTo(snapshot.monthlyTotal * 12, 0.0001));
     expect(snapshot.activeCount, 3);
-    expect(snapshot.upcoming.map((item) => item.subscriptionId), ['netflix', 'adobe', 'spotify']);
+    expect(snapshot.upcoming.map((item) => item.subscriptionId), [
+      'netflix',
+      'adobe',
+      'spotify',
+    ]);
   });
 
   test('category breakdown sorts by monthly spend', () {
@@ -89,9 +99,15 @@ void main() {
     ]);
 
     expect(snapshot.categories, hasLength(2));
-    expect(snapshot.categories.first.category, SubscriptionCategory.productivity);
+    expect(
+      snapshot.categories.first.category,
+      SubscriptionCategory.productivity,
+    );
     expect(snapshot.categories.first.monthlyAmount, closeTo(59.99, 0.0001));
-    expect(snapshot.categories.last.category, SubscriptionCategory.entertainment);
+    expect(
+      snapshot.categories.last.category,
+      SubscriptionCategory.entertainment,
+    );
     expect(snapshot.categories.last.monthlyAmount, closeTo(32.99, 0.0001));
   });
 
@@ -110,7 +126,11 @@ void main() {
       netflix,
     ]);
 
-    expect(snapshot.upcoming.map((item) => item.subscriptionId), ['netflix', 'adobe', 'spotify']);
+    expect(snapshot.upcoming.map((item) => item.subscriptionId), [
+      'netflix',
+      'adobe',
+      'spotify',
+    ]);
   });
 
   test('upcoming labels use today, tomorrow, then month-day', () {

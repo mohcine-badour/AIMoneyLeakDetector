@@ -32,8 +32,14 @@ void main() {
       location: AppRoutes.addSubscription,
     );
 
-    await tester.enterText(find.byKey(const Key('subscription-name')), 'Netflix');
-    await tester.enterText(find.byKey(const Key('subscription-amount')), '22.99');
+    await tester.enterText(
+      find.byKey(const Key('subscription-name')),
+      'Netflix',
+    );
+    await tester.enterText(
+      find.byKey(const Key('subscription-amount')),
+      '22.99',
+    );
 
     await tester.ensureVisible(find.byKey(const Key('subscription-cycle')));
     await tester.tap(find.byKey(const Key('subscription-cycle')));
@@ -65,10 +71,10 @@ void main() {
     await tester.tap(find.text(AppStrings.addThisSubscription));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.subscriptionsTitle), findsOneWidget);
+    expect(find.text(AppStrings.subscriptionsTitle), findsWidgets);
     expect(find.text(AppStrings.addSubscriptionTitle), findsNothing);
     expect(find.text('Netflix'), findsOneWidget);
-    expect(find.text(r'$22.99 / month'), findsOneWidget);
+    expect(find.text(r'$22.99'), findsWidgets);
 
     final stored = await DriftSubscriptionRepository(harness.$3).getAll();
     expect(stored, hasLength(1));

@@ -5,10 +5,7 @@ import '../../upcoming/domain/upcoming_payment.dart';
 import '../../upcoming/domain/upcoming_payments.dart';
 
 class CategorySpend {
-  const CategorySpend({
-    required this.category,
-    required this.monthlyAmount,
-  });
+  const CategorySpend({required this.category, required this.monthlyAmount});
 
   final SubscriptionCategory category;
   final double monthlyAmount;
@@ -39,9 +36,7 @@ class DashboardSnapshot {
 abstract final class DashboardCalculator {
   static const int upcomingLimit = 3;
 
-  static DashboardSnapshot fromSubscriptions(
-    List<Subscription> subscriptions,
-  ) {
+  static DashboardSnapshot fromSubscriptions(List<Subscription> subscriptions) {
     final active = [
       for (final item in subscriptions)
         if (item.status == SubscriptionStatus.active) item,

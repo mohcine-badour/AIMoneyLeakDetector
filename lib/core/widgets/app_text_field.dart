@@ -12,6 +12,7 @@ class AppTextField extends StatelessWidget {
     this.enabled = true,
     this.obscureText = false,
     this.prefixIcon,
+    this.autofocus = false,
     super.key,
   });
 
@@ -25,6 +26,7 @@ class AppTextField extends StatelessWidget {
   final bool enabled;
   final bool obscureText;
   final IconData? prefixIcon;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class AppTextField extends StatelessWidget {
       onChanged: onChanged,
       enabled: enabled,
       obscureText: obscureText,
+      autofocus: autofocus,
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,

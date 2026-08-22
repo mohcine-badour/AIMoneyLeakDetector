@@ -4,12 +4,18 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../../analytics/data/disabled_analytics.dart';
+import '../../analytics/domain/analytics.dart';
+import '../../analytics/domain/reminder_analytics.dart';
 import '../domain/reminder_scheduler.dart';
 import '../domain/scheduled_reminder.dart';
 
 class LocalReminderScheduler implements ReminderScheduler {
-  LocalReminderScheduler({FlutterLocalNotificationsPlugin? plugin})
-      : _plugin = plugin ?? FlutterLocalNotificationsPlugin();
+  LocalReminderScheduler({
+    FlutterLocalNotificationsPlugin? plugin,
+    Analytics? analytics,
+  }) : _plugin = plugin ?? FlutterLocalNotificationsPlugin(),
+       _analytics = analytics ?? const DisabledAnalytics();
 
   static const _channelId = 'billkiller_reminders';
   static const _channelName = 'Reminders';
@@ -17,6 +23,7 @@ class LocalReminderScheduler implements ReminderScheduler {
       'Trial ending and subscription renewal reminders';
 
   final FlutterLocalNotificationsPlugin _plugin;
+  final Analytics _analytics;
   var _initialized = false;
 
   Future<void> initialize() async {
@@ -32,7 +39,12 @@ class LocalReminderScheduler implements ReminderScheduler {
         requestSoundPermission: false,
       ),
     );
-    await _plugin.initialize(settings: settings);
+    await _plugin.initialize(
+      settings: settings,
+      onDidReceiveNotificationResponse: (response) {
+        ReminderAnalytics.onPayload(response.payload, _analytics);
+      },
+    );
     _initialized = true;
   }
 
@@ -89,18 +101,26 @@ class LocalReminderScheduler implements ReminderScheduler {
   }
 
   Future<bool> _requestPermission() async {
-    final android = _plugin.resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>();
+    final android = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
     if (android != null) {
       final notifications =
           await android.requestNotificationsPermission() ?? true;
       await android.requestExactAlarmsPermission();
       return notifications;
     }
-    final ios = _plugin.resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>();
+    final ios = _plugin
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >();
     if (ios != null) {
-      return await ios.requestPermissions(alert: true, badge: true, sound: true) ??
+      return await ios.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          ) ??
           false;
     }
     return true;

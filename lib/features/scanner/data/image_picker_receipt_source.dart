@@ -4,7 +4,7 @@ import '../domain/receipt_image.dart';
 
 class ImagePickerReceiptSource implements ReceiptImagePicker {
   ImagePickerReceiptSource([ImagePicker? picker])
-      : _picker = picker ?? ImagePicker();
+    : _picker = picker ?? ImagePicker();
 
   final ImagePicker _picker;
 
