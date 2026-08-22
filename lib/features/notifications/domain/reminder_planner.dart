@@ -58,6 +58,16 @@ abstract final class ReminderPlanner {
     return reminders;
   }
 
+  static bool hasUpcoming({
+    required DateTime eventDate,
+    required DateTime now,
+  }) {
+    final eventTime = eventAt(eventDate);
+    return PaymentReminderOffsets.beforeCharge.any(
+      (offset) => eventTime.subtract(offset).isAfter(now),
+    );
+  }
+
   static int notificationId(
     String eventId,
     ReminderKind kind,

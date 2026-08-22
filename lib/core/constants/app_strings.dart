@@ -94,6 +94,18 @@ abstract final class AppStrings {
   static const String privacySection = 'Privacy';
   static const String yourDataSection = 'Your data';
   static const String planSection = 'Plan';
+  static const String remindersSection = 'Reminders';
+  static const String remindersToggle = 'Reminders';
+  static const String remindersExplanation =
+      'Get a reminder before a renewal or trial ends. Kichta does not cancel for you.';
+  static const String remindMe = 'Remind me';
+  static const String remindMeHint = 'We will ping you before this date.';
+  static const String reminderArmed =
+      'We will remind you 3 days, 1 day, and 2 hours before.';
+  static const String reminderPermissionDenied =
+      'Allow notifications to get reminders.';
+  static const String reminderNothingUpcoming =
+      'Nothing to remind yet. Choose a date in the future.';
   static const String dismissedInsightsReset =
       'Dismissed insights are visible again.';
   static const String privacyLastUpdated = 'Last updated';

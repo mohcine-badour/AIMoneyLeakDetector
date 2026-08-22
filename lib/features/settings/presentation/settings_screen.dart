@@ -11,6 +11,7 @@ import '../../../core/constants/app_strings.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../insights/insights_providers.dart';
+import '../../notifications/notifications_providers.dart';
 import '../../paywall/domain/entitlement_copy.dart';
 import '../../paywall/domain/paywall_source.dart';
 import '../../paywall/paywall_navigation.dart';
@@ -50,6 +51,26 @@ class SettingsScreen extends ConsumerWidget {
                 source: PaywallSource.settings,
               );
             },
+          ),
+          const SizedBox(height: AppSpacing.xl),
+          _SectionLabel(AppStrings.remindersSection),
+          const SizedBox(height: AppSpacing.sm),
+          _SettingsCard(
+            children: [
+              _RemindersToggle(),
+              Divider(height: 1, color: tokens.border),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+                child: Text(
+                  AppStrings.remindersExplanation,
+                  style: TextStyle(
+                    fontSize: 13,
+                    height: 1.4,
+                    color: tokens.textSecondary,
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: AppSpacing.xl),
           _SectionLabel(AppStrings.privacySection),
@@ -193,6 +214,68 @@ class SettingsScreen extends ConsumerWidget {
     if (result != null && context.mounted) {
       context.go(AppRoutes.launch);
     }
+  }
+}
+
+class _RemindersToggle extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tokens = AppTokens.of(context);
+    final enabled = ref.watch(remindersEnabledProvider);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Row(
+        children: [
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: tokens.bgMuted,
+              borderRadius: BorderRadius.circular(9),
+            ),
+            child: Icon(
+              AppIcons.bellRinging,
+              size: 16,
+              color: tokens.textSecondary,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              AppStrings.remindersToggle,
+              style: TextStyle(
+                fontSize: 14.5,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.15,
+                color: tokens.textPrimary,
+              ),
+            ),
+          ),
+          Switch.adaptive(
+            key: const Key('reminders-toggle'),
+            value: enabled,
+            activeTrackColor: tokens.accent,
+            onChanged: (value) async {
+              HapticFeedback.selectionClick();
+              if (value) {
+                final allowed = await ref
+                    .read(remindersEnabledProvider.notifier)
+                    .enable();
+                if (!allowed && context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(AppStrings.reminderPermissionDenied),
+                    ),
+                  );
+                }
+              } else {
+                await ref.read(remindersEnabledProvider.notifier).disable();
+              }
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
 

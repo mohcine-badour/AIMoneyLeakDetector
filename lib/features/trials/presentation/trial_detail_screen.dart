@@ -13,6 +13,7 @@ import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../notifications/presentation/remind_me_button.dart';
 import '../domain/trial.dart';
 import '../domain/trial_countdown.dart';
 import '../trial_detail_controller.dart';
@@ -99,6 +100,11 @@ class _TrialDetailBody extends ConsumerWidget {
                 ],
               ),
             ),
+            if (status != TrialStatus.cancelled &&
+                status != TrialStatus.expired) ...[
+              const SizedBox(height: AppSpacing.lg),
+              RemindMeRow(eventDate: trial.trialEndDate),
+            ],
             const SizedBox(height: AppSpacing.xl),
             _DetailRow(
               label: AppStrings.fieldTrialEndDate,

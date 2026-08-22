@@ -17,6 +17,7 @@ import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
+import '../../notifications/presentation/remind_me_button.dart';
 import '../domain/subscription.dart';
 import '../domain/subscription_brand.dart';
 import '../domain/subscription_cost.dart';
@@ -97,6 +98,10 @@ class _SubscriptionDetailBody extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.lg),
             _NextBillChip(date: subscription.nextBillingDate, now: now),
+            if (subscription.status == SubscriptionStatus.active) ...[
+              const SizedBox(height: AppSpacing.lg),
+              RemindMeRow(eventDate: subscription.nextBillingDate),
+            ],
             const SizedBox(height: AppSpacing.lg),
             _CostCard(
               monthly: monthly,

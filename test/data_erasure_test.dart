@@ -25,6 +25,9 @@ class _RecordingReminders implements ReminderScheduler {
   Future<void> sync(List<ScheduledReminder> reminders) async {
     last = reminders;
   }
+
+  @override
+  Future<bool> requestPermission() async => true;
 }
 
 void main() {

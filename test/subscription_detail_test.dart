@@ -45,6 +45,7 @@ void main() {
     expect(find.text('Aug 1, 2026'), findsOneWidget);
     expect(find.text(AppStrings.sourceManual), findsOneWidget);
     expect(find.text(AppStrings.edit), findsOneWidget);
+    expect(find.text(AppStrings.remindMe), findsOneWidget);
     expect(find.text(AppStrings.pause), findsOneWidget);
     expect(find.text(AppStrings.delete), findsOneWidget);
     expect(find.text(AppStrings.cancellationGuide), findsOneWidget);

@@ -144,6 +144,23 @@ void main() {
     },
   );
 
+  test('hasUpcoming is false once every offset has passed', () {
+    expect(
+      ReminderPlanner.hasUpcoming(
+        eventDate: DateTime(2026, 8, 21),
+        now: DateTime(2026, 8, 21, 12),
+      ),
+      isFalse,
+    );
+    expect(
+      ReminderPlanner.hasUpcoming(
+        eventDate: DateTime(2026, 9, 3),
+        now: DateTime(2026, 8, 21, 12),
+      ),
+      isTrue,
+    );
+  });
+
   test('notification ids stay stable for the same event and offset', () {
     expect(
       ReminderPlanner.notificationId(

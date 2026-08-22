@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:kichta/app/router/app_routes.dart';
@@ -37,6 +38,7 @@ void main() {
 
     expect(find.text(AppStrings.trialCancelled), findsOneWidget);
     expect(find.text(AppStrings.markTrialCancelled), findsNothing);
+    expect(find.byKey(const Key('remind-me')), findsNothing);
 
     final stored = await DriftTrialRepository(harness.$3).getById('chatgpt');
     expect(stored!.status, TrialStatus.cancelled);

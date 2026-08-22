@@ -41,6 +41,8 @@ void main() {
 
     expect(find.text(AppStrings.settingsTitle), findsWidgets);
     expect(find.text(AppStrings.privacyPolicy), findsOneWidget);
+    expect(find.text(AppStrings.remindersToggle), findsOneWidget);
+    expect(find.text(AppStrings.remindersExplanation), findsOneWidget);
     expect(find.text(AppStrings.deleteMyData), findsOneWidget);
     expect(find.text(AppStrings.deleteAccount), findsOneWidget);
     expect(find.text(AppStrings.appStoreBillingNotice), findsOneWidget);
@@ -69,11 +71,13 @@ void main() {
   );
 
   testWidgets('dashboard opens settings', (tester) async {
+    _largeScreen(tester);
     await pumpKichtaApp(tester, location: AppRoutes.dashboard);
 
     await tester.tap(find.byKey(const Key('open-settings')));
     await tester.pumpAndSettle();
 
+    expect(find.text(AppStrings.remindersToggle), findsOneWidget);
     expect(find.text(AppStrings.deleteMyData), findsOneWidget);
   });
 

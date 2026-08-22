@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:kichta/app/router/app_routes.dart';
+import 'package:kichta/core/constants/app_strings.dart';
 import 'package:kichta/core/database/app_database.dart';
 import 'package:kichta/features/notifications/domain/reminder_scheduler.dart';
 import 'package:kichta/features/notifications/domain/scheduled_reminder.dart';
@@ -15,11 +17,19 @@ import 'helpers/pump_app.dart';
 class _RecordingScheduler implements ReminderScheduler {
   List<ScheduledReminder> last = const [];
   var syncs = 0;
+  var permissionAllowed = true;
+  var permissionRequests = 0;
 
   @override
   Future<void> sync(List<ScheduledReminder> reminders) async {
     syncs += 1;
     last = reminders;
+  }
+
+  @override
+  Future<bool> requestPermission() async {
+    permissionRequests += 1;
+    return permissionAllowed;
   }
 }
 
@@ -77,6 +87,20 @@ void main() {
     });
   });
 
+  testWidgets('disabled reminders do not schedule on app open', (tester) async {
+    final scheduler = _RecordingScheduler();
+    await pumpKichtaApp(
+      tester,
+      location: AppRoutes.dashboard,
+      now: _now,
+      seed: _seed,
+      reminderScheduler: scheduler,
+      prefs: const {'reminders/enabled': false},
+    );
+
+    expect(scheduler.last, isEmpty);
+  });
+
   testWidgets('cancelling a trial removes its reminders on the next sync', (
     tester,
   ) async {
@@ -100,5 +124,67 @@ void main() {
       scheduler.last.where((item) => item.kind == ReminderKind.renewal),
       hasLength(3),
     );
+  });
+
+  testWidgets('turning reminders off clears scheduled notifications', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(800, 2000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    final scheduler = _RecordingScheduler();
+    await pumpKichtaApp(
+      tester,
+      location: AppRoutes.settings,
+      now: _now,
+      seed: _seed,
+      reminderScheduler: scheduler,
+    );
+
+    expect(scheduler.last, hasLength(6));
+
+    await tester.tap(find.byKey(const Key('reminders-toggle')));
+    await tester.pumpAndSettle();
+
+    expect(scheduler.last, isEmpty);
+  });
+
+  testWidgets('remind me asks for permission and confirms the schedule', (
+    tester,
+  ) async {
+    final scheduler = _RecordingScheduler();
+    await pumpKichtaApp(
+      tester,
+      location: AppRoutes.trialDetailLocation('chatgpt'),
+      now: _now,
+      seed: _seed,
+      reminderScheduler: scheduler,
+    );
+
+    await tester.tap(find.byKey(const Key('remind-me')));
+    await tester.pumpAndSettle();
+
+    expect(scheduler.permissionRequests, greaterThan(0));
+    expect(find.text(AppStrings.reminderArmed), findsOneWidget);
+  });
+
+  testWidgets('denied notification permission shows an honest message', (
+    tester,
+  ) async {
+    final scheduler = _RecordingScheduler()..permissionAllowed = false;
+    await pumpKichtaApp(
+      tester,
+      location: AppRoutes.trialDetailLocation('chatgpt'),
+      now: _now,
+      seed: _seed,
+      reminderScheduler: scheduler,
+    );
+
+    await tester.tap(find.byKey(const Key('remind-me')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.reminderPermissionDenied), findsOneWidget);
   });
 }
