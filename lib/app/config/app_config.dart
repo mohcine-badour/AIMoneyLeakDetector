@@ -10,7 +10,7 @@ abstract final class AppConfig {
   static const String privacyPolicyUrl = '';
   static const String termsUrl = '';
   static const String supportUrl =
-      'https://github.com/mohcine-badour/AIMoneyLeakDetector/issues';
+      'https://mohcine-badour.github.io/AIMoneyLeakDetector/support.html';
   static const String manageSubscriptionUrl =
       'https://apps.apple.com/account/subscriptions';
 }

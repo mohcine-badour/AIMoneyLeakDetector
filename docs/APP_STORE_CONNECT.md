@@ -4,7 +4,7 @@ Paste these after GitHub Pages is live from `docs/`:
 
 - Privacy Policy URL: `https://mohcine-badour.github.io/AIMoneyLeakDetector/privacy.html`
 - Terms of Use URL (or use Apple’s standard EULA): `https://mohcine-badour.github.io/AIMoneyLeakDetector/terms.html`
-- Support URL: `https://github.com/mohcine-badour/AIMoneyLeakDetector/issues`
+- Support URL: `https://mohcine-badour.github.io/AIMoneyLeakDetector/support.html`
 
 Enable Pages: repo Settings → Pages → Source = GitHub Actions. The workflow `.github/workflows/pages.yml` deploys `docs/`.
 
