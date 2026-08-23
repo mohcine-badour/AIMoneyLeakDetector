@@ -7,7 +7,6 @@ import '../../app/router/app_routes.dart';
 import '../../app/theme/app_tokens.dart';
 import '../analytics/analytics_providers.dart';
 import '../analytics/domain/analytics_event.dart';
-import '../paywall/domain/paywall_source.dart';
 import 'domain/onboarding_pages.dart';
 import 'onboarding_controller.dart';
 import 'presentation/onboarding_cta.dart';
@@ -165,6 +164,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (!mounted) {
       return;
     }
-    context.go(AppRoutes.paywallLocation(source: PaywallSource.onboarding));
+    context.go(AppRoutes.dashboard);
   }
 }

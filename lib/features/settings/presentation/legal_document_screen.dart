@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/theme/app_tokens.dart';
 import '../../../core/constants/app_icons.dart';
@@ -380,12 +381,14 @@ class _LinkedBody extends ConsumerWidget {
 
   final String text;
 
-  static final _urls = RegExp(r'https://[^\s]+');
+  static final _links = RegExp(
+    r'https://[^\s]+|[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}',
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tokens = AppTokens.of(context);
-    final matches = _urls.allMatches(text);
+    final matches = _links.allMatches(text);
     if (matches.isEmpty) {
       return Text(
         text,
@@ -405,6 +408,9 @@ class _LinkedBody extends ConsumerWidget {
       }
       final raw = match.group(0)!;
       final href = raw.replaceFirst(RegExp(r'[.,;:]+$'), '');
+      final uri = href.contains('@') && !href.startsWith('http')
+          ? Uri(scheme: 'mailto', path: href)
+          : Uri.parse(href);
       spans.add(
         WidgetSpan(
           alignment: PlaceholderAlignment.baseline,
@@ -412,7 +418,11 @@ class _LinkedBody extends ConsumerWidget {
           child: GestureDetector(
             onTap: () {
               HapticFeedback.selectionClick();
-              ref.read(cancellationLinkOpenerProvider).open(Uri.parse(href));
+              if (uri.scheme == 'mailto') {
+                launchUrl(uri);
+              } else {
+                ref.read(cancellationLinkOpenerProvider).open(uri);
+              }
             },
             child: Text(
               href,
@@ -475,7 +485,7 @@ abstract final class _LegalLook {
       'Ads' || 'What Google may receive' => AppIcons.ads,
       'App Store purchases' ||
       'App Store Privacy labels' ||
-      'How to cancel Pro' ||
+      'If you already subscribed' ||
       'Who provides Kichta' => AppIcons.apple,
       'Links you open' || 'Sharing' || 'Third-party services' => AppIcons.share,
       'AI processing' => AppIcons.sparkles,
@@ -485,9 +495,8 @@ abstract final class _LegalLook {
       'Retention' || 'Changes' => AppIcons.upcoming,
       'Deletion' => AppIcons.delete,
       'Revoke consent' => AppIcons.visibility,
-      'What Pro includes' => AppIcons.infinity,
-      'Auto-renewable subscription' => AppIcons.subscriptions,
-      'Restore and refunds' => AppIcons.check,
+      'This version is free' => AppIcons.infinity,
+      'If we add a paid plan later' => AppIcons.subscriptions,
       'Merchants' => AppIcons.close,
       'International transfers' => AppIcons.wifiOff,
       _ => AppIcons.info,

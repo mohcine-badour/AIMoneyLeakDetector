@@ -10,7 +10,6 @@ import 'package:kichta/features/auth/data/guest_session_repository.dart';
 import 'package:kichta/features/onboarding/data/onboarding_repository.dart';
 import 'package:kichta/features/onboarding/domain/onboarding_answers.dart';
 import 'package:kichta/features/onboarding/domain/onboarding_pages.dart';
-import 'package:kichta/features/paywall/domain/paywall_source.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -133,7 +132,7 @@ void main() {
     expect(find.text(AppStrings.onboardingFindOut), findsNothing);
   });
 
-  testWidgets('CTA advances pages and final CTA opens the paywall', (
+  testWidgets('CTA advances pages and final CTA opens home', (
     tester,
   ) async {
     _largeScreen(tester);
@@ -170,22 +169,20 @@ void main() {
 
     await _advance(tester);
 
-    expect(find.text(AppStrings.paywallHeadline), findsOneWidget);
+    expect(find.text(AppStrings.paywallHeadline), findsNothing);
     expect(OnboardingRepository(harness.$2).isCompleted, isTrue);
     expect(analytics.has(AnalyticsEvent.onboardingCompleted), isTrue);
     expect(analytics.propertiesFor(AnalyticsEvent.onboardingCompleted), {
       'source': 'cta_final',
       'kind': OnboardingPageId.safety.name,
     });
-    expect(analytics.propertiesFor(AnalyticsEvent.paywallViewed), {
-      'source': PaywallSource.onboarding.query,
-    });
+    expect(analytics.has(AnalyticsEvent.paywallViewed), isFalse);
     expect(_count(analytics, AnalyticsEvent.onboardingPageView), 4);
     expect(_count(analytics, AnalyticsEvent.onboardingAdvance), 3);
     expect(_count(analytics, AnalyticsEvent.onboardingCompleted), 1);
   });
 
-  testWidgets('Skip completes onboarding and still opens the paywall', (
+  testWidgets('Skip completes onboarding and opens home', (
     tester,
   ) async {
     _largeScreen(tester);
@@ -200,7 +197,7 @@ void main() {
     await tester.tap(find.byKey(const Key('onboarding-skip')));
     await tester.pumpAndSettle();
 
-    expect(find.text(AppStrings.paywallHeadline), findsOneWidget);
+    expect(find.text(AppStrings.paywallHeadline), findsNothing);
     expect(OnboardingRepository(harness.$2).isCompleted, isTrue);
     expect(GuestSessionRepository(harness.$2).hasSession, isTrue);
     expect(analytics.has(AnalyticsEvent.onboardingSkipPress), isTrue);

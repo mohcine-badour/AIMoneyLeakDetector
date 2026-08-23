@@ -1,3 +1,5 @@
+import 'legal_identity.dart';
+
 class PrivacyPolicySection {
   const PrivacyPolicySection({
     required this.title,
@@ -33,13 +35,13 @@ abstract final class PrivacyPolicy {
       title: 'Who provides Kichta',
       group: groupWho,
       body:
-          'Kichta is a local subscription tracker published by the independent developer of this app on the Apple App Store. There is no parent company and no Kichta cloud account in this version.',
+          'Kichta is a local subscription tracker published by ${LegalIdentity.publisher} on the Apple App Store. There is no parent company and no Kichta cloud account in this version.',
     ),
     PrivacyPolicySection(
       title: 'Contact',
       group: groupWho,
       body:
-          'Privacy questions: use the Support row in Settings, which opens GitHub issues, or App Store support for this app. Privacy Policy and Terms of Use are in Settings and at the public URL listed in App Store Connect.',
+          'Privacy questions: email ${LegalIdentity.email}. You can also use the Support row in Settings (GitHub issues) or App Store support for this app. Privacy Policy and Terms of Use are in Settings and at the public URL listed in App Store Connect.',
     ),
     PrivacyPolicySection(
       title: 'Overview',
@@ -93,25 +95,25 @@ abstract final class PrivacyPolicy {
       title: 'App Store purchases',
       group: groupLeavesDevice,
       body:
-          'Pro is sold through the App Store. Apple collects and processes purchase, restore, and Apple ID data to charge, validate, and manage the auto-renewable subscription. Apple’s privacy policy applies to that data: https://www.apple.com/legal/privacy/',
+          'This version is free and does not sell in-app purchases. If you already bought Kichta Pro in an earlier build, or if we add a paid plan later, Apple collects purchase, restore, and Apple ID data to bill and manage that subscription. Apple’s privacy policy applies to that data: https://www.apple.com/legal/privacy/',
     ),
     PrivacyPolicySection(
       title: 'Ads',
       group: groupLeavesDevice,
       body:
-          'Free users may see a small banner on Trials and Upcoming. Ads are served by Google AdMob, a third-party advertising SDK. We request non-personalized ads. We do not send amounts, merchant names, or receipts to the ad SDK. Pro removes ads. Home, add, scan, paywall, and Settings never show ads.',
+          'This version does not show Google AdMob banners and does not request ads. We do not send amounts, merchant names, or receipts to an ad SDK. If we turn ads on later, we will update this policy and App Store Privacy labels first.',
     ),
     PrivacyPolicySection(
       title: 'What Google may receive',
       group: groupLeavesDevice,
       body:
-          'When a banner loads, Google may receive the ad request, IP address, device type, app identifier, ad unit identifier, and an advertising identifier if iOS provides one. Google may also use SKAdNetwork for ad measurement. We do not use App Tracking Transparency and we do not track you across other companies’ apps or websites. Google’s privacy policy: https://policies.google.com/privacy',
+          'Because this version does not request ads, Google does not receive ad requests from Kichta. We do not use App Tracking Transparency and we do not track you across other companies’ apps or websites. If ads return later, Google’s privacy policy will apply to those requests: https://policies.google.com/privacy',
     ),
     PrivacyPolicySection(
       title: 'Links you open',
       group: groupLeavesDevice,
       body:
-          'Cancellation, Support, and Manage subscription open HTTPS pages in Safari or the App Store. Those sites (Apple, GitHub, or a merchant) receive a normal web visit. We do not attach your subscription list to those requests.',
+          'Cancellation and Support open HTTPS pages in Safari or GitHub. Those sites receive a normal web visit. We do not attach your subscription list to those requests.',
     ),
     PrivacyPolicySection(
       title: 'RevenueCat',
@@ -141,13 +143,13 @@ abstract final class PrivacyPolicy {
       title: 'Deletion',
       group: groupControl,
       body:
-          'You can delete the data on this device in Settings with Delete my data. Deletion is immediate and local. There is no cloud account, so there is no separate account-deletion flow. App Store subscriptions are billed by Apple and are not cancelled by deleting app data. Manage or cancel Pro in your Apple ID subscription settings.',
+          'You can delete the data on this device in Settings with Delete my data. Deletion is immediate and local. There is no cloud account, so there is no separate account-deletion flow. If you already have an App Store subscription from an earlier build, deleting app data does not cancel it. Manage or cancel in your Apple ID subscription settings.',
     ),
     PrivacyPolicySection(
       title: 'Revoke consent',
       group: groupControl,
       body:
-          'Turn off Reminders in Settings to stop local notifications, or disable notifications for Kichta in iOS Settings. Revoke camera or photo access in iOS Settings; scan will stop using them. Upgrade to Pro, or avoid Trials and Upcoming, to stop AdMob requests. Paid features do not require you to grant camera, photos, or tracking permission.',
+          'Turn off Reminders in Settings to stop local notifications, or disable notifications for Kichta in iOS Settings. Revoke camera or photo access in iOS Settings; scan will stop using them. Paid features do not require you to grant camera, photos, or tracking permission.',
     ),
     PrivacyPolicySection(
       title: 'Sharing',
@@ -165,13 +167,13 @@ abstract final class PrivacyPolicy {
       title: 'International transfers',
       group: groupRules,
       body:
-          'Apple and Google may process purchase and advertising data in the United States and other countries. Data you store in Kichta stays on this phone unless you open a link or an ad request is sent as described above.',
+          'If you buy Pro later, Apple may process purchase data in the United States and other countries. This version does not send ad requests to Google. Data you store in Kichta stays on this phone unless you open a link.',
     ),
     PrivacyPolicySection(
       title: 'App Store Privacy labels',
       group: groupRules,
       body:
-          'In App Store Connect we declare: Purchases for App Functionality (Apple billing), Photos and Camera for App Functionality (receipt scan), and Advertising Data for Third-Party Advertising (AdMob banners). We do not declare tracking. We do not declare financial amounts, merchant names, or email as data linked to you by Kichta.',
+          'In App Store Connect we declare Photos and Camera for App Functionality (receipt scan). This version does not sell in-app purchases, so we do not declare Purchases. This version does not declare Advertising Data or tracking. We do not declare financial amounts, merchant names, or email as data linked to you by Kichta.',
     ),
     PrivacyPolicySection(
       title: 'Changes',

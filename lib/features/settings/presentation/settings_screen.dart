@@ -59,24 +59,24 @@ class SettingsScreen extends ConsumerWidget {
               },
             ),
             const SizedBox(height: AppSpacing.sm),
+            _SettingsCard(
+              children: [
+                _SettingsRow(
+                  key: const Key('manage-subscription'),
+                  icon: AppIcons.apple,
+                  title: AppStrings.manageSubscription,
+                  chevron: true,
+                  onTap: () {
+                    HapticFeedback.selectionClick();
+                    ref
+                        .read(cancellationLinkOpenerProvider)
+                        .open(Uri.parse(AppConfig.manageSubscriptionUrl));
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.xl),
           ],
-          _SettingsCard(
-            children: [
-              _SettingsRow(
-                key: const Key('manage-subscription'),
-                icon: AppIcons.apple,
-                title: AppStrings.manageSubscription,
-                chevron: true,
-                onTap: () {
-                  HapticFeedback.selectionClick();
-                  ref
-                      .read(cancellationLinkOpenerProvider)
-                      .open(Uri.parse(AppConfig.manageSubscriptionUrl));
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.xl),
           _SectionLabel(AppStrings.remindersSection),
           const SizedBox(height: AppSpacing.sm),
           _SettingsCard(

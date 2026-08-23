@@ -1,17 +1,18 @@
+import 'legal_identity.dart';
 import 'privacy_policy.dart';
 
 /// In-app terms of use. Keep this English-only for V1.
 ///
-/// Written to App Store Review Guideline 3.1.2 (auto-renewable subscriptions)
-/// and Apple’s Licensed Application EULA: name the service, each plan length
-/// and price, cancel path, refunds, and what the user is buying.
+/// This build is free and does not sell a subscription. If a paid plan ships
+/// later, restore Guideline 3.1.2 price, length, and auto-renew copy before
+/// that offer goes live.
 abstract final class TermsOfUse {
   static const String lastUpdated = 'August 23, 2026';
   static const String hostedUrl =
       'https://mohcine-badour.github.io/AIMoneyLeakDetector/terms.html';
 
   static const String groupProduct = 'The app';
-  static const String groupBilling = 'Kichta Pro';
+  static const String groupBilling = 'Paid plan';
   static const String groupLimits = 'What Kichta does not do';
   static const String groupRules = 'Other rules';
 
@@ -20,7 +21,7 @@ abstract final class TermsOfUse {
       title: 'Using Kichta',
       group: groupProduct,
       body:
-          'Kichta is a local subscription tracker on this phone. You add subscriptions and trials yourself. There is no Kichta account and no cloud sync in this version. By downloading or using Kichta you agree to these Terms and the Privacy Policy.',
+          'Kichta is a local subscription tracker published by ${LegalIdentity.publisher}. You add subscriptions and trials yourself. There is no Kichta account and no cloud sync in this version. By downloading or using Kichta you agree to these Terms and the Privacy Policy.',
     ),
     PrivacyPolicySection(
       title: 'License',
@@ -44,31 +45,25 @@ abstract final class TermsOfUse {
       title: 'Ads',
       group: groupProduct,
       body:
-          'The free version may show Google AdMob banners on Trials and Upcoming. Ads are requested as non-personalized. Pro removes ads. Ad content is provided by Google, not by Kichta.',
+          'This version does not show ads. All features are available without paying.',
     ),
     PrivacyPolicySection(
-      title: 'What Pro includes',
+      title: 'This version is free',
       group: groupBilling,
       body:
-          'Kichta Pro is the paid auto-renewable App Store subscription for this app. Pro removes ads and unlocks the paid features shown on the paywall before you buy, including unlimited subscriptions and extra trial tracking. Free limits, when enabled, cap how many subscriptions and trials you can save and may require Pro for receipt scan. The paywall is the offer you accept.',
+          'This version of Kichta is free. It does not show ads. It does not offer Kichta Pro or any other in-app purchase. You can add subscriptions, trials, and scans without paying.',
     ),
     PrivacyPolicySection(
-      title: 'Auto-renewable subscription',
+      title: 'If we add a paid plan later',
       group: groupBilling,
       body:
-          'Kichta Pro is an auto-renewable App Store subscription. Yearly is \$19.99 per year. Monthly is \$2.99 per month. Weekly is \$0.99 per week, or the equivalent price Apple shows you in your local currency on the paywall and the App Store. Payment is charged to your Apple ID at confirmation of purchase. The subscription renews unless you turn off auto-renew at least 24 hours before the end of the current period. Apple may charge the renewal within 24 hours before the period ends.',
+          'If we later offer an auto-renewable App Store subscription, Apple will show the title, length, and price on a paywall before you buy. Payment would be charged to your Apple ID. The subscription would renew unless you turned auto-renew off at least 24 hours before the period ended. We will update these Terms before any paid plan goes live.',
     ),
     PrivacyPolicySection(
-      title: 'How to cancel Pro',
+      title: 'If you already subscribed',
       group: groupBilling,
       body:
-          'Manage or cancel Kichta Pro in your Apple ID subscription settings. The Manage subscription row in Settings opens that page. Deleting data in Kichta does not cancel an App Store subscription. After you cancel, Pro stays active until the end of the paid period.',
-    ),
-    PrivacyPolicySection(
-      title: 'Restore and refunds',
-      group: groupBilling,
-      body:
-          'Use Restore purchases on the paywall to unlock Pro again on a device signed into the same Apple ID. Refunds are handled by Apple, not by Kichta.',
+          'If you bought Kichta Pro on this Apple ID in an earlier build, manage or cancel in your Apple ID subscription settings. Use Restore purchases on the paywall if that screen is available. Deleting the app or using Delete my data does not cancel an Apple subscription. Refunds are handled by Apple, not by Kichta.',
     ),
     PrivacyPolicySection(
       title: 'Merchants',
@@ -86,7 +81,7 @@ abstract final class TermsOfUse {
       title: 'Third-party services',
       group: groupLimits,
       body:
-          'Apple handles billing. Google serves ads on the free version. Support and cancellation links open other sites. Those parties have their own terms. We do not control their content or availability.',
+          'Apple handles billing if you buy Pro later. Support and cancellation links open other sites. Those parties have their own terms. We do not control their content or availability.',
     ),
     PrivacyPolicySection(
       title: 'Eligibility',
@@ -110,13 +105,13 @@ abstract final class TermsOfUse {
       title: 'Changes',
       group: groupRules,
       body:
-          'We may update these Terms. We will change the last-updated date in the app and at the public URL. If we change Kichta Pro prices or plan lengths, Apple will show the new offer before you buy or when a plan changes. Continued use after an update means you accept the new Terms.',
+          'We may update these Terms. We will change the last-updated date in the app and at the public URL. If we add a paid plan later, we will update this document before that offer goes live, and Apple will show the price and length before you buy. Continued use after an update means you accept the new Terms.',
     ),
     PrivacyPolicySection(
       title: 'Contact',
       group: groupRules,
       body:
-          'Questions: use the Support row in Settings, which opens GitHub issues, or App Store support for this app. The Privacy Policy is in Settings and at the public URL listed in App Store Connect.',
+          'Kichta is published by ${LegalIdentity.publisher}. Questions: email ${LegalIdentity.email}. You can also use the Support row in Settings (GitHub issues) or App Store support for this app. The Privacy Policy is in Settings and at the public URL listed in App Store Connect.',
     ),
   ];
 }

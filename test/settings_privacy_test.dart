@@ -43,7 +43,7 @@ void main() {
     expect(find.text(AppStrings.settingsTitle), findsWidgets);
     expect(find.text(AppStrings.privacyPolicy), findsOneWidget);
     expect(find.text(AppStrings.termsOfUseTitle), findsOneWidget);
-    expect(find.text(AppStrings.manageSubscription), findsOneWidget);
+    expect(find.text(AppStrings.manageSubscription), findsNothing);
     expect(find.text(AppStrings.support), findsOneWidget);
     expect(find.text(AppStrings.remindersToggle), findsOneWidget);
     expect(find.text(AppStrings.remindersExplanation), findsOneWidget);
@@ -65,8 +65,10 @@ void main() {
     expect(body, contains('Google AdMob'));
     expect(body, contains('not directed at children'));
     expect(body, contains('Delete my data'));
-    expect(body, contains('do not declare tracking'));
+    expect(body, contains('does not declare Advertising Data or tracking'));
     expect(body, contains('kept until you delete it'));
+    expect(body, contains('Mohcine Badour'));
+    expect(body, contains('mohcinebadour@gmail.com'));
   });
 
   testWidgets(
@@ -94,10 +96,10 @@ void main() {
         .map((section) => '${section.title} ${section.body}')
         .join(' ');
 
+    expect(body, contains('This version of Kichta is free'));
+    expect(body, contains('does not offer Kichta Pro'));
     expect(body, contains('auto-renewable'));
-    expect(body, contains(r'$19.99'));
-    expect(body, contains(r'$2.99'));
-    expect(body, contains(r'$0.99'));
+    expect(body, isNot(contains(r'$19.99')));
     expect(body, contains('24 hours'));
     expect(body, contains('Apple ID'));
     expect(body, contains('does not cancel'));
@@ -105,6 +107,8 @@ void main() {
     expect(body, contains('Refunds are handled by Apple'));
     expect(body, contains('not a bank'));
     expect(body, contains('at least 13'));
+    expect(body, contains('Mohcine Badour'));
+    expect(body, contains('mohcinebadour@gmail.com'));
   });
 
   testWidgets('terms of use is a real document, not the privacy policy', (

@@ -114,7 +114,7 @@ abstract final class AppStrings {
   static const String privacyLastUpdated = 'Last updated';
   static const String legalOnThisPage = 'On this page';
   static const String legalPrivacyHeadline = 'What Kichta keeps on this phone';
-  static const String legalTermsHeadline = 'How Kichta and Kichta Pro work';
+  static const String legalTermsHeadline = 'How Kichta works';
   static const String privacyMinimalCollection =
       'We keep collection small. Analytics never receive amounts, merchants, or receipts.';
   static const String deleteMyData = 'Delete my data';
@@ -128,7 +128,7 @@ abstract final class AppStrings {
   static const String deleteDataExplanation =
       'You can remove the information stored on this phone at any time.';
   static const String appStoreBillingNotice =
-      'Pro is billed by Apple. Deleting app data does not cancel an App Store subscription.';
+      'Deleting app data does not cancel an App Store subscription.';
   static const String deleteDataFailed =
       'Could not delete data on this device.';
   static const String paywallTitle = 'Paywall';
