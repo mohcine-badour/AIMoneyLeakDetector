@@ -497,7 +497,7 @@ abstract final class _LegalLook {
       'Retention' || 'Changes' => AppIcons.upcoming,
       'Deletion' => AppIcons.delete,
       'Revoke consent' => AppIcons.visibility,
-      'This version is free' || 'No in-app purchases' => AppIcons.infinity,
+      'This version is free' => AppIcons.infinity,
       'Merchants' => AppIcons.close,
       'International transfers' => AppIcons.wifiOff,
       _ => AppIcons.info,

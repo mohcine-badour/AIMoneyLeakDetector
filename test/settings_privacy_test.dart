@@ -59,20 +59,23 @@ void main() {
         .map((section) => '${section.title} ${section.body}')
         .join(' ');
 
-    expect(body, contains('do not put financial amounts'));
-    expect(body, contains('AI API secrets'));
+    expect(body, contains('encrypted local database'));
+    expect(body, contains('iOS Keychain'));
+    expect(body, contains('does not require an account'));
     expect(body, contains('same or equal protection'));
-    expect(body, contains('Google AdMob'));
-    expect(body, contains('are not saved in the subscription database'));
-    expect(body, contains('does not use RevenueCat'));
-    expect(body, isNot(contains('paywall viewed')));
-    expect(body, isNot(contains('Paid features')));
+    expect(body, contains('do not send financial amounts'));
     expect(body, contains('not directed at children'));
     expect(body, contains('Delete my data'));
-    expect(body, contains('does not declare Advertising Data or tracking'));
     expect(body, contains('kept until you delete it'));
     expect(body, contains('Mohcine Badour'));
     expect(body, contains('mohcinebadour@gmail.com'));
+    expect(body, isNot(contains('sign-in screen')));
+    expect(body, isNot(contains('Kichta Pro')));
+    expect(body, isNot(contains('Google AdMob')));
+    expect(body, isNot(contains('RevenueCat')));
+    expect(body, isNot(contains('In App Store Connect we declare')));
+    expect(body, isNot(contains('paywall viewed')));
+    expect(body, isNot(contains('Paid features')));
   });
 
   testWidgets(
@@ -88,7 +91,7 @@ void main() {
         findsOneWidget,
       );
       expect(
-        find.textContaining('do not put financial amounts', findRichText: true),
+        find.textContaining('do not send financial amounts', findRichText: true),
         findsOneWidget,
       );
       expect(find.text(AppStrings.adLabel), findsNothing);
@@ -101,7 +104,6 @@ void main() {
         .join(' ');
 
     expect(body, contains('This version of Kichta is free'));
-    expect(body, contains('does not offer in-app purchases'));
     expect(body, contains('does not cancel'));
     expect(body, contains('not a bank'));
     expect(body, contains('at least 13'));

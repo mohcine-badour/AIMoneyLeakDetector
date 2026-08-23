@@ -47,13 +47,13 @@ abstract final class PrivacyPolicy {
       title: 'Overview',
       group: groupDevice,
       body:
-          'Kichta tracks subscriptions on this device. We collect as little as we can and do not send receipts or money amounts to analytics.',
+          'Kichta tracks subscriptions on this device. We collect as little as we can and do not send receipts or money amounts off this device. Kichta does not require an account or authentication.',
     ),
     PrivacyPolicySection(
       title: 'Data stored on this device',
       group: groupDevice,
       body:
-          'Subscriptions, trials, usage counts, reminder preference, and onboarding answers stay in an encrypted local database on your phone. The encryption key is stored in the system Keychain, not in SharedPreferences. They are used to calculate spend, upcoming payments, and reminders. There is no Kichta account. If you type an email or password on the sign-in screen, those fields are checked on this phone only and are not saved in the subscription database.',
+          'Subscriptions, trials, and usage counts are stored in an encrypted local database on your phone. The encryption key is stored in the iOS Keychain. Onboarding answers and the reminder preference are stored in local app preferences on this device. They are used to calculate spend, upcoming payments, and reminders. There is no Kichta account.',
     ),
     PrivacyPolicySection(
       title: 'How we collect it',
@@ -83,25 +83,7 @@ abstract final class PrivacyPolicy {
       title: 'Data we do not collect',
       group: groupNotCollected,
       body:
-          'We do not ask for bank logins. We do not create a Kichta account. We do not keep raw receipt images after a scan. We do not put financial amounts, merchant names, or documents into analytics. We do not sell your personal data. We do not use your subscription list to profile you for ads.',
-    ),
-    PrivacyPolicySection(
-      title: 'Analytics',
-      group: groupLeavesDevice,
-      body:
-          'This version logs event names on the device only, such as app opened or reminder kind. Amounts, merchants, and documents are stripped before anything is recorded. There is no third-party analytics SDK.',
-    ),
-    PrivacyPolicySection(
-      title: 'App Store purchases',
-      group: groupLeavesDevice,
-      body:
-          'This version is free and does not sell in-app purchases. Apple does not collect in-app purchase data from Kichta in this version.',
-    ),
-    PrivacyPolicySection(
-      title: 'Ads',
-      group: groupLeavesDevice,
-      body:
-          'This version does not show Google AdMob banners and does not request ads. Google does not receive ad requests from Kichta. We do not use App Tracking Transparency and we do not track you across other companies’ apps or websites. If we turn ads on later, we will update this policy and App Store Privacy labels first.',
+          'We do not ask for bank logins. We do not create a Kichta account. We do not keep raw receipt images after a scan. We do not send financial amounts, merchant names, or documents off this device. We do not sell your personal data.',
     ),
     PrivacyPolicySection(
       title: 'Links you open',
@@ -110,22 +92,10 @@ abstract final class PrivacyPolicy {
           'Cancellation and Support open HTTPS pages in Safari. Those sites receive a normal web visit. We do not attach your subscription list to those requests.',
     ),
     PrivacyPolicySection(
-      title: 'RevenueCat',
-      group: groupLeavesDevice,
-      body:
-          'This version does not use RevenueCat. No public SDK key is configured, so RevenueCat does not receive store account or product identifiers. If we add it later, we will update this policy first. This app never stores an AI API key or a RevenueCat secret key.',
-    ),
-    PrivacyPolicySection(
-      title: 'AI processing',
-      group: groupLeavesDevice,
-      body:
-          'Spend math stays in the app. This version does not send your data to an AI provider. Flutter does not contain AI API secrets.',
-    ),
-    PrivacyPolicySection(
       title: 'Third-party protection',
       group: groupLeavesDevice,
       body:
-          'In this version the only parties that may receive data are sites you open such as the Support page. Google and RevenueCat do not receive data from this version. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.',
+          'In this version the only parties that may receive data are sites you open such as the Support page. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.',
     ),
     PrivacyPolicySection(
       title: 'Retention',
@@ -161,19 +131,13 @@ abstract final class PrivacyPolicy {
       title: 'International transfers',
       group: groupRules,
       body:
-          'This version does not send ad requests to Google and does not use RevenueCat. Data you store in Kichta stays on this phone unless you open a link.',
-    ),
-    PrivacyPolicySection(
-      title: 'App Store Privacy labels',
-      group: groupRules,
-      body:
-          'In App Store Connect we declare Photos and Camera for App Functionality (receipt scan). This version does not sell in-app purchases, so we do not declare Purchases. This version does not declare Advertising Data or tracking. We do not declare financial amounts, merchant names, or email as data linked to you by Kichta.',
+          'Data you store in Kichta stays on this phone unless you open a link.',
     ),
     PrivacyPolicySection(
       title: 'Changes',
       group: groupRules,
       body:
-          'If this policy changes, we update the in-app document, the public URL, and the last-updated date. Continued use after an update means you are using the app under the new policy. Material changes that add new collection will be reflected in App Store Privacy labels before those practices ship.',
+          'If this policy changes, we update the in-app document, the public URL, and the last-updated date. Continued use after an update means you are using the app under the new policy.',
     ),
   ];
 }

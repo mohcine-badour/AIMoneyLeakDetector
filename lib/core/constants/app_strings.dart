@@ -116,12 +116,12 @@ abstract final class AppStrings {
   static const String legalPrivacyHeadline = 'What Kichta keeps on this phone';
   static const String legalTermsHeadline = 'How Kichta works';
   static const String privacyMinimalCollection =
-      'We keep collection small. Analytics never receive amounts, merchants, or receipts.';
+      'We keep collection small. Receipts and money amounts stay on this phone.';
   static const String deleteMyData = 'Delete my data';
   static const String deleteAccount = 'Delete account';
   static const String deleteMyDataTitle = 'Delete data on this device?';
   static const String deleteMyDataMessage =
-      'Subscriptions, trials, usage, and onboarding answers on this phone will be removed. App Store billing does not change.';
+      'Subscriptions, trials, usage, and onboarding answers on this phone will be removed.';
   static const String deleteAccountTitle = 'Delete your account?';
   static const String deleteAccountMessage =
       'There is no Kichta account. This removes data on this phone only. App Store subscriptions stay with Apple until you cancel them there.';

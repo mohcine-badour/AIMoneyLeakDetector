@@ -15,11 +15,9 @@ You are responsible for the accuracy of the names, amounts, and dates you enter 
 
 Reminders are local notifications. They are a best-effort ping, not a guarantee that you will cancel a merchant or avoid a charge. You can turn them off in Settings.
 
-This version does not show ads. All features are available without paying.
-
 ## This version is free
 
-This version of Kichta is free. It does not show ads. It does not offer in-app purchases. You can add subscriptions, trials, and scans without paying.
+This version of Kichta is free. You can add subscriptions, trials, and scans without paying.
 
 ## What Kichta does not do
 

@@ -236,7 +236,7 @@ void main() {
     await tester.tap(find.byKey(const Key('welcome-privacy')));
     await tester.pumpAndSettle();
     expect(
-      find.textContaining('does not sell in-app purchases', findRichText: true),
+      find.textContaining('does not require an account', findRichText: true),
       findsWidgets,
     );
     expect(find.textContaining(r'$19.99'), findsNothing);
@@ -270,14 +270,11 @@ void main() {
     await tester.tap(find.text(AppStrings.privacyPolicy));
     await tester.pumpAndSettle();
     expect(
-      find.textContaining(
-        'are not saved in the subscription database',
-        findRichText: true,
-      ),
+      find.textContaining('encrypted local database', findRichText: true),
       findsOneWidget,
     );
     expect(
-      find.textContaining('does not use RevenueCat', findRichText: true),
+      find.textContaining('does not require an account', findRichText: true),
       findsWidgets,
     );
     await tester.pageBack();

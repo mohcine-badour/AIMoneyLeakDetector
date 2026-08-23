@@ -42,16 +42,10 @@ abstract final class TermsOfUse {
           'Reminders are local notifications. They are a best-effort ping, not a guarantee that you will cancel a merchant or avoid a charge. You can turn them off in Settings.',
     ),
     PrivacyPolicySection(
-      title: 'Ads',
-      group: groupProduct,
-      body:
-          'This version does not show ads. All features are available without paying.',
-    ),
-    PrivacyPolicySection(
-      title: 'No in-app purchases',
+      title: 'This version is free',
       group: groupFree,
       body:
-          'This version of Kichta is free. It does not show ads. It does not offer in-app purchases. You can add subscriptions, trials, and scans without paying.',
+          'This version of Kichta is free. You can add subscriptions, trials, and scans without paying.',
     ),
     PrivacyPolicySection(
       title: 'Merchants',
