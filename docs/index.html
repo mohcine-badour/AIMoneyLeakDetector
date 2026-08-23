@@ -4,30 +4,50 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kichta</title>
-  <link rel="stylesheet" href="legal.css">
+  <meta name="description" content="Kichta helps you keep track of recurring subscriptions, renewal dates, free trials, and subscription spending.">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="support.css">
 </head>
 <body>
-  <div class="wrap home">
+  <div class="wrap">
     <header class="top">
-      <a class="brand" href="index.html">Kichta</a>
-      <nav class="nav">
+      <a class="brand" href="index.html" aria-label="Kichta home">Kichta</a>
+      <nav class="nav" aria-label="Site">
+        <a href="support.html">Support</a>
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
-        <a href="support.html">Support</a>
       </nav>
     </header>
 
-    <section class="hero">
-      <span class="kicker">Kichta</span>
-      <h1>A local subscription tracker</h1>
-      <p class="lede">You add subscriptions and trials on this phone. Kichta does not cancel merchants for you.</p>
-    </section>
+    <main>
+      <section class="hero" aria-labelledby="home-title">
+        <h1 id="home-title">Kichta</h1>
+        <p class="lede">Subscription tracking, without the complexity.</p>
+        <p class="note">Kichta helps you keep track of recurring subscriptions, renewal dates, free trials, and subscription spending.</p>
+      </section>
 
-    <div class="links">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Use</a>
-      <a href="support.html">Support</a>
-    </div>
+      <section>
+        <div class="card">
+          <p>You add subscriptions and trials yourself. Kichta does not require an account, does not connect to your bank, and does not cancel merchants for you.</p>
+          <p><a href="support.html">Support</a></p>
+          <p><a href="privacy.html">Privacy Policy</a></p>
+          <p><a href="terms.html">Terms of Use</a></p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <div class="foot-row">
+        <p>© 2026 Kichta. All rights reserved.</p>
+        <nav aria-label="Footer">
+          <a href="support.html">Support</a>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+        </nav>
+      </div>
+      <p class="made">Made for iPhone · Version 1.0</p>
+    </footer>
   </div>
 </body>
 </html>
