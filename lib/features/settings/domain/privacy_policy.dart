@@ -95,7 +95,7 @@ abstract final class PrivacyPolicy {
       title: 'App Store purchases',
       group: groupLeavesDevice,
       body:
-          'This version is free and does not sell in-app purchases. If you already bought Kichta Pro in an earlier build, or if we add a paid plan later, Apple collects purchase, restore, and Apple ID data to bill and manage that subscription. Apple’s privacy policy applies to that data: https://www.apple.com/legal/privacy/',
+          'This version is free and does not sell in-app purchases. Apple does not collect in-app purchase data from Kichta in this version.',
     ),
     PrivacyPolicySection(
       title: 'Ads',
@@ -125,19 +125,19 @@ abstract final class PrivacyPolicy {
       title: 'Third-party protection',
       group: groupLeavesDevice,
       body:
-          'In this version the only parties that may receive data are Apple, if you already have a purchase, and sites you open such as the Support page. Google and RevenueCat do not receive data from this version. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.',
+          'In this version the only parties that may receive data are sites you open such as the Support page. Google and RevenueCat do not receive data from this version. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.',
     ),
     PrivacyPolicySection(
       title: 'Retention',
       group: groupControl,
       body:
-          'Data on this phone is kept until you delete it in Settings or uninstall Kichta. Uninstalling removes the local database and Keychain items for this app. We do not keep a server copy of your subscription list. If you already have an App Store purchase, Apple keeps that billing data under Apple’s rules.',
+          'Data on this phone is kept until you delete it in Settings or uninstall Kichta. Uninstalling removes the local database and Keychain items for this app. We do not keep a server copy of your subscription list.',
     ),
     PrivacyPolicySection(
       title: 'Deletion',
       group: groupControl,
       body:
-          'You can delete the data on this device in Settings with Delete my data. Deletion is immediate and local. There is no cloud account, so there is no separate account-deletion flow. If you already have an App Store subscription from an earlier build, deleting app data does not cancel it. Manage or cancel in your Apple ID subscription settings.',
+          'You can delete the data on this device in Settings with Delete my data. Deletion is immediate and local. There is no cloud account, so there is no separate account-deletion flow.',
     ),
     PrivacyPolicySection(
       title: 'Revoke consent',
@@ -161,7 +161,7 @@ abstract final class PrivacyPolicy {
       title: 'International transfers',
       group: groupRules,
       body:
-          'This version does not send ad requests to Google and does not use RevenueCat. Data you store in Kichta stays on this phone unless you open a link. If you already have an App Store purchase, Apple may process that billing data in the United States and other countries.',
+          'This version does not send ad requests to Google and does not use RevenueCat. Data you store in Kichta stays on this phone unless you open a link.',
     ),
     PrivacyPolicySection(
       title: 'App Store Privacy labels',

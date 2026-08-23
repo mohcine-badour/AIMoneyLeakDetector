@@ -95,24 +95,23 @@ void main() {
     },
   );
 
-  test('terms of use cover App Store 3.1.2 subscription rules', () {
+  test('terms of use describe this free version', () {
     final body = TermsOfUse.sections
         .map((section) => '${section.title} ${section.body}')
         .join(' ');
 
     expect(body, contains('This version of Kichta is free'));
-    expect(body, contains('does not offer Kichta Pro'));
-    expect(body, contains('auto-renewable'));
-    expect(body, isNot(contains(r'$19.99')));
-    expect(body, contains('24 hours'));
-    expect(body, contains('Apple ID'));
+    expect(body, contains('does not offer in-app purchases'));
     expect(body, contains('does not cancel'));
-    expect(body, contains('Restore purchases'));
-    expect(body, contains('Refunds are handled by Apple'));
     expect(body, contains('not a bank'));
     expect(body, contains('at least 13'));
     expect(body, contains('Mohcine Badour'));
     expect(body, contains('mohcinebadour@gmail.com'));
+    expect(body, isNot(contains('Kichta Pro')));
+    expect(body, isNot(contains('If you already subscribed')));
+    expect(body, isNot(contains('Restore purchases')));
+    expect(body, isNot(contains('auto-renewable')));
+    expect(body, isNot(contains(r'$19.99')));
   });
 
   testWidgets('terms of use is a real document, not the privacy policy', (
@@ -122,7 +121,7 @@ void main() {
     await pumpKichtaApp(tester, location: AppRoutes.termsOfUse);
 
     expect(find.text(AppStrings.termsOfUseTitle), findsWidgets);
-    expect(find.textContaining('auto-renewable'), findsWidgets);
+    expect(find.textContaining('This version of Kichta is free'), findsWidgets);
     expect(find.textContaining('does not cancel'), findsWidgets);
     expect(find.text(PrivacyPolicy.sections.first.title), findsNothing);
   });

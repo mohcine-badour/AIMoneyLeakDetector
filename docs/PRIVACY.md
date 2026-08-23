@@ -33,7 +33,7 @@ We do not ask for bank logins. We do not create a Kichta account. We do not keep
 
 This version logs event names on the device only, such as app opened or reminder kind. Amounts, merchants, and documents are stripped before anything is recorded. There is no third-party analytics SDK.
 
-This version is free and does not sell in-app purchases. If you already bought Kichta Pro in an earlier build, or if we add a paid plan later, Apple collects purchase, restore, and Apple ID data to bill and manage that subscription. [Apple’s privacy policy](https://www.apple.com/legal/privacy/) applies to that data.
+This version is free and does not sell in-app purchases. Apple does not collect in-app purchase data from Kichta in this version.
 
 This version does not show Google AdMob banners and does not request ads. Google does not receive ad requests from Kichta. We do not use App Tracking Transparency and we do not track you across other companies’ apps or websites. If we turn ads on later, we will update this policy and App Store Privacy labels first.
 
@@ -43,13 +43,13 @@ This version does not use RevenueCat. No public SDK key is configured, so Revenu
 
 Spend math stays in the app. This version does not send your data to an AI provider. Flutter does not contain AI API secrets.
 
-In this version the only parties that may receive data are Apple, if you already have a purchase, and sites you open such as the Support page. Google and RevenueCat do not receive data from this version. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.
+In this version the only parties that may receive data are sites you open such as the Support page. Google and RevenueCat do not receive data from this version. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.
 
 ## Your control
 
-Data on this phone is kept until you delete it in Settings or uninstall Kichta. Uninstalling removes the local database and Keychain items for this app. We do not keep a server copy of your subscription list. If you already have an App Store purchase, Apple keeps that billing data under Apple’s rules.
+Data on this phone is kept until you delete it in Settings or uninstall Kichta. Uninstalling removes the local database and Keychain items for this app. We do not keep a server copy of your subscription list.
 
-You can delete the data on this device in Settings with Delete my data. Deletion is immediate and local. There is no cloud account, so there is no separate account-deletion flow. If you already have an App Store subscription from an earlier build, deleting app data does not cancel it. Manage or cancel in your Apple ID subscription settings.
+You can delete the data on this device in Settings with Delete my data. Deletion is immediate and local. There is no cloud account, so there is no separate account-deletion flow.
 
 Turn off Reminders in Settings to stop local notifications, or disable notifications for Kichta in iOS Settings. Revoke camera or photo access in iOS Settings; scan will stop using them.
 
@@ -59,7 +59,7 @@ This version does not upload your subscription list to a Kichta account. We do n
 
 Kichta is not directed at children under 13, and we do not knowingly collect personal data from children. The app is not in the App Store Kids category. Do not use Kichta to store a child’s personal information.
 
-This version does not send ad requests to Google and does not use RevenueCat. Data you store in Kichta stays on this phone unless you open a link. If you already have an App Store purchase, Apple may process that billing data in the United States and other countries.
+This version does not send ad requests to Google and does not use RevenueCat. Data you store in Kichta stays on this phone unless you open a link.
 
 In App Store Connect we declare Photos and Camera for App Functionality (receipt scan). This version does not sell in-app purchases, so we do not declare Purchases. This version does not declare Advertising Data or tracking. We do not declare financial amounts, merchant names, or email as data linked to you by Kichta.
 

@@ -469,7 +469,7 @@ abstract final class _LegalLook {
       PrivacyPolicy.groupControl => AppIcons.delete,
       PrivacyPolicy.groupRules => AppIcons.shieldCheck,
       TermsOfUse.groupProduct => AppIcons.home,
-      TermsOfUse.groupBilling => AppIcons.infinity,
+      TermsOfUse.groupFree => AppIcons.infinity,
       TermsOfUse.groupLimits => AppIcons.close,
       TermsOfUse.groupRules => AppIcons.info,
       _ => AppIcons.info,
@@ -488,7 +488,6 @@ abstract final class _LegalLook {
       'Ads' => AppIcons.ads,
       'App Store purchases' ||
       'App Store Privacy labels' ||
-      'If you already subscribed' ||
       'Who provides Kichta' => AppIcons.apple,
       'Links you open' || 'Sharing' || 'Third-party services' => AppIcons.share,
       'AI processing' => AppIcons.sparkles,
@@ -498,8 +497,7 @@ abstract final class _LegalLook {
       'Retention' || 'Changes' => AppIcons.upcoming,
       'Deletion' => AppIcons.delete,
       'Revoke consent' => AppIcons.visibility,
-      'This version is free' => AppIcons.infinity,
-      'If we add a paid plan later' => AppIcons.subscriptions,
+      'This version is free' || 'No in-app purchases' => AppIcons.infinity,
       'Merchants' => AppIcons.close,
       'International transfers' => AppIcons.wifiOff,
       _ => AppIcons.info,

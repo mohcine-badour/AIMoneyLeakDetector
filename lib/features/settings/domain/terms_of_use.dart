@@ -3,16 +3,16 @@ import 'privacy_policy.dart';
 
 /// In-app terms of use. Keep this English-only for V1.
 ///
-/// This build is free and does not sell a subscription. If a paid plan ships
-/// later, restore Guideline 3.1.2 price, length, and auto-renew copy before
-/// that offer goes live.
+/// This build is free and does not sell in-app purchases. If a paid plan
+/// ships later, add Guideline 3.1.2 price, length, and auto-renew copy
+/// before that offer goes live.
 abstract final class TermsOfUse {
   static const String lastUpdated = 'August 23, 2026';
   static const String hostedUrl =
       'https://mohcine-badour.github.io/AIMoneyLeakDetector/terms.html';
 
   static const String groupProduct = 'The app';
-  static const String groupBilling = 'Paid plan';
+  static const String groupFree = 'This version is free';
   static const String groupLimits = 'What Kichta does not do';
   static const String groupRules = 'Other rules';
 
@@ -27,7 +27,7 @@ abstract final class TermsOfUse {
       title: 'License',
       group: groupProduct,
       body:
-          'We grant you a personal, non-exclusive, non-transferable, revocable license to use Kichta on Apple devices you own or control, as allowed by the App Store and Apple’s Licensed Application End User License Agreement. These Terms supplement that EULA. If they conflict, Apple’s EULA controls for the licensed application, except for the auto-renewable subscription terms required by Guideline 3.1.2.',
+          'We grant you a personal, non-exclusive, non-transferable, revocable license to use Kichta on Apple devices you own or control, as allowed by the App Store and Apple’s Licensed Application End User License Agreement. These Terms supplement that EULA. If they conflict, Apple’s EULA controls for the licensed application.',
     ),
     PrivacyPolicySection(
       title: 'Your records',
@@ -48,22 +48,10 @@ abstract final class TermsOfUse {
           'This version does not show ads. All features are available without paying.',
     ),
     PrivacyPolicySection(
-      title: 'This version is free',
-      group: groupBilling,
+      title: 'No in-app purchases',
+      group: groupFree,
       body:
-          'This version of Kichta is free. It does not show ads. It does not offer Kichta Pro or any other in-app purchase. You can add subscriptions, trials, and scans without paying.',
-    ),
-    PrivacyPolicySection(
-      title: 'If we add a paid plan later',
-      group: groupBilling,
-      body:
-          'If we later offer an auto-renewable App Store subscription, Apple will show the title, length, and price on a paywall before you buy. Payment would be charged to your Apple ID. The subscription would renew unless you turned auto-renew off at least 24 hours before the period ended. We will update these Terms before any paid plan goes live.',
-    ),
-    PrivacyPolicySection(
-      title: 'If you already subscribed',
-      group: groupBilling,
-      body:
-          'If you bought Kichta Pro on this Apple ID in an earlier build, manage or cancel in your Apple ID subscription settings. Use Restore purchases on the paywall if that screen is available. Deleting the app or using Delete my data does not cancel an Apple subscription. Refunds are handled by Apple, not by Kichta.',
+          'This version of Kichta is free. It does not show ads. It does not offer in-app purchases. You can add subscriptions, trials, and scans without paying.',
     ),
     PrivacyPolicySection(
       title: 'Merchants',
@@ -81,13 +69,13 @@ abstract final class TermsOfUse {
       title: 'Third-party services',
       group: groupLimits,
       body:
-          'Apple handles billing if you buy Pro later. Support and cancellation links open other sites. Those parties have their own terms. We do not control their content or availability.',
+          'Support and cancellation links open other sites. Those parties have their own terms. We do not control their content or availability.',
     ),
     PrivacyPolicySection(
       title: 'Eligibility',
       group: groupRules,
       body:
-          'You must be at least 13 and able to agree to these Terms. Kichta is not directed at children under 13 and is not in the App Store Kids category. If you are not of legal age to enter an App Store contract, a parent or guardian must approve the download and any purchase.',
+          'You must be at least 13 and able to agree to these Terms. Kichta is not directed at children under 13 and is not in the App Store Kids category. If you are not of legal age to enter an App Store contract, a parent or guardian must approve the download.',
     ),
     PrivacyPolicySection(
       title: 'Acceptable use',
@@ -99,13 +87,13 @@ abstract final class TermsOfUse {
       title: 'Disclaimer',
       group: groupRules,
       body:
-          'Kichta is provided as is, to the maximum extent permitted by law. We do not warrant that reminders will fire, that a scan will read a receipt correctly, or that the app will be uninterrupted. We are not liable for ad content, merchant billing, or data loss after you delete the app or use Delete my data.',
+          'Kichta is provided as is, to the maximum extent permitted by law. We do not warrant that reminders will fire, that a scan will read a receipt correctly, or that the app will be uninterrupted. We are not liable for merchant billing or data loss after you delete the app or use Delete my data.',
     ),
     PrivacyPolicySection(
       title: 'Changes',
       group: groupRules,
       body:
-          'We may update these Terms. We will change the last-updated date in the app and at the public URL. If we add a paid plan later, we will update this document before that offer goes live, and Apple will show the price and length before you buy. Continued use after an update means you accept the new Terms.',
+          'We may update these Terms. We will change the last-updated date in the app and at the public URL. Continued use after an update means you accept the new Terms.',
     ),
     PrivacyPolicySection(
       title: 'Contact',
