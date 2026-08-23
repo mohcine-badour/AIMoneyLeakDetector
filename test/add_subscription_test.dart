@@ -19,6 +19,19 @@ void main() {
     }
   });
 
+  testWidgets('tapping outside a field dismisses the keyboard', (tester) async {
+    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+
+    await tester.tap(find.byKey(const Key('subscription-amount')));
+    await tester.pump();
+    expect(tester.testTextInput.isVisible, isTrue);
+
+    await tester.tap(find.text(AppStrings.emptySubscriptionsMessage));
+    await tester.pump();
+
+    expect(tester.testTextInput.isVisible, isFalse);
+  });
+
   testWidgets('empty save shows validation errors', (tester) async {
     await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
 

@@ -66,6 +66,8 @@ class AppFilledField extends StatelessWidget {
                   textInputAction: textInputAction,
                   autocorrect: false,
                   enableSuggestions: false,
+                  onTapOutside: (_) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                   onChanged: onChanged == null ? null : (_) => onChanged!(),
                   style: TextStyle(
                     fontSize: 15,
