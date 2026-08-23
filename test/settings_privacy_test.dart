@@ -6,6 +6,7 @@ import 'package:kichta/core/constants/app_strings.dart';
 import 'package:kichta/core/database/app_database.dart';
 import 'package:kichta/features/onboarding/data/onboarding_repository.dart';
 import 'package:kichta/features/settings/domain/privacy_policy.dart';
+import 'package:kichta/features/settings/domain/terms_of_use.dart';
 import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
 import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
@@ -53,6 +54,21 @@ void main() {
     expect(find.text(AppStrings.adLabel), findsNothing);
   });
 
+  test('privacy policy covers App Store 5.1.1 topics', () {
+    final body = PrivacyPolicy.sections
+        .map((section) => '${section.title} ${section.body}')
+        .join(' ');
+
+    expect(body, contains('do not put financial amounts'));
+    expect(body, contains('AI API secrets'));
+    expect(body, contains('same or equal protection'));
+    expect(body, contains('Google AdMob'));
+    expect(body, contains('not directed at children'));
+    expect(body, contains('Delete my data'));
+    expect(body, contains('do not declare tracking'));
+    expect(body, contains('kept until you delete it'));
+  });
+
   testWidgets(
     'privacy policy explains local storage and no financial analytics',
     (tester) async {
@@ -69,10 +85,27 @@ void main() {
         find.textContaining('do not put financial amounts', findRichText: true),
         findsOneWidget,
       );
-      expect(find.textContaining('AI API secrets'), findsOneWidget);
       expect(find.text(AppStrings.adLabel), findsNothing);
     },
   );
+
+  test('terms of use cover App Store 3.1.2 subscription rules', () {
+    final body = TermsOfUse.sections
+        .map((section) => '${section.title} ${section.body}')
+        .join(' ');
+
+    expect(body, contains('auto-renewable'));
+    expect(body, contains(r'$19.99'));
+    expect(body, contains(r'$2.99'));
+    expect(body, contains(r'$0.99'));
+    expect(body, contains('24 hours'));
+    expect(body, contains('Apple ID'));
+    expect(body, contains('does not cancel'));
+    expect(body, contains('Restore purchases'));
+    expect(body, contains('Refunds are handled by Apple'));
+    expect(body, contains('not a bank'));
+    expect(body, contains('at least 13'));
+  });
 
   testWidgets('terms of use is a real document, not the privacy policy', (
     tester,
@@ -81,7 +114,7 @@ void main() {
     await pumpKichtaApp(tester, location: AppRoutes.termsOfUse);
 
     expect(find.text(AppStrings.termsOfUseTitle), findsWidgets);
-    expect(find.textContaining('auto-renewable'), findsOneWidget);
+    expect(find.textContaining('auto-renewable'), findsWidgets);
     expect(find.textContaining('does not cancel'), findsWidgets);
     expect(find.text(PrivacyPolicy.sections.first.title), findsNothing);
   });

@@ -93,7 +93,7 @@ abstract final class AppStrings {
   static const String privacyPolicy = 'Privacy Policy';
   static const String termsOfUseTitle = 'Terms of Use';
   static const String termsIntro =
-      'Kichta is a local subscription tracker. There is no Kichta account in this version.';
+      'Kichta is a local subscription tracker. There is no Kichta account in this version. By using the app you agree to these Terms and the Privacy Policy.';
   static const String manageSubscription = 'Manage subscription';
   static const String support = 'Support';
   static const String privacySection = 'Privacy';

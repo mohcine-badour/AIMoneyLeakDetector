@@ -3,19 +3,46 @@
 Last updated: August 23, 2026
 
 This document matches the in-app Terms of Use and `docs/terms.html`.
+Public URL: https://mohcine-badour.github.io/AIMoneyLeakDetector/terms.html
 
 ## The app
 
-Kichta is a local subscription tracker on this phone. You add subscriptions and trials yourself. There is no Kichta account and no cloud sync in this version.
+Kichta is a local subscription tracker on this phone. You add subscriptions and trials yourself. There is no Kichta account and no cloud sync in this version. By downloading or using Kichta you agree to these Terms and the Privacy Policy.
 
-You are responsible for the accuracy of the names, amounts, and dates you enter or confirm after a receipt scan. Kichta uses those records to show spend, upcoming payments, and reminders.
+We grant you a personal, non-exclusive, non-transferable, revocable license to use Kichta on Apple devices you own or control, as allowed by the App Store and Apple’s Licensed Application End User License Agreement. These Terms supplement that EULA. If they conflict, Apple’s EULA controls for the licensed application, except for the auto-renewable subscription terms required by Guideline 3.1.2.
+
+You are responsible for the accuracy of the names, amounts, and dates you enter or confirm after a receipt scan. Kichta uses those records to show spend, upcoming payments, and reminders. Receipt text is read on this phone and can be wrong. Check the review screen before you save.
+
+Reminders are local notifications. They are a best-effort ping, not a guarantee that you will cancel a merchant or avoid a charge. You can turn them off in Settings.
+
+The free version may show Google AdMob banners on Trials and Upcoming. Ads are requested as non-personalized. Pro removes ads. Ad content is provided by Google, not by Kichta.
 
 ## Kichta Pro
 
-Kichta Pro is an auto-renewable App Store subscription. Yearly is $19.99 per year. Monthly is $2.99 per month. Weekly is $0.99 per week. Payment is charged to your Apple ID at confirmation of purchase. The subscription renews unless you turn off auto-renew at least 24 hours before the end of the current period. Apple may charge the renewal within 24 hours before the period ends.
+Kichta Pro is the paid auto-renewable App Store subscription for this app. Pro removes ads and unlocks the paid features shown on the paywall before you buy, including unlimited subscriptions and extra trial tracking. Free limits, when enabled, cap how many subscriptions and trials you can save and may require Pro for receipt scan. The paywall is the offer you accept.
 
-Manage or cancel Kichta Pro in your Apple ID subscription settings. Deleting data in Kichta does not cancel an App Store subscription. Refunds are handled by Apple.
+Kichta Pro is an auto-renewable App Store subscription. Yearly is $19.99 per year. Monthly is $2.99 per month. Weekly is $0.99 per week, or the equivalent price Apple shows you in your local currency on the paywall and the App Store. Payment is charged to your Apple ID at confirmation of purchase. The subscription renews unless you turn off auto-renew at least 24 hours before the end of the current period. Apple may charge the renewal within 24 hours before the period ends.
+
+Manage or cancel Kichta Pro in your Apple ID subscription settings. The Manage subscription row in Settings opens that page. Deleting data in Kichta does not cancel an App Store subscription. After you cancel, Pro stays active until the end of the paid period.
+
+Use Restore purchases on the paywall to unlock Pro again on a device signed into the same Apple ID. Refunds are handled by Apple, not by Kichta.
 
 ## What Kichta does not do
 
 Kichta does not cancel Netflix, Spotify, or any other merchant for you. Cancellation links open the merchant or Apple. You finish cancellation on their site or in Settings.
+
+Kichta is a tracker, not a bank, accountant, or advisor. Totals and reminder dates depend on what you enter. We are not responsible for merchant charges, missed cancellations, or decisions you make from the numbers on screen.
+
+Apple handles billing. Google serves ads on the free version. Support and cancellation links open other sites. Those parties have their own terms. We do not control their content or availability.
+
+## Other rules
+
+You must be at least 13 and able to agree to these Terms. Kichta is not directed at children under 13 and is not in the App Store Kids category. If you are not of legal age to enter an App Store contract, a parent or guardian must approve the download and any purchase.
+
+Use Kichta only to track subscriptions and trials you are allowed to record. Do not misuse the app, attempt to break it, or store a child’s personal information in it.
+
+Kichta is provided as is, to the maximum extent permitted by law. We do not warrant that reminders will fire, that a scan will read a receipt correctly, or that the app will be uninterrupted. We are not liable for ad content, merchant billing, or data loss after you delete the app or use Delete my data.
+
+We may update these Terms. We will change the last-updated date in the app and at the public URL. If we change Kichta Pro prices or plan lengths, Apple will show the new offer before you buy or when a plan changes. Continued use after an update means you accept the new Terms.
+
+Questions: use the Support row in Settings, which opens [GitHub issues](https://github.com/mohcine-badour/AIMoneyLeakDetector/issues), or App Store support for this app. The Privacy Policy is in Settings and at the public URL listed in App Store Connect.

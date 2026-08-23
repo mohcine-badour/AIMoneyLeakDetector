@@ -12,7 +12,13 @@ Also fill:
 
 - Screenshots of Welcome, Home, Add subscription, Paywall, Settings
 - Description: local subscription tracker. Users add records or scan a receipt. Kichta does not cancel merchants.
-- Age rating: likely 4+
-- App Privacy: Purchases for App Functionality if StoreKit is used. Photos/Camera for App Functionality if receipt scan is used. Advertising Data for Third-Party Advertising if AdMob banners are on. Do not declare tracking unless App Tracking Transparency is added.
-- Subscription group localization: Yearly $19.99, Monthly $2.99, Weekly $0.99, auto-renew, cancel in Apple ID settings
+- Age rating: 4+. Do not put the app in the Kids category. The privacy policy says Kichta is not directed at children under 13.
+- App Privacy (must match the privacy policy):
+  - Purchases — App Functionality — Apple billing / restore
+  - Photos — App Functionality — receipt scan, not saved
+  - Camera — App Functionality — receipt scan, not saved
+  - Advertising Data — Third-Party Advertising — Google AdMob banners (non-personalized)
+  - Do not declare Tracking (no ATT, no cross-app tracking)
+  - Do not declare financial amounts, merchant names, or email as data collected by Kichta
+- Subscription group localization must match Terms of Use (Guideline 3.1.2): title Kichta Pro; Yearly $19.99 / 1 year; Monthly $2.99 / 1 month; Weekly $0.99 / 1 week; auto-renew; cancel in Apple ID settings; Privacy and Terms URLs functional
 - Create `billkiller_pro_weekly` in the same Kichta Pro subscription group (1 week, $0.99). Keep existing monthly and yearly IDs.
