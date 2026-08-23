@@ -19,6 +19,7 @@ import 'package:kichta/features/cancellation/domain/cancellation_link_opener.dar
 import 'package:kichta/features/notifications/domain/reminder_scheduler.dart';
 import 'package:kichta/features/notifications/notifications_providers.dart';
 import 'package:kichta/features/ads/ads_providers.dart';
+import 'package:kichta/features/ads/data/disabled_ad_service.dart';
 import 'package:kichta/features/ads/domain/ad_config.dart';
 import 'package:kichta/features/ads/domain/ad_service.dart';
 import 'package:kichta/features/auth/auth_providers.dart';
@@ -93,7 +94,9 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpKichtaApp(
         if (monetizationConfig != null)
           monetizationConfigProvider.overrideWithValue(monetizationConfig),
         if (adConfig != null) adConfigProvider.overrideWithValue(adConfig),
-        if (adService != null) adServiceProvider.overrideWithValue(adService),
+        adServiceProvider.overrideWithValue(
+          adService ?? const DisabledAdService(),
+        ),
       ],
       child: KichtaApp(router: router),
     ),

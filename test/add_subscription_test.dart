@@ -41,6 +41,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const Key('subscription-name')), findsOneWidget);
+    expect(find.text(AppStrings.fieldNameHint), findsOneWidget);
     expect(find.text(AppStrings.reviewBeforeAdding), findsOneWidget);
   });
 

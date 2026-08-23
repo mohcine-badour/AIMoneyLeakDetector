@@ -9,10 +9,10 @@ import '../../../app/theme/app_tokens.dart';
 import '../../../core/constants/app_icons.dart';
 import '../../../core/constants/app_spacing.dart';
 import '../../../core/constants/app_strings.dart';
+import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../cancellation/cancellation_providers.dart';
-import '../../insights/insights_providers.dart';
 import '../../notifications/notifications_providers.dart';
 import '../../paywall/domain/entitlement_copy.dart';
 import '../../paywall/domain/paywall_source.dart';
@@ -175,40 +175,26 @@ class SettingsScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-              Divider(height: 1, color: tokens.border),
-              _SettingsRow(
-                key: const Key('reset-dismissed-insights'),
-                icon: AppIcons.sparkles,
-                title: AppStrings.resetDismissedInsights,
-                onTap: () {
-                  HapticFeedback.selectionClick();
-                  ref.read(dismissedInsightsProvider.notifier).reset();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(AppStrings.dismissedInsightsReset),
-                    ),
-                  );
-                },
-              ),
-              Divider(height: 1, color: tokens.border),
-              _SettingsRow(
-                key: const Key('delete-local-data'),
-                icon: AppIcons.delete,
-                title: AppStrings.deleteMyData,
-                tone: _RowTone.danger,
-                enabled: !action.isErasing,
-                loading: action.isErasing,
-                onTap: () => _confirm(
-                  context,
-                  ref,
-                  kind: ErasureKind.localData,
-                  title: AppStrings.deleteMyDataTitle,
-                  message: AppStrings.deleteMyDataMessage,
+              Padding(
+                padding: const EdgeInsets.fromLTRB(14, 4, 14, 12),
+                child: AppButton(
+                  key: const Key('delete-local-data'),
+                  label: AppStrings.deleteMyData,
+                  variant: AppButtonVariant.danger,
+                  isLoading: action.isErasing,
+                  onPressed: action.isErasing
+                      ? null
+                      : () => _confirm(
+                          context,
+                          ref,
+                          kind: ErasureKind.localData,
+                          title: AppStrings.deleteMyDataTitle,
+                          message: AppStrings.deleteMyDataMessage,
+                        ),
                 ),
               ),
-              Divider(height: 1, color: tokens.border),
               Padding(
-                padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+                padding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
                 child: Text(
                   AppStrings.appStoreBillingNotice,
                   style: TextStyle(

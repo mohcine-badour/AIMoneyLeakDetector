@@ -40,7 +40,10 @@ class TrialsListScreen extends ConsumerWidget {
         AppSpacing.page,
         AppSpacing.page,
       ),
-      bottomBanner: const AdBannerSlot(placement: AdPlacement.trials),
+      bottomBanner: AdBannerSlot(
+        placement: AdPlacement.trials,
+        visible: visible.asData?.value.isNotEmpty ?? false,
+      ),
       body: visible.when(
         loading: () => const LoadingState(),
         error: (error, stackTrace) => ErrorState(

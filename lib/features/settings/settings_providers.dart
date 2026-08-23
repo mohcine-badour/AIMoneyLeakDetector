@@ -2,8 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/constants/app_strings.dart';
 import '../../../core/providers/app_database_provider.dart';
+import '../../../core/providers/shared_preferences_provider.dart';
 import '../../../core/security/security_providers.dart';
 import '../auth/auth_providers.dart';
+import '../insights/insights_providers.dart';
 import '../notifications/notifications_providers.dart';
 import '../onboarding/data/onboarding_repository.dart';
 import '../subscriptions/subscriptions_providers.dart';
@@ -19,6 +21,7 @@ final dataEraserProvider = Provider<LocalDataEraser>((ref) {
     reminders: ref.watch(reminderSchedulerProvider),
     secureStore: ref.watch(secureStoreProvider),
     documents: ref.watch(documentStoreProvider),
+    preferences: ref.watch(sharedPreferencesProvider),
   );
 });
 
@@ -45,6 +48,10 @@ class PrivacyActionController extends Notifier<PrivacyActionState> {
       ref.invalidate(subscriptionsProvider);
       ref.invalidate(trialsProvider);
       ref.invalidate(declaredUsageCountsProvider);
+      ref.invalidate(subscriptionListQueryProvider);
+      ref.invalidate(dismissedInsightsProvider);
+      ref.invalidate(insightsTimeframeProvider);
+      ref.invalidate(remindersEnabledProvider);
       state = const PrivacyActionState();
       return result;
     } on Object {

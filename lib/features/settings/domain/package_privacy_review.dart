@@ -117,6 +117,12 @@ abstract final class PackagePrivacyReview {
       data: 'Same local subscription records as drift. No network',
       leavesDevice: false,
     ),
+    PackagePrivacyNote(
+      package: 'google_mobile_ads',
+      purpose: 'Non-personalized banners on Trials and Upcoming',
+      data: 'Ad requests via Google. No amounts, merchants, or receipts',
+      leavesDevice: true,
+    ),
   ];
 
   static Set<String> get packageNames => {

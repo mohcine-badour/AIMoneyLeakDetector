@@ -20,6 +20,8 @@ import 'features/cancellation/data/url_launcher_link_opener.dart';
 import 'features/notifications/data/local_reminder_scheduler.dart';
 import 'features/notifications/notifications_providers.dart';
 import 'features/onboarding/data/onboarding_repository.dart';
+import 'features/ads/data/admob_bootstrap.dart';
+import 'features/ads/domain/ad_config.dart';
 import 'features/paywall/data/billing_client_factory.dart';
 import 'features/paywall/domain/monetization_config.dart';
 import 'features/paywall/paywall_providers.dart';
@@ -41,6 +43,7 @@ Future<void> main() async {
   final monetization = MonetizationConfig.defaults;
   final billing = BillingClientFactory.create(monetization);
   await billing.initialize();
+  await AdMobBootstrap.initialize(AdConfig.defaults);
 
   runApp(
     ProviderScope(

@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../core/database/app_database.dart';
 import '../../../core/security/document_store.dart';
 import '../../../core/security/secure_store.dart';
@@ -30,6 +32,7 @@ class LocalDataEraser {
     required this.reminders,
     required this.secureStore,
     required this.documents,
+    required this.preferences,
   });
 
   final AppDatabase database;
@@ -38,6 +41,7 @@ class LocalDataEraser {
   final ReminderScheduler reminders;
   final SecureStore secureStore;
   final DocumentStore documents;
+  final SharedPreferences preferences;
 
   Future<ErasureResult> erase(ErasureKind kind) async {
     await database.eraseAllUserData();
@@ -46,6 +50,7 @@ class LocalDataEraser {
     await reminders.sync(const []);
     await secureStore.clear();
     await documents.discard();
+    await preferences.clear();
     return ErasureResult(
       kind: kind,
       localDataRemoved: true,

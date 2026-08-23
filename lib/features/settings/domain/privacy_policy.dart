@@ -61,7 +61,7 @@ abstract final class PrivacyPolicy {
       title: 'Ads',
       group: groupProduct,
       body:
-          'This version does not show advertisements and does not load an advertising SDK.',
+          'Free users may see a small banner on Trials and Upcoming. Ads are served by Google AdMob and requested as non-personalized. We do not send amounts, merchant names, or receipts to the ad SDK. Pro removes ads. Home, add, scan, paywall, and Settings never show ads.',
     ),
     PrivacyPolicySection(
       title: 'AI processing',

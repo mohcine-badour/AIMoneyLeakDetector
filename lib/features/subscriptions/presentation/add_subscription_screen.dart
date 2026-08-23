@@ -155,6 +155,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
                   AppFilledField(
                     fieldKey: const Key('subscription-name'),
                     label: AppStrings.fieldName,
+                    hint: AppStrings.fieldNameHint,
                     controller: _nameController,
                     errorText: form.errors.name,
                     textInputAction: TextInputAction.next,

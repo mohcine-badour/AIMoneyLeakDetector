@@ -31,7 +31,10 @@ class UpcomingPaymentsScreen extends ConsumerWidget {
         AppSpacing.page,
         AppSpacing.page,
       ),
-      bottomBanner: const AdBannerSlot(placement: AdPlacement.upcoming),
+      bottomBanner: AdBannerSlot(
+        placement: AdPlacement.upcoming,
+        visible: async.asData?.value.isNotEmpty ?? false,
+      ),
       body: async.when(
         loading: () => const LoadingState(),
         error: (error, stackTrace) => ErrorState(

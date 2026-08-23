@@ -26,7 +26,12 @@ void main() {
       PackagePrivacyReview.notes
           .where((note) => note.leavesDevice)
           .map((note) => note.package),
-      {'purchases_flutter', 'in_app_purchase', 'url_launcher'},
+      {
+        'purchases_flutter',
+        'in_app_purchase',
+        'url_launcher',
+        'google_mobile_ads',
+      },
     );
   });
 }

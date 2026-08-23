@@ -3,8 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:kichta/app/router/app_routes.dart';
 import 'package:kichta/core/constants/app_strings.dart';
+import 'package:kichta/core/database/app_database.dart';
+import 'package:kichta/features/ads/data/local_ad_service.dart';
 import 'package:kichta/features/ads/domain/ad_config.dart';
 import 'package:kichta/features/paywall/domain/entitlement.dart';
+import 'package:kichta/features/trials/data/drift_trial_repository.dart';
+import 'package:kichta/features/trials/domain/trial.dart';
 
 import 'helpers/pump_app.dart';
 
@@ -64,6 +68,46 @@ void main() {
     await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
 
     expect(find.text(AppStrings.addSubscriptionTitle), findsOneWidget);
+    expect(find.text(AppStrings.adLabel), findsNothing);
+  });
+
+  testWidgets('free users see a trials banner when a trial exists', (
+    tester,
+  ) async {
+    _largeScreen(tester);
+    await pumpKichtaApp(
+      tester,
+      location: AppRoutes.trials,
+      now: DateTime.utc(2026, 8, 21),
+      adConfig: const AdConfig(enabled: true),
+      adService: const LocalAdService(),
+      seed: (AppDatabase database) {
+        return DriftTrialRepository(database).save(
+          Trial.create(
+            id: 'chatgpt',
+            subscriptionName: 'ChatGPT',
+            amountAfterTrial: 20,
+            trialEndDate: DateTime.utc(2026, 8, 26),
+          ),
+        );
+      },
+    );
+
+    expect(find.byKey(const Key('ad-banner-trials')), findsOneWidget);
+    expect(find.text(AppStrings.adLabel), findsOneWidget);
+    expect(find.text(AppStrings.adRemoveHint), findsOneWidget);
+  });
+
+  testWidgets('empty trials list does not show a banner', (tester) async {
+    _largeScreen(tester);
+    await pumpKichtaApp(
+      tester,
+      location: AppRoutes.trials,
+      adConfig: const AdConfig(enabled: true),
+      adService: const LocalAdService(),
+    );
+
+    expect(find.byKey(const Key('ad-banner-trials')), findsNothing);
     expect(find.text(AppStrings.adLabel), findsNothing);
   });
 

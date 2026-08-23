@@ -71,6 +71,8 @@ void main() {
     await store.write(key: 'token.session', value: 'abc');
     final documents = EphemeralDocumentStore();
     await documents.hold(Uint8List.fromList([9, 8, 7]));
+    await prefs.setStringList('insights/dismissed', ['overlap-netflix']);
+    await prefs.setBool('reminders/enabled', false);
     final reminders = _RecordingReminders();
 
     final eraser = LocalDataEraser(
@@ -80,6 +82,7 @@ void main() {
       reminders: reminders,
       secureStore: store,
       documents: documents,
+      preferences: prefs,
     );
 
     final result = await eraser.erase(ErasureKind.account);
@@ -94,5 +97,7 @@ void main() {
     expect(await store.read('token.session'), isNull);
     expect(documents.currentBytes, isNull);
     expect(reminders.last, isEmpty);
+    expect(prefs.getStringList('insights/dismissed'), isNull);
+    expect(prefs.getBool('reminders/enabled'), isNull);
   });
 }

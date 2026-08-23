@@ -20,7 +20,7 @@ Product analytics may record event names such as app opened or paywall viewed. A
 
 Pro is sold through the App Store. Apple validates the purchase. If a RevenueCat public SDK key is configured later, RevenueCat may also see store account and product identifiers to restore entitlement. This app never stores an AI API key or a RevenueCat secret key.
 
-This version does not show advertisements and does not load an advertising SDK. Spend math stays in the app. This version does not send your data to an AI provider.
+Free users may see a small banner on Trials and Upcoming. Ads are served by Google AdMob and requested as non-personalized. We do not send amounts, merchant names, or receipts to the ad SDK. Pro removes ads. Home, add, scan, paywall, and Settings never show ads. Spend math stays in the app. This version does not send your data to an AI provider.
 
 ## Your control
 

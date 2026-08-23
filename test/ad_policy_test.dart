@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:kichta/features/ads/data/ad_service_factory.dart';
+import 'package:kichta/features/ads/data/admob_ad_service.dart';
 import 'package:kichta/features/ads/data/disabled_ad_service.dart';
-import 'package:kichta/features/ads/data/local_ad_service.dart';
 import 'package:kichta/features/ads/domain/ad_config.dart';
 import 'package:kichta/features/ads/domain/ad_placement.dart';
 import 'package:kichta/features/ads/domain/ad_policy.dart';
@@ -84,7 +84,11 @@ void main() {
     );
   });
 
-  test('factory keeps AdMob out of the rest of the app', () {
-    expect(AdServiceFactory.create(const AdConfig()), isA<LocalAdService>());
+  test('factory keeps AdMob behind the ad service port', () {
+    expect(AdServiceFactory.create(const AdConfig()), isA<AdMobAdService>());
+    expect(
+      AdServiceFactory.create(const AdConfig(enabled: false)),
+      isA<DisabledAdService>(),
+    );
   });
 }

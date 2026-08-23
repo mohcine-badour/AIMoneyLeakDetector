@@ -47,6 +47,7 @@ void main() {
     expect(find.text(AppStrings.remindersToggle), findsOneWidget);
     expect(find.text(AppStrings.remindersExplanation), findsOneWidget);
     expect(find.text(AppStrings.deleteMyData), findsOneWidget);
+    expect(find.text('Reset dismissed insights'), findsNothing);
     expect(find.text(AppStrings.deleteAccount), findsNothing);
     expect(find.text(AppStrings.appStoreBillingNotice), findsOneWidget);
     expect(find.text(AppStrings.adLabel), findsNothing);

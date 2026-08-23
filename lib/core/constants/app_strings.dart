@@ -68,7 +68,6 @@ abstract final class AppStrings {
   static const String addSubscriptionCta = 'Add subscription';
   static const String review = 'Review';
   static const String dismiss = 'Dismiss';
-  static const String resetDismissedInsights = 'Reset dismissed insights';
   static String categoryCount(int count) {
     if (count == 1) {
       return '1 category';
@@ -112,8 +111,6 @@ abstract final class AppStrings {
       'Allow notifications to get reminders.';
   static const String reminderNothingUpcoming =
       'Nothing to remind yet. Choose a date in the future.';
-  static const String dismissedInsightsReset =
-      'Dismissed insights are visible again.';
   static const String privacyLastUpdated = 'Last updated';
   static const String privacyMinimalCollection =
       'We keep collection small. Analytics never receive amounts, merchants, or receipts.';
@@ -182,6 +179,7 @@ abstract final class AppStrings {
   static const String save = 'Save';
   static const String select = 'Select';
   static const String fieldName = 'Name';
+  static const String fieldNameHint = 'Netflix, iCloud, gym';
   static const String fieldMerchant = 'Merchant';
   static const String fieldMerchantHint = 'Defaults to name';
   static const String mostPopular = 'Most popular';
