@@ -1,6 +1,6 @@
 # Kichta Privacy Policy
 
-Last updated: August 22, 2026
+Last updated: August 23, 2026
 
 This document matches the in-app Privacy Policy and `docs/privacy.html`.
 
@@ -12,7 +12,7 @@ Subscriptions, trials, usage counts, and onboarding answers stay in an encrypted
 
 ## What we do not collect
 
-We do not ask for bank logins. We do not create a Kichta account. We do not put financial amounts, merchant names, or documents into analytics. This version does not offer receipt scanning. Kichta does not keep receipt images in the app database.
+We do not ask for bank logins. We do not create a Kichta account. We do not keep raw receipt images after a scan. We do not put financial amounts, merchant names, or documents into analytics. The camera and photo library are used only to scan a receipt. Text is read on this phone. The image is held in memory for that scan, then discarded. Receipt files are not saved in the app database.
 
 ## How the app works
 

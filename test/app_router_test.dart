@@ -62,11 +62,12 @@ void main() {
     expect(find.text(AppStrings.backToList), findsOneWidget);
   });
 
-  testWidgets('receipt scan is not a shipped route', (tester) async {
+  testWidgets('receipt scan is a shipped route', (tester) async {
     await pumpKichtaApp(tester, location: AppRoutes.scanReceipt);
 
-    expect(find.text(AppStrings.scanReceiptTitle), findsNothing);
-    expect(find.text(AppStrings.subscriptionNotFound), findsOneWidget);
+    expect(find.text(AppStrings.scanReceiptTitle), findsOneWidget);
+    expect(find.text(AppStrings.scanUseCamera), findsOneWidget);
+    expect(find.text(AppStrings.scanUseGallery), findsOneWidget);
   });
 
   testWidgets('unknown route shows not found and can return home', (

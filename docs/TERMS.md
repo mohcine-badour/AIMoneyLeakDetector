@@ -1,6 +1,6 @@
 # Kichta Terms of Use
 
-Last updated: August 22, 2026
+Last updated: August 23, 2026
 
 This document matches the in-app Terms of Use and `docs/terms.html`.
 
@@ -8,7 +8,7 @@ This document matches the in-app Terms of Use and `docs/terms.html`.
 
 Kichta is a local subscription tracker on this phone. You add subscriptions and trials yourself. There is no Kichta account and no cloud sync in this version.
 
-You are responsible for the accuracy of the names, amounts, and dates you enter. Kichta uses those records to show spend, upcoming payments, and reminders.
+You are responsible for the accuracy of the names, amounts, and dates you enter or confirm after a receipt scan. Kichta uses those records to show spend, upcoming payments, and reminders.
 
 ## Kichta Pro
 

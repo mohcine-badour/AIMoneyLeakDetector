@@ -8,6 +8,7 @@ void main() {
   const config = MonetizationConfig(
     freeSubscriptionLimit: 2,
     freeTrialLimit: 1,
+    featureGatesEnabled: true,
   );
 
   test('free users can add subscriptions under the configured limit', () {

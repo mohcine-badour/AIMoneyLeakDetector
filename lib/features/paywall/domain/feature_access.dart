@@ -16,17 +16,26 @@ class FeatureAccess {
   final int trialCount;
 
   bool get canAddSubscription =>
-      entitlement.isPro || subscriptionCount < config.freeSubscriptionLimit;
+      !config.featureGatesEnabled ||
+      entitlement.isPro ||
+      subscriptionCount < config.freeSubscriptionLimit;
 
   bool get canAddTrial {
-    if (entitlement.isPro || !config.trialProtectionRequiresPro) {
+    if (!config.featureGatesEnabled ||
+        entitlement.isPro ||
+        !config.trialProtectionRequiresPro) {
       return true;
     }
     return trialCount < config.freeTrialLimit;
   }
 
-  bool get canUseScanner => entitlement.isPro || !config.scannerRequiresPro;
+  bool get canUseScanner =>
+      !config.featureGatesEnabled ||
+      entitlement.isPro ||
+      !config.scannerRequiresPro;
 
   bool get canUseAiAnalysis =>
-      entitlement.isPro || !config.aiAnalysisRequiresPro;
+      !config.featureGatesEnabled ||
+      entitlement.isPro ||
+      !config.aiAnalysisRequiresPro;
 }

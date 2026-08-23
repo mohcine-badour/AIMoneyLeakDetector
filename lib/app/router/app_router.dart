@@ -13,6 +13,7 @@ import '../../features/paywall/domain/paywall_source.dart';
 import '../../features/paywall/presentation/paywall_screen.dart';
 import '../../features/upcoming/presentation/upcoming_payments_screen.dart';
 import '../../features/insights/presentation/insights_screen.dart';
+import '../../features/scanner/presentation/scan_receipt_screen.dart';
 import '../../features/settings/presentation/legal_document_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/settings/domain/privacy_policy.dart';
@@ -50,6 +51,10 @@ abstract final class AppRouter {
             GoRoute(
               path: 'add',
               builder: (context, state) => const AddSubscriptionScreen(),
+            ),
+            GoRoute(
+              path: 'scan',
+              builder: (context, state) => const ScanReceiptScreen(),
             ),
             GoRoute(
               path: 'evaluate',

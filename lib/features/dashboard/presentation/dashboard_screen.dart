@@ -75,7 +75,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             controller: _scroll,
             now: clock,
             subscriptions: subscriptions,
-            showUnlock: !ref.watch(entitlementProvider).isPro,
+            showUnlock:
+                ref.watch(monetizationConfigProvider).featureGatesEnabled &&
+                !ref.watch(entitlementProvider).isPro,
           ),
         ),
       ),

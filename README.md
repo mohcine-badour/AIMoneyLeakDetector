@@ -1,6 +1,6 @@
 # Kichta
 
-Kichta is a local subscription tracker. Add subscriptions and trials on this phone, see upcoming payments, and get reminders before a date.
+Kichta is a local subscription tracker. Add subscriptions and trials on this phone, scan a receipt, see upcoming payments, and get reminders before a date.
 
 This is a Flutter (iOS-first) project. See `lib/` for the application code.
 

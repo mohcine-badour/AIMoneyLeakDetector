@@ -6,19 +6,22 @@ import '../before_subscribe/domain/subscription_candidate.dart';
 import '../../core/constants/app_strings.dart';
 import '../../core/security/security_providers.dart';
 import '../subscriptions/domain/subscription.dart';
-import 'data/unavailable_receipt_source.dart';
-import 'data/local_receipt_extraction_backend.dart';
+import 'data/image_picker_receipt_source.dart';
+import 'data/on_device_receipt_extraction_backend.dart';
 import 'data/validated_receipt_extractor.dart';
+import 'data/vision_receipt_ocr.dart';
 import 'domain/extracted_receipt.dart';
 import 'domain/receipt_extractor.dart';
 import 'domain/receipt_image.dart';
 
 final receiptImagePickerProvider = Provider<ReceiptImagePicker>((ref) {
-  return const UnavailableReceiptPicker();
+  return ImagePickerReceiptSource();
 });
 
 final receiptExtractorProvider = Provider<ReceiptExtractor>((ref) {
-  return const ValidatedReceiptExtractor(LocalReceiptExtractionBackend());
+  return const ValidatedReceiptExtractor(
+    OnDeviceReceiptExtractionBackend(VisionReceiptOcr()),
+  );
 });
 
 enum ScanFlowStep { source, preview, processing, extracted }

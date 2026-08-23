@@ -27,6 +27,9 @@ class SettingsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final action = ref.watch(privacyActionProvider);
+    final gatesEnabled = ref
+        .watch(monetizationConfigProvider)
+        .featureGatesEnabled;
     final entitlement = ref.watch(entitlementProvider);
     final tokens = AppTokens.of(context);
 
@@ -41,20 +44,22 @@ class SettingsScreen extends ConsumerWidget {
       ),
       body: ListView(
         children: [
-          _SectionLabel(AppStrings.planSection),
-          const SizedBox(height: AppSpacing.sm),
-          _PlanCard(
-            isPro: entitlement.isPro,
-            status: EntitlementCopy.status(entitlement),
-            onUnlock: () {
-              HapticFeedback.selectionClick();
-              PaywallNavigation.paywall(
-                context,
-                source: PaywallSource.settings,
-              );
-            },
-          ),
-          const SizedBox(height: AppSpacing.sm),
+          if (gatesEnabled) ...[
+            _SectionLabel(AppStrings.planSection),
+            const SizedBox(height: AppSpacing.sm),
+            _PlanCard(
+              isPro: entitlement.isPro,
+              status: EntitlementCopy.status(entitlement),
+              onUnlock: () {
+                HapticFeedback.selectionClick();
+                PaywallNavigation.paywall(
+                  context,
+                  source: PaywallSource.settings,
+                );
+              },
+            ),
+            const SizedBox(height: AppSpacing.sm),
+          ],
           _SettingsCard(
             children: [
               _SettingsRow(

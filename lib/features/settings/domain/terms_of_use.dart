@@ -2,7 +2,7 @@ import 'privacy_policy.dart';
 
 /// In-app terms of use. Keep this English-only for V1.
 abstract final class TermsOfUse {
-  static const String lastUpdated = 'August 22, 2026';
+  static const String lastUpdated = 'August 23, 2026';
 
   static const String groupProduct = 'The app';
   static const String groupBilling = 'Kichta Pro';
@@ -19,7 +19,7 @@ abstract final class TermsOfUse {
       title: 'Your records',
       group: groupProduct,
       body:
-          'You are responsible for the accuracy of the names, amounts, and dates you enter. Kichta uses those records to show spend, upcoming payments, and reminders.',
+          'You are responsible for the accuracy of the names, amounts, and dates you enter or confirm after a receipt scan. Kichta uses those records to show spend, upcoming payments, and reminders.',
     ),
     PrivacyPolicySection(
       title: 'Auto-renewable subscription',

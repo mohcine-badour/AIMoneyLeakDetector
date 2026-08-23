@@ -5,6 +5,7 @@ import 'package:kichta/app/router/app_routes.dart';
 import 'package:kichta/core/constants/app_strings.dart';
 import 'package:kichta/core/database/app_database.dart';
 import 'package:kichta/features/paywall/domain/entitlement.dart';
+import 'package:kichta/features/paywall/domain/monetization_config.dart';
 import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
 import 'package:kichta/features/subscriptions/domain/subscription.dart';
 
@@ -96,7 +97,12 @@ void main() {
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
 
-    await pumpKichtaApp(tester, location: AppRoutes.dashboard, now: _now);
+    await pumpKichtaApp(
+      tester,
+      location: AppRoutes.dashboard,
+      now: _now,
+      monetizationConfig: const MonetizationConfig(featureGatesEnabled: true),
+    );
 
     expect(find.byKey(const Key('dashboard-unlock-pro')), findsOneWidget);
     expect(find.text(AppStrings.unlockPro), findsOneWidget);

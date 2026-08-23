@@ -17,6 +17,7 @@ class MonetizationConfig {
     this.scannerRequiresPro = true,
     this.aiAnalysisRequiresPro = true,
     this.trialProtectionRequiresPro = true,
+    this.featureGatesEnabled = false,
     this.yearlyIntroTrialDays,
     this.weeklyProductId = 'billkiller_pro_weekly',
     this.monthlyProductId = 'billkiller_pro_monthly',
@@ -38,6 +39,10 @@ class MonetizationConfig {
   final bool scannerRequiresPro;
   final bool aiAnalysisRequiresPro;
   final bool trialProtectionRequiresPro;
+
+  /// Temporary. When false, every feature is available without Pro so the
+  /// product can be tested. Set back to true before shipping.
+  final bool featureGatesEnabled;
 
   /// Store-confirmed free trial length in days. Null or 0 means no trial copy.
   final int? yearlyIntroTrialDays;

@@ -183,7 +183,10 @@ void main() {
       tester,
       location: AppRoutes.subscriptions,
       seed: _saveNetflix,
-      monetizationConfig: const MonetizationConfig(freeSubscriptionLimit: 1),
+      monetizationConfig: const MonetizationConfig(
+        freeSubscriptionLimit: 1,
+        featureGatesEnabled: true,
+      ),
     );
 
     await tester.tap(find.byTooltip(AppStrings.addSubscriptionTitle));
@@ -199,7 +202,10 @@ void main() {
       location: AppRoutes.subscriptions,
       seed: _saveNetflix,
       entitlement: Entitlement.pro,
-      monetizationConfig: const MonetizationConfig(freeSubscriptionLimit: 1),
+      monetizationConfig: const MonetizationConfig(
+        freeSubscriptionLimit: 1,
+        featureGatesEnabled: true,
+      ),
     );
 
     await tester.tap(find.byTooltip(AppStrings.addSubscriptionTitle));

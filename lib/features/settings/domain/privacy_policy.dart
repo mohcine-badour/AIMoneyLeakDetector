@@ -13,7 +13,7 @@ class PrivacyPolicySection {
 /// In-app privacy policy. Keep this English-only for V1.
 abstract final class PrivacyPolicy {
   static const String title = 'Privacy Policy';
-  static const String lastUpdated = 'August 22, 2026';
+  static const String lastUpdated = 'August 23, 2026';
 
   static const String groupDevice = 'On this device';
   static const String groupNotCollected = 'What we do not collect';
@@ -37,13 +37,13 @@ abstract final class PrivacyPolicy {
       title: 'Data we do not collect',
       group: groupNotCollected,
       body:
-          'We do not ask for bank logins. We do not create a Kichta account. We do not put financial amounts, merchant names, or documents into analytics.',
+          'We do not ask for bank logins. We do not create a Kichta account. We do not keep raw receipt images after a scan. We do not put financial amounts, merchant names, or documents into analytics.',
     ),
     PrivacyPolicySection(
       title: 'Receipts and documents',
       group: groupNotCollected,
       body:
-          'This version does not offer receipt scanning. Kichta does not keep receipt images in the app database.',
+          'The camera and photo library are used only to scan a receipt. Text is read on this phone. The image is held in memory for that scan, then discarded. Receipt files are not saved in the app database.',
     ),
     PrivacyPolicySection(
       title: 'Analytics',

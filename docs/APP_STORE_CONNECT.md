@@ -11,8 +11,8 @@ Enable Pages: repo Settings → Pages → Source = GitHub Actions. The workflow 
 Also fill:
 
 - Screenshots of Welcome, Home, Add subscription, Paywall, Settings
-- Description: local subscription tracker. Users add records. Kichta does not cancel merchants and does not scan receipts in this version.
+- Description: local subscription tracker. Users add records or scan a receipt. Kichta does not cancel merchants.
 - Age rating: likely 4+
-- App Privacy: Purchases for App Functionality if StoreKit is used. Do not declare ads, photos, or tracking.
+- App Privacy: Purchases for App Functionality if StoreKit is used. Photos/Camera for App Functionality if receipt scan is used. Do not declare ads or tracking.
 - Subscription group localization: Yearly $19.99, Monthly $2.99, Weekly $0.99, auto-renew, cancel in Apple ID settings
 - Create `billkiller_pro_weekly` in the same Kichta Pro subscription group (1 week, $0.99). Keep existing monthly and yearly IDs.
