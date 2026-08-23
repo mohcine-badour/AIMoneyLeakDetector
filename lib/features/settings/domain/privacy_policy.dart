@@ -53,7 +53,7 @@ abstract final class PrivacyPolicy {
       title: 'Data stored on this device',
       group: groupDevice,
       body:
-          'Subscriptions, trials, usage counts, reminder preference, and onboarding answers stay in an encrypted local database on your phone. Optional on-device sign-in fields also stay on this phone. The encryption key is stored in the system Keychain, not in SharedPreferences. They are used to calculate spend, upcoming payments, and reminders.',
+          'Subscriptions, trials, usage counts, reminder preference, and onboarding answers stay in an encrypted local database on your phone. The encryption key is stored in the system Keychain, not in SharedPreferences. They are used to calculate spend, upcoming payments, and reminders. There is no Kichta account. If you type an email or password on the sign-in screen, those fields are checked on this phone only and are not saved in the subscription database.',
     ),
     PrivacyPolicySection(
       title: 'How we collect it',
@@ -89,7 +89,7 @@ abstract final class PrivacyPolicy {
       title: 'Analytics',
       group: groupLeavesDevice,
       body:
-          'Product analytics may record event names such as app opened or paywall viewed. Allowed details are limited to plan, source, success, and reminder kind. Amounts, merchants, and documents are stripped before anything is recorded. This version logs those event names on the device only. There is no third-party analytics SDK.',
+          'This version logs event names on the device only, such as app opened or reminder kind. Amounts, merchants, and documents are stripped before anything is recorded. There is no third-party analytics SDK.',
     ),
     PrivacyPolicySection(
       title: 'App Store purchases',
@@ -101,13 +101,7 @@ abstract final class PrivacyPolicy {
       title: 'Ads',
       group: groupLeavesDevice,
       body:
-          'This version does not show Google AdMob banners and does not request ads. We do not send amounts, merchant names, or receipts to an ad SDK. If we turn ads on later, we will update this policy and App Store Privacy labels first.',
-    ),
-    PrivacyPolicySection(
-      title: 'What Google may receive',
-      group: groupLeavesDevice,
-      body:
-          'Because this version does not request ads, Google does not receive ad requests from Kichta. We do not use App Tracking Transparency and we do not track you across other companies’ apps or websites. If ads return later, Google’s privacy policy will apply to those requests: https://policies.google.com/privacy',
+          'This version does not show Google AdMob banners and does not request ads. Google does not receive ad requests from Kichta. We do not use App Tracking Transparency and we do not track you across other companies’ apps or websites. If we turn ads on later, we will update this policy and App Store Privacy labels first.',
     ),
     PrivacyPolicySection(
       title: 'Links you open',
@@ -119,7 +113,7 @@ abstract final class PrivacyPolicy {
       title: 'RevenueCat',
       group: groupLeavesDevice,
       body:
-          'If a RevenueCat public SDK key is configured later, RevenueCat may see store account and product identifiers to restore entitlement. This app never stores an AI API key or a RevenueCat secret key. RevenueCat’s privacy policy: https://www.revenuecat.com/privacy',
+          'This version does not use RevenueCat. No public SDK key is configured, so RevenueCat does not receive store account or product identifiers. If we add it later, we will update this policy first. This app never stores an AI API key or a RevenueCat secret key.',
     ),
     PrivacyPolicySection(
       title: 'AI processing',
@@ -131,13 +125,13 @@ abstract final class PrivacyPolicy {
       title: 'Third-party protection',
       group: groupLeavesDevice,
       body:
-          'The third parties named here — Apple, Google, and RevenueCat if configured — receive only the data described above. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines. Their own privacy policies also apply.',
+          'In this version the only parties that may receive data are Apple, if you already have a purchase, and sites you open such as GitHub. Google and RevenueCat do not receive data from this version. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.',
     ),
     PrivacyPolicySection(
       title: 'Retention',
       group: groupControl,
       body:
-          'Data on this phone is kept until you delete it in Settings or uninstall Kichta. Uninstalling removes the local database and Keychain items for this app. Apple and Google keep purchase and ad-request data under their own retention rules. We do not keep a server copy of your subscription list.',
+          'Data on this phone is kept until you delete it in Settings or uninstall Kichta. Uninstalling removes the local database and Keychain items for this app. We do not keep a server copy of your subscription list. If you already have an App Store purchase, Apple keeps that billing data under Apple’s rules.',
     ),
     PrivacyPolicySection(
       title: 'Deletion',
@@ -149,7 +143,7 @@ abstract final class PrivacyPolicy {
       title: 'Revoke consent',
       group: groupControl,
       body:
-          'Turn off Reminders in Settings to stop local notifications, or disable notifications for Kichta in iOS Settings. Revoke camera or photo access in iOS Settings; scan will stop using them. Paid features do not require you to grant camera, photos, or tracking permission.',
+          'Turn off Reminders in Settings to stop local notifications, or disable notifications for Kichta in iOS Settings. Revoke camera or photo access in iOS Settings; scan will stop using them.',
     ),
     PrivacyPolicySection(
       title: 'Sharing',
@@ -167,7 +161,7 @@ abstract final class PrivacyPolicy {
       title: 'International transfers',
       group: groupRules,
       body:
-          'If you buy Pro later, Apple may process purchase data in the United States and other countries. This version does not send ad requests to Google. Data you store in Kichta stays on this phone unless you open a link.',
+          'This version does not send ad requests to Google and does not use RevenueCat. Data you store in Kichta stays on this phone unless you open a link. If you already have an App Store purchase, Apple may process that billing data in the United States and other countries.',
     ),
     PrivacyPolicySection(
       title: 'App Store Privacy labels',

@@ -63,6 +63,10 @@ void main() {
     expect(body, contains('AI API secrets'));
     expect(body, contains('same or equal protection'));
     expect(body, contains('Google AdMob'));
+    expect(body, contains('are not saved in the subscription database'));
+    expect(body, contains('does not use RevenueCat'));
+    expect(body, isNot(contains('paywall viewed')));
+    expect(body, isNot(contains('Paid features')));
     expect(body, contains('not directed at children'));
     expect(body, contains('Delete my data'));
     expect(body, contains('does not declare Advertising Data or tracking'));

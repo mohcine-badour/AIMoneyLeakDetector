@@ -74,8 +74,10 @@ class _LegalDocumentScreenState extends ConsumerState<LegalDocumentScreen> {
         AppSpacing.page,
         AppSpacing.xxl,
       ),
-      body: ListView(
-        children: [
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
           _HeroCard(
             isPrivacy: _isPrivacy,
             kicker: widget.title,
@@ -115,7 +117,8 @@ class _LegalDocumentScreenState extends ConsumerState<LegalDocumentScreen> {
             ),
             const SizedBox(height: AppSpacing.xl),
           ],
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -482,7 +485,7 @@ abstract final class _LegalLook {
       'Reminders' => AppIcons.bellRinging,
       'Data we do not collect' => AppIcons.visibilityOff,
       'Analytics' => AppIcons.chartBar,
-      'Ads' || 'What Google may receive' => AppIcons.ads,
+      'Ads' => AppIcons.ads,
       'App Store purchases' ||
       'App Store Privacy labels' ||
       'If you already subscribed' ||

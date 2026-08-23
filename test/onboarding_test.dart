@@ -222,6 +222,76 @@ void main() {
     expect(find.text(AppStrings.appName), findsOneWidget);
   });
 
+  testWidgets('welcome through settings stays free and matches legal copy', (
+    tester,
+  ) async {
+    _largeScreen(tester);
+    await pumpKichtaApp(tester);
+
+    expect(find.text(AppStrings.getStarted), findsOneWidget);
+    expect(find.text(AppStrings.unlockPro), findsNothing);
+    expect(find.text(AppStrings.adLabel), findsNothing);
+
+    await tester.tap(find.byKey(const Key('welcome-privacy')));
+    await tester.pumpAndSettle();
+    expect(
+      find.textContaining('does not sell in-app purchases', findRichText: true),
+      findsWidgets,
+    );
+    expect(find.textContaining(r'$19.99'), findsNothing);
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const Key('get-started')));
+    await tester.pumpAndSettle();
+    expect(find.text('THE GAP'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('onboarding-skip')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.paywallHeadline), findsNothing);
+    expect(find.text(AppStrings.unlockPro), findsNothing);
+    expect(find.text(AppStrings.adLabel), findsNothing);
+    expect(find.text(AppStrings.addSubscriptionCta), findsOneWidget);
+    expect(find.byKey(const Key('open-settings')), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('open-settings')));
+    await tester.pumpAndSettle();
+
+    expect(find.text(AppStrings.settingsTitle), findsWidgets);
+    expect(find.text(AppStrings.manageSubscription), findsNothing);
+    expect(find.text(AppStrings.unlockPro), findsNothing);
+    expect(find.text(AppStrings.remindersToggle), findsOneWidget);
+    expect(find.text(AppStrings.privacyPolicy), findsOneWidget);
+    expect(find.text(AppStrings.termsOfUseTitle), findsOneWidget);
+    expect(find.text(AppStrings.deleteMyData), findsOneWidget);
+
+    await tester.tap(find.text(AppStrings.privacyPolicy));
+    await tester.pumpAndSettle();
+    expect(
+      find.textContaining(
+        'are not saved in the subscription database',
+        findRichText: true,
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.textContaining('does not use RevenueCat', findRichText: true),
+      findsWidgets,
+    );
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text(AppStrings.termsOfUseTitle));
+    await tester.pumpAndSettle();
+    expect(
+      find.textContaining('This version of Kichta is free', findRichText: true),
+      findsWidgets,
+    );
+    expect(find.textContaining(r'$19.99'), findsNothing);
+    expect(find.text(AppStrings.paywallHeadline), findsNothing);
+  });
+
   testWidgets('tapping a progress pill jumps to that page', (tester) async {
     _largeScreen(tester);
     final analytics = RecordingAnalytics();

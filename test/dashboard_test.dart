@@ -57,6 +57,9 @@ void main() {
     expect(find.text(AppStrings.addSubscriptionCta), findsOneWidget);
     expect(find.text(AppStrings.addFirstSubscriptionMessage), findsOneWidget);
     expect(find.byKey(const Key('dashboard-add-subscription')), findsOneWidget);
+    expect(find.byKey(const Key('dashboard-unlock-pro')), findsNothing);
+    expect(find.text(AppStrings.unlockPro), findsNothing);
+    expect(find.text(AppStrings.adLabel), findsNothing);
   });
 
   testWidgets('dashboard totals and upcoming payments use local data', (

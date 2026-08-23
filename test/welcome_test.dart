@@ -100,6 +100,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text(AppStrings.termsOfUseTitle), findsWidgets);
     expect(find.text(AppStrings.privacyPolicy), findsNothing);
+    expect(
+      find.textContaining('This version of Kichta is free', findRichText: true),
+      findsWidgets,
+    );
+    expect(find.textContaining(r'$19.99'), findsNothing);
     expect(analytics.has(AnalyticsEvent.termsPress), isTrue);
 
     await tester.pageBack();
