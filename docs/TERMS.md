@@ -43,4 +43,4 @@ Kichta is provided as is, to the maximum extent permitted by law. We do not warr
 
 We may update these Terms. We will change the last-updated date in the app and at the public URL. If we add a paid plan later, we will update this document before that offer goes live, and Apple will show the price and length before you buy. Continued use after an update means you accept the new Terms.
 
-Kichta is published by Mohcine Badour. Questions: email [mohcinebadour@gmail.com](mailto:mohcinebadour@gmail.com). You can also use the Support row in Settings ([GitHub issues](https://github.com/mohcine-badour/AIMoneyLeakDetector/issues)) or App Store support for this app. The Privacy Policy is in Settings and at the public URL listed in App Store Connect.
+Kichta is published by Mohcine Badour. Questions: email [mohcinebadour@gmail.com](mailto:mohcinebadour@gmail.com). You can also use the [Support page](https://mohcine-badour.github.io/AIMoneyLeakDetector/support.html) or the Support row in Settings. The Privacy Policy is in Settings and at the public URL listed in App Store Connect.

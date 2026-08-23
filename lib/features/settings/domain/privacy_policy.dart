@@ -41,7 +41,7 @@ abstract final class PrivacyPolicy {
       title: 'Contact',
       group: groupWho,
       body:
-          'Privacy questions: email ${LegalIdentity.email}. You can also use the Support row in Settings (GitHub issues) or App Store support for this app. Privacy Policy and Terms of Use are in Settings and at the public URL listed in App Store Connect.',
+          'Privacy questions: email ${LegalIdentity.email}. You can also use the Support page or the Support row in Settings. Privacy Policy and Terms of Use are in Settings and at the public URL listed in App Store Connect.',
     ),
     PrivacyPolicySection(
       title: 'Overview',
@@ -107,7 +107,7 @@ abstract final class PrivacyPolicy {
       title: 'Links you open',
       group: groupLeavesDevice,
       body:
-          'Cancellation and Support open HTTPS pages in Safari or GitHub. Those sites receive a normal web visit. We do not attach your subscription list to those requests.',
+          'Cancellation and Support open HTTPS pages in Safari. Those sites receive a normal web visit. We do not attach your subscription list to those requests.',
     ),
     PrivacyPolicySection(
       title: 'RevenueCat',
@@ -125,7 +125,7 @@ abstract final class PrivacyPolicy {
       title: 'Third-party protection',
       group: groupLeavesDevice,
       body:
-          'In this version the only parties that may receive data are Apple, if you already have a purchase, and sites you open such as GitHub. Google and RevenueCat do not receive data from this version. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.',
+          'In this version the only parties that may receive data are Apple, if you already have a purchase, and sites you open such as the Support page. Google and RevenueCat do not receive data from this version. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.',
     ),
     PrivacyPolicySection(
       title: 'Retention',

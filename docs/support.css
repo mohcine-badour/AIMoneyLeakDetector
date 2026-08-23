@@ -112,6 +112,83 @@ summary:focus-visible {
   color: var(--text);
 }
 
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.nav a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.nav a:hover,
+.nav a[aria-current="page"] {
+  color: var(--text);
+}
+
+.kicker {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 10px;
+}
+
+.doc-meta {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  color: var(--secondary);
+}
+
+.toc-label {
+  font-size: 13px;
+  color: var(--secondary);
+  margin: 0 0 10px;
+}
+
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.toc a {
+  display: inline-block;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 12px;
+}
+
+.toc a:hover {
+  color: var(--accent);
+}
+
+.legal .card + .card,
+.legal .group + .group {
+  margin-top: 12px;
+}
+
+.legal .card h3 {
+  margin-top: 18px;
+}
+
+.legal .card h3:first-child {
+  margin-top: 0;
+}
+
+.legal .card p {
+  color: var(--secondary);
+}
+
 .hero {
   padding: 48px 0 36px;
 }
@@ -189,6 +266,10 @@ p:last-child {
 .email-block dt {
   font-size: 13px;
   color: var(--secondary);
+}
+
+.email-block dt:not(:first-of-type) {
+  margin-top: 14px;
 }
 
 .email-block dd {

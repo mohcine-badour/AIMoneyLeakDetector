@@ -11,7 +11,7 @@ Kichta tracks subscriptions on this device. We collect as little as we can and d
 
 Kichta is a local subscription tracker published by Mohcine Badour on the Apple App Store. There is no parent company and no Kichta cloud account in this version.
 
-Privacy questions: email [mohcinebadour@gmail.com](mailto:mohcinebadour@gmail.com). You can also use the Support row in Settings ([GitHub issues](https://github.com/mohcine-badour/AIMoneyLeakDetector/issues)) or App Store support for this app. Privacy Policy and Terms of Use are in Settings and at the public URL listed in App Store Connect.
+Privacy questions: email [mohcinebadour@gmail.com](mailto:mohcinebadour@gmail.com). You can also use the [Support page](https://mohcine-badour.github.io/AIMoneyLeakDetector/support.html) or the Support row in Settings. Privacy Policy and Terms of Use are in Settings and at the public URL listed in App Store Connect.
 
 ## On this device
 
@@ -37,13 +37,13 @@ This version is free and does not sell in-app purchases. If you already bought K
 
 This version does not show Google AdMob banners and does not request ads. Google does not receive ad requests from Kichta. We do not use App Tracking Transparency and we do not track you across other companies’ apps or websites. If we turn ads on later, we will update this policy and App Store Privacy labels first.
 
-Cancellation and Support open HTTPS pages in Safari or GitHub. Those sites receive a normal web visit. We do not attach your subscription list to those requests.
+Cancellation and Support open HTTPS pages in Safari. Those sites receive a normal web visit. We do not attach your subscription list to those requests.
 
 This version does not use RevenueCat. No public SDK key is configured, so RevenueCat does not receive store account or product identifiers. If we add it later, we will update this policy first. This app never stores an AI API key or a RevenueCat secret key.
 
 Spend math stays in the app. This version does not send your data to an AI provider. Flutter does not contain AI API secrets.
 
-In this version the only parties that may receive data are Apple, if you already have a purchase, and sites you open such as GitHub. Google and RevenueCat do not receive data from this version. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.
+In this version the only parties that may receive data are Apple, if you already have a purchase, and sites you open such as the Support page. Google and RevenueCat do not receive data from this version. We confirm that any third party with whom this app shares user data will provide the same or equal protection of user data as stated in this policy and required by the App Store Review Guidelines.
 
 ## Your control
 

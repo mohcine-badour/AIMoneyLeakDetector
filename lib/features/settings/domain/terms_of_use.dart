@@ -111,7 +111,7 @@ abstract final class TermsOfUse {
       title: 'Contact',
       group: groupRules,
       body:
-          'Kichta is published by ${LegalIdentity.publisher}. Questions: email ${LegalIdentity.email}. You can also use the Support row in Settings (GitHub issues) or App Store support for this app. The Privacy Policy is in Settings and at the public URL listed in App Store Connect.',
+          'Kichta is published by ${LegalIdentity.publisher}. Questions: email ${LegalIdentity.email}. You can also use the Support page or the Support row in Settings. The Privacy Policy is in Settings and at the public URL listed in App Store Connect.',
     ),
   ];
 }
