@@ -9,6 +9,10 @@ abstract final class AppRoutes {
   static const String dashboard = '/dashboard';
   static const String subscriptions = '/subscriptions';
   static const String addSubscription = '/subscriptions/add';
+  static const String addCustomSubscription = '/subscriptions/add/custom';
+
+  static String addSubscriptionBrand(String slug) =>
+      '/subscriptions/add/brand/$slug';
   static const String scanReceipt = '/subscriptions/scan';
   static const String beforeYouSubscribe = '/subscriptions/evaluate';
   static const String subscriptionDetail = '/subscriptions/:id';

@@ -18,6 +18,7 @@ import '../../features/settings/presentation/legal_document_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/settings/domain/privacy_policy.dart';
 import '../../features/settings/domain/terms_of_use.dart';
+import '../../features/subscriptions/presentation/add_subscription_catalog_screen.dart';
 import '../../features/subscriptions/presentation/add_subscription_screen.dart';
 import '../../features/subscriptions/presentation/subscription_detail_screen.dart';
 import '../../features/subscriptions/presentation/subscriptions_list_screen.dart';
@@ -50,7 +51,20 @@ abstract final class AppRouter {
           routes: [
             GoRoute(
               path: 'add',
-              builder: (context, state) => const AddSubscriptionScreen(),
+              builder: (context, state) =>
+                  const AddSubscriptionCatalogScreen(),
+              routes: [
+                GoRoute(
+                  path: 'custom',
+                  builder: (context, state) => const AddSubscriptionScreen(),
+                ),
+                GoRoute(
+                  path: 'brand/:slug',
+                  builder: (context, state) => AddSubscriptionScreen(
+                    brandSlug: state.pathParameters['slug'],
+                  ),
+                ),
+              ],
             ),
             GoRoute(
               path: 'scan',

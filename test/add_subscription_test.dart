@@ -7,33 +7,80 @@ import 'package:kichta/core/constants/app_strings.dart';
 import 'package:kichta/features/subscriptions/data/drift_subscription_repository.dart';
 import 'package:kichta/features/subscriptions/domain/popular_apps.dart';
 import 'package:kichta/features/subscriptions/domain/subscription.dart';
+import 'package:kichta/features/subscriptions/domain/subscription_catalog.dart';
 
 import 'helpers/pump_app.dart';
 
 void main() {
-  test('popular app slugs stay unique and in the registry', () {
+  test('popular app slugs stay unique and in the catalog', () {
     expect(PopularApps.slugs.toSet().length, PopularApps.slugs.length);
-    expect(PopularApps.slugs.length, greaterThan(20));
+    expect(PopularApps.slugs, SubscriptionCatalog.popularSlugs);
     for (final slug in PopularApps.slugs) {
-      expect(BrandRegistry.getBrand(slug), isNotNull, reason: slug);
+      expect(SubscriptionCatalog.bySlug[slug], isNotNull, reason: slug);
     }
+    expect(
+      PopularApps.catalog.map((brand) => brand.slug).toSet(),
+      SubscriptionCatalog.all.map((service) => service.slug).toSet(),
+    );
+  });
+
+  testWidgets('add screen shows popular services and opens custom form', (
+    tester,
+  ) async {
+    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+
+    expect(find.text(AppStrings.catalogPopular), findsOneWidget);
+    expect(find.text(AppStrings.searchAllSubscriptions), findsOneWidget);
+    expect(find.byKey(const Key('catalog-app-netflix')), findsOneWidget);
+    expect(find.byKey(const Key('catalog-app-canvapro')), findsNothing);
+    expect(find.text(AppStrings.addCustomSubscription), findsOneWidget);
+    expect(find.byKey(const Key('subscription-amount')), findsNothing);
+
+    await tester.ensureVisible(find.text(AppStrings.addCustomSubscription));
+    await tester.tap(find.text(AppStrings.addCustomSubscription));
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('subscription-name')), findsOneWidget);
+    expect(find.text(AppStrings.reviewBeforeAdding), findsOneWidget);
+  });
+
+  testWidgets('searching the catalog finds Canva Pro', (tester) async {
+    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+
+    await tester.enterText(find.byKey(const Key('catalog-search')), 'Can');
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const Key('catalog-app-canvapro')), findsOneWidget);
+    expect(find.text('Canva Pro'), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('catalog-app-canvapro')));
+    await tester.pumpAndSettle();
+
+    expect(
+      tester
+          .widget<TextField>(find.byKey(const Key('subscription-name')))
+          .controller
+          ?.text,
+      'Canva Pro',
+    );
+    expect(find.text(AppStrings.categoryProductivity), findsOneWidget);
   });
 
   testWidgets('tapping outside a field dismisses the keyboard', (tester) async {
-    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+    await pumpKichtaApp(tester, location: AppRoutes.addCustomSubscription);
 
     await tester.tap(find.byKey(const Key('subscription-amount')));
     await tester.pump();
     expect(tester.testTextInput.isVisible, isTrue);
 
-    await tester.tap(find.text(AppStrings.emptySubscriptionsMessage));
+    await tester.tap(find.text(AppStrings.addSubscriptionTitle));
     await tester.pump();
 
     expect(tester.testTextInput.isVisible, isFalse);
   });
 
   testWidgets('empty save shows validation errors', (tester) async {
-    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+    await pumpKichtaApp(tester, location: AppRoutes.addCustomSubscription);
 
     await tester.ensureVisible(find.text(AppStrings.reviewBeforeAdding));
     await tester.tap(find.text(AppStrings.reviewBeforeAdding));
@@ -52,7 +99,7 @@ void main() {
   ) async {
     final harness = await pumpKichtaApp(
       tester,
-      location: AppRoutes.addSubscription,
+      location: AppRoutes.addCustomSubscription,
     );
 
     await tester.enterText(
@@ -119,10 +166,10 @@ void main() {
 
     await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
 
-    expect(find.text(AppStrings.mostPopular), findsOneWidget);
-    expect(find.byKey(const Key('popular-app-netflix')), findsOneWidget);
+    expect(find.text(AppStrings.catalogPopular), findsOneWidget);
+    expect(find.byKey(const Key('catalog-app-netflix')), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('popular-app-netflix')));
+    await tester.tap(find.byKey(const Key('catalog-app-netflix')));
     await tester.pumpAndSettle();
 
     expect(
@@ -145,7 +192,7 @@ void main() {
   testWidgets('currency sheet shows names and keeps the selected code', (
     tester,
   ) async {
-    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+    await pumpKichtaApp(tester, location: AppRoutes.addCustomSubscription);
 
     await tester.ensureVisible(find.byKey(const Key('subscription-currency')));
     await tester.tap(find.byKey(const Key('subscription-currency')));
@@ -166,7 +213,7 @@ void main() {
   testWidgets('billing cycle sheet shows cadence and selects weekly', (
     tester,
   ) async {
-    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+    await pumpKichtaApp(tester, location: AppRoutes.addCustomSubscription);
 
     await tester.ensureVisible(find.byKey(const Key('subscription-cycle')));
     await tester.tap(find.byKey(const Key('subscription-cycle')));
@@ -188,7 +235,7 @@ void main() {
   testWidgets('category sheet shows options and hides software', (
     tester,
   ) async {
-    await pumpKichtaApp(tester, location: AppRoutes.addSubscription);
+    await pumpKichtaApp(tester, location: AppRoutes.addCustomSubscription);
 
     await tester.ensureVisible(find.byKey(const Key('subscription-category')));
     await tester.tap(find.byKey(const Key('subscription-category')));

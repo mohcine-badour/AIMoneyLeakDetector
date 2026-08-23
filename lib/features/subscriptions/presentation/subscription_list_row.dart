@@ -32,6 +32,7 @@ class SubscriptionListRow extends ConsumerWidget {
     final tokens = AppTokens.of(context);
     final now = ref.watch(appNowProvider);
     final slug = SubscriptionBrand.slugFor(subscription);
+    final brand = SubscriptionBrand.brandFor(subscription);
     final faded = subscription.status != SubscriptionStatus.active;
     final relative = AppDateFormat.relative(subscription.nextBillingDate, now);
     final when = relative.isEmpty
@@ -65,6 +66,7 @@ class SubscriptionListRow extends ConsumerWidget {
               children: [
                 BrandIcon(
                   slug: slug,
+                  brand: brand,
                   size: 40,
                   fallbackInitial: subscription.name.isEmpty
                       ? '?'

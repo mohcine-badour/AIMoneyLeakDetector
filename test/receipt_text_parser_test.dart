@@ -22,6 +22,20 @@ class _FixedOcr implements ReceiptOcr {
 void main() {
   final now = DateTime.utc(2026, 8, 23);
 
+  test('maps receipt aliases onto the catalog merchant', () {
+    final json = ReceiptTextParser.parse(
+      '''
+SPOTIFY AB
+Total \$10.99
+Billed monthly
+Jan 15, 2026
+''',
+      now: now,
+    );
+
+    expect(json['merchant'], 'Spotify');
+  });
+
   test('parses a Spotify receipt instead of the Netflix sample', () {
     final json = ReceiptTextParser.parse(
       '''

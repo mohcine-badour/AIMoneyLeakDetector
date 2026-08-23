@@ -14,6 +14,9 @@ abstract final class CategoryColors {
     BrandCategory.developer: Color(0xFFFAC775),
     BrandCategory.news: Color(0xFFF5C4B3),
     BrandCategory.fitness: Color(0xFF9FE1CB),
+    BrandCategory.security: Color(0xFF8AA4C4),
+    BrandCategory.shopping: Color(0xFFE0A36A),
+    BrandCategory.finance: Color(0xFF7BAE9E),
     BrandCategory.other: Color(0xFFB4B2A9),
   };
 

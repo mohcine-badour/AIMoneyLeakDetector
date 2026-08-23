@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:kichta/core/brand/brand_registry.dart';
+import 'package:kichta/features/subscriptions/domain/subscription_catalog.dart';
 import 'package:kichta/features/welcome/domain/featured_brands.dart';
 
 void main() {
@@ -29,9 +30,11 @@ void main() {
     );
   });
 
-  test('other count is rounded down to the nearest 10 from the registry', () {
-    final remaining = BrandRegistry.bySlug.length - FeaturedBrands.slugs.length;
+  test('other count is rounded down to the nearest 10 from the catalog', () {
+    final remaining =
+        SubscriptionCatalog.all.length - FeaturedBrands.slugs.length;
     expect(FeaturedBrands.otherCount, (remaining ~/ 10) * 10);
+    expect(FeaturedBrands.otherCount, greaterThanOrEqualTo(140));
     expect(FeaturedBrands.otherCount, isNot(240));
   });
 }

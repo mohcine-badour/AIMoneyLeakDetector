@@ -1,5 +1,6 @@
 import '../../../core/brand/brand_registry.dart';
 import 'subscription.dart';
+import 'subscription_catalog.dart';
 
 /// Brand registry wins. Stored "Software" never appears in the UI.
 abstract final class SubscriptionBrand {
@@ -13,18 +14,21 @@ abstract final class SubscriptionBrand {
     BrandCategory.fitness,
     BrandCategory.gaming,
     BrandCategory.developer,
+    BrandCategory.security,
+    BrandCategory.shopping,
+    BrandCategory.finance,
     BrandCategory.other,
   ];
 
   static String slugFor(Subscription subscription) {
-    return BrandRegistry.slugFor(
+    return SubscriptionCatalog.slugFor(
       name: subscription.name,
       merchant: subscription.merchant,
     );
   }
 
   static Brand? brandFor(Subscription subscription) {
-    return BrandRegistry.getBrand(slugFor(subscription));
+    return SubscriptionCatalog.brandForSlug(slugFor(subscription));
   }
 
   static BrandCategory categoryFor(Subscription subscription) {
@@ -41,8 +45,8 @@ abstract final class SubscriptionBrand {
       SubscriptionCategory.news => BrandCategory.news,
       SubscriptionCategory.gaming => BrandCategory.gaming,
       SubscriptionCategory.education ||
-      SubscriptionCategory.software ||
-      SubscriptionCategory.finance ||
+      SubscriptionCategory.software => BrandCategory.other,
+      SubscriptionCategory.finance => BrandCategory.finance,
       SubscriptionCategory.other => BrandCategory.other,
     };
   }
@@ -58,6 +62,9 @@ abstract final class SubscriptionBrand {
       BrandCategory.fitness => SubscriptionCategory.fitness,
       BrandCategory.news => SubscriptionCategory.news,
       BrandCategory.gaming => SubscriptionCategory.gaming,
+      BrandCategory.finance => SubscriptionCategory.finance,
+      BrandCategory.security ||
+      BrandCategory.shopping ||
       BrandCategory.other => SubscriptionCategory.other,
     };
   }

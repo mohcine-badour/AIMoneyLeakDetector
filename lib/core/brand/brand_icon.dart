@@ -8,12 +8,14 @@ import 'brand_registry.dart';
 class BrandIcon extends StatelessWidget {
   const BrandIcon({
     required this.slug,
+    this.brand,
     this.size = 34,
     this.fallbackInitial,
     super.key,
   });
 
   final String slug;
+  final Brand? brand;
   final double size;
   final String? fallbackInitial;
 
@@ -27,7 +29,7 @@ class BrandIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final tokens = AppTokens.of(context);
     final radius = size * 0.24;
-    final brand = BrandRegistry.getBrand(slug);
+    final brand = this.brand ?? BrandRegistry.getBrand(slug);
 
     if (brand == null) {
       final initial = (fallbackInitial ?? (slug.isEmpty ? '?' : slug[0]))

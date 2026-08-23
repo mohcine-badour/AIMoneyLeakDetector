@@ -28,11 +28,8 @@ class HomeSubscriptionRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tokens = AppTokens.of(context);
-    final slug = BrandRegistry.slugFor(
-      name: subscription.name,
-      merchant: subscription.merchant,
-    );
-    final brand = BrandRegistry.getBrand(slug);
+    final slug = SubscriptionBrand.slugFor(subscription);
+    final brand = SubscriptionBrand.brandFor(subscription);
     final name = subscription.name;
     final size = variant == SubscriptionRowVariant.renewing ? 34.0 : 30.0;
     final relative = AppDateFormat.relative(subscription.nextBillingDate, now);
@@ -50,6 +47,7 @@ class HomeSubscriptionRow extends StatelessWidget {
           children: [
             BrandIcon(
               slug: slug,
+              brand: brand,
               size: size,
               fallbackInitial: name.isEmpty ? '?' : name[0],
             ),

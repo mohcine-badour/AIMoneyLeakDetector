@@ -1,6 +1,7 @@
 import '../../../core/brand/brand_registry.dart';
 import '../../../core/utils/money_format.dart';
 import '../../subscriptions/domain/subscription.dart';
+import '../../subscriptions/domain/subscription_catalog.dart';
 import 'receipt_extraction_exception.dart';
 
 /// Turns OCR text into the receipt JSON contract. Keep this deterministic.
@@ -66,8 +67,8 @@ abstract final class ReceiptTextParser {
     final date = _date(cleaned) ?? DateTime.utc(clock.year, clock.month, clock.day);
     final billing = _billing(cleaned);
     var confidence = 0.35;
-    if (BrandRegistry.getBrand(
-          BrandRegistry.slugFor(name: merchant, merchant: merchant),
+    if (SubscriptionCatalog.brandForSlug(
+          SubscriptionCatalog.slugFor(name: merchant, merchant: merchant),
         ) !=
         null) {
       confidence += 0.25;
@@ -98,6 +99,10 @@ abstract final class ReceiptTextParser {
   }
 
   static String _merchant(String text) {
+    final matched = SubscriptionCatalog.match(text);
+    if (matched != null) {
+      return matched.name;
+    }
     final brands = BrandRegistry.bySlug.values.toList()
       ..sort((a, b) => b.displayName.length.compareTo(a.displayName.length));
     final lower = text.toLowerCase();

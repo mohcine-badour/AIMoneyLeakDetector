@@ -104,7 +104,7 @@ void main() {
     final analytics = RecordingAnalytics();
     await pumpKichtaApp(
       tester,
-      location: AppRoutes.addSubscription,
+      location: AppRoutes.addCustomSubscription,
       analytics: analytics,
     );
 

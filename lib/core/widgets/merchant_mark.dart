@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../app/theme/app_tokens.dart';
+import '../../features/subscriptions/domain/subscription_catalog.dart';
 import '../brand/brand_icon.dart';
-import '../brand/brand_registry.dart';
 
 class MerchantMark extends StatelessWidget {
   const MerchantMark({required this.name, this.size = 40, super.key});
@@ -12,9 +12,10 @@ class MerchantMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final slug = BrandRegistry.slugFor(name: name);
+    final slug = SubscriptionCatalog.slugFor(name: name);
     return BrandIcon(
       slug: slug,
+      brand: SubscriptionCatalog.brandForSlug(slug),
       size: size,
       fallbackInitial: name.trim().isEmpty ? '?' : name.trim()[0],
     );

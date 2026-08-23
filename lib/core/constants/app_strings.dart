@@ -185,6 +185,12 @@ abstract final class AppStrings {
   static const String fieldMerchant = 'Merchant';
   static const String fieldMerchantHint = 'Defaults to name';
   static const String mostPopular = 'Most popular';
+  static const String catalogPopular = 'Popular';
+  static const String addCustomSubscription = 'Add custom subscription';
+  static const String chooseAService = 'Services';
+  static const String searchAllSubscriptions = 'Search all subscriptions';
+  static const String categorySecurity = 'Security';
+  static const String categoryShopping = 'Shopping';
   static const String fieldAmount = 'Amount';
   static const String fieldCurrency = 'Currency';
   static const String fieldBillingCycle = 'Billing cycle';

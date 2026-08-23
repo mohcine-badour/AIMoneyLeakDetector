@@ -1,4 +1,4 @@
-import '../../../core/brand/brand_registry.dart';
+import '../../subscriptions/domain/subscription_catalog.dart';
 
 /// Curated Works With tiles. Order is for recognition, not alphabet or category.
 abstract final class FeaturedBrands {
@@ -22,9 +22,9 @@ abstract final class FeaturedBrands {
 
   static List<String> get row2 => slugs.sublist(5);
 
-  /// Remaining registry brands, rounded down to the nearest 10.
+  /// Remaining catalog services, rounded down to the nearest 10.
   static int get otherCount {
-    final remaining = BrandRegistry.bySlug.length - slugs.length;
+    final remaining = SubscriptionCatalog.all.length - slugs.length;
     if (remaining <= 0) {
       return 0;
     }

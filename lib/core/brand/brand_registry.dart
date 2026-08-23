@@ -10,6 +10,9 @@ enum BrandCategory {
   fitness,
   gaming,
   developer,
+  security,
+  shopping,
+  finance,
   other,
 }
 
@@ -24,6 +27,9 @@ extension BrandCategoryLabel on BrandCategory {
     BrandCategory.fitness => 'Fitness',
     BrandCategory.gaming => 'Gaming',
     BrandCategory.developer => 'Developer',
+    BrandCategory.security => 'Security',
+    BrandCategory.shopping => 'Shopping',
+    BrandCategory.finance => 'Finance',
     BrandCategory.other => 'Other',
   };
 }
@@ -123,6 +129,13 @@ abstract final class BrandRegistry {
       tileBg: Color(0xFF00A8E1),
       iconColor: Color(0xFFFFFFFF),
       category: BrandCategory.entertainment,
+    ),
+    'amazonprime': Brand(
+      slug: 'amazonprime',
+      displayName: 'Amazon Prime',
+      tileBg: Color(0xFFFF9900),
+      iconColor: Color(0xFF000000),
+      category: BrandCategory.shopping,
     ),
     'applemusic': Brand(
       slug: 'applemusic',
@@ -249,9 +262,9 @@ abstract final class BrandRegistry {
     'adobe': 'adobecreativecloud',
     'chatgpt': 'openai',
     'gpt': 'openai',
-    'prime': 'amazonprimevideo',
     'prime video': 'amazonprimevideo',
-    'amazon prime': 'amazonprimevideo',
+    'amazon prime video': 'amazonprimevideo',
+    'amazon prime': 'amazonprime',
     'google one': 'googledrive',
     'icloud+': 'icloud',
     'apple music': 'applemusic',
@@ -267,7 +280,16 @@ abstract final class BrandRegistry {
 
   static Brand? getBrand(String slug) {
     final key = slug.trim().toLowerCase();
-    return bySlug[key] ?? bySlug[_aliases[key] ?? ''];
+    final direct = bySlug[key] ?? bySlug[_aliases[key] ?? ''];
+    if (direct != null) {
+      return direct;
+    }
+    for (final brand in bySlug.values) {
+      if (brand.slug == key) {
+        return brand;
+      }
+    }
+    return null;
   }
 
   static String slugFor({required String name, String? merchant}) {

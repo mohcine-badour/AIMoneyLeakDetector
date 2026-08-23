@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/router/app_routes.dart';
 import '../../../app/theme/app_tokens.dart';
 import '../../../core/brand/brand_registry.dart';
+import '../domain/subscription_catalog.dart';
 import '../../../core/constants/app_icons.dart';
 import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/app_date_format.dart';
@@ -15,10 +16,7 @@ import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/currency_sheet.dart';
 import '../../../core/widgets/error_state.dart';
 import '../../../core/widgets/loading_state.dart';
-import '../../analytics/analytics_providers.dart';
-import '../../analytics/domain/analytics_event.dart';
 import '../../paywall/domain/paywall_source.dart';
-import '../../paywall/paywall_navigation.dart';
 import '../../paywall/paywall_providers.dart';
 import '../add_subscription_controller.dart';
 import '../domain/subscription.dart';
@@ -26,13 +24,13 @@ import '../domain/subscription_brand.dart';
 import '../subscriptions_providers.dart';
 import 'billing_cycle_sheet.dart';
 import 'category_sheet.dart';
-import 'popular_apps_scroller.dart';
 import 'subscription_labels.dart';
 
 class AddSubscriptionScreen extends ConsumerStatefulWidget {
-  const AddSubscriptionScreen({this.subscriptionId, super.key});
+  const AddSubscriptionScreen({this.subscriptionId, this.brandSlug, super.key});
 
   final String? subscriptionId;
+  final String? brandSlug;
 
   @override
   ConsumerState<AddSubscriptionScreen> createState() =>
@@ -44,7 +42,7 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
   final _merchantController = TextEditingController();
   final _amountController = TextEditingController();
   var _hydrated = false;
-  String? _selectedBrandSlug;
+  var _brandApplied = false;
 
   bool get _isEditing => widget.subscriptionId != null;
 
@@ -67,11 +65,38 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
     setState(() => _hydrated = true);
   }
 
+  void _applyBrand(Brand brand) {
+    if (_brandApplied) {
+      return;
+    }
+    final service = SubscriptionCatalog.bySlug[brand.slug];
+    _nameController.text = service?.name ?? brand.displayName;
+    _merchantController.text = service?.name ?? brand.displayName;
+    final controller = ref.read(addSubscriptionControllerProvider.notifier);
+    controller.setCategory(SubscriptionBrand.storedCategory(brand.category));
+    final billing = service?.billing;
+    if (billing != null && billing.isNotEmpty) {
+      controller.setBillingCycle(billing.first);
+    }
+    _brandApplied = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     final tokens = AppTokens.of(context);
     final form = ref.watch(addSubscriptionControllerProvider);
     final controller = ref.read(addSubscriptionControllerProvider.notifier);
+
+    if (!_isEditing && !_brandApplied && widget.brandSlug != null) {
+      final brand = SubscriptionCatalog.brandForSlug(widget.brandSlug!);
+      if (brand != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            _applyBrand(brand);
+          }
+        });
+      }
+    }
 
     if (_isEditing && !_hydrated) {
       final async = ref.watch(subscriptionByIdProvider(widget.subscriptionId!));
@@ -127,22 +152,6 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (!_isEditing) ...[
-                    Text(
-                      AppStrings.emptySubscriptionsMessage,
-                      style: TextStyle(
-                        fontSize: 14,
-                        height: 1.35,
-                        color: tokens.textSecondary,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    PopularAppsScroller(
-                      selectedSlug: _selectedBrandSlug,
-                      onSelected: _selectBrand,
-                    ),
-                    const SizedBox(height: 20),
-                  ],
                   AppFilledField(
                     fieldKey: const Key('subscription-name'),
                     label: AppStrings.fieldName,
@@ -220,12 +229,6 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
                     errorText: form.errors.category,
                     onTap: () => _pickCategory(form.category),
                   ),
-                  if (!_isEditing) ...[
-                    const SizedBox(height: 20),
-                    _ScanReceiptRow(
-                      onTap: () => PaywallNavigation.scanReceipt(context, ref),
-                    ),
-                  ],
                 ],
               ),
             ),
@@ -249,21 +252,6 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
         ],
       ),
     );
-  }
-
-  void _selectBrand(Brand brand) {
-    _nameController.text = brand.displayName;
-    _merchantController.text = brand.displayName;
-    ref
-        .read(addSubscriptionControllerProvider.notifier)
-        .setCategory(SubscriptionBrand.storedCategory(brand.category));
-    ref
-        .read(analyticsProvider)
-        .track(
-          AnalyticsEvent.featuredBrandTap,
-          properties: {'kind': brand.slug},
-        );
-    setState(() => _selectedBrandSlug = brand.slug);
   }
 
   Future<void> _save(AddSubscriptionController controller) async {
@@ -350,40 +338,5 @@ class _AddSubscriptionScreenState extends ConsumerState<AddSubscriptionScreen> {
           .read(addSubscriptionControllerProvider.notifier)
           .setCategory(selected);
     }
-  }
-}
-
-class _ScanReceiptRow extends StatelessWidget {
-  const _ScanReceiptRow({required this.onTap});
-
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final tokens = AppTokens.of(context);
-    return InkWell(
-      key: const Key('scan-receipt'),
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
-        child: Row(
-          children: [
-            Icon(AppIcons.scan, size: 18, color: tokens.textMuted),
-            const SizedBox(width: 10),
-            Text(
-              AppStrings.entryScanReceipt,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: tokens.textSecondary,
-              ),
-            ),
-            const Spacer(),
-            Icon(AppIcons.chevronRight, size: 16, color: tokens.textMuted),
-          ],
-        ),
-      ),
-    );
   }
 }

@@ -94,7 +94,7 @@ class _PopularAppTile extends StatelessWidget {
                   width: selected ? 1.5 : 0.5,
                 ),
               ),
-              child: BrandIcon(slug: brand.slug, size: 40),
+              child: BrandIcon(slug: brand.slug, brand: brand, size: 40),
             ),
             const SizedBox(height: 6),
             Text(
