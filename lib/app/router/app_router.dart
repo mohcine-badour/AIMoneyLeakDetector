@@ -137,6 +137,7 @@ abstract final class AppRouter {
               path: 'privacy',
               builder: (context, state) => const LegalDocumentScreen(
                 title: AppStrings.privacyPolicy,
+                headline: AppStrings.legalPrivacyHeadline,
                 lastUpdated: PrivacyPolicy.lastUpdated,
                 intro: AppStrings.privacyMinimalCollection,
                 sections: PrivacyPolicy.sections,
@@ -146,6 +147,7 @@ abstract final class AppRouter {
               path: 'terms',
               builder: (context, state) => const LegalDocumentScreen(
                 title: AppStrings.termsOfUseTitle,
+                headline: AppStrings.legalTermsHeadline,
                 lastUpdated: TermsOfUse.lastUpdated,
                 intro: AppStrings.termsIntro,
                 sections: TermsOfUse.sections,

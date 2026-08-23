@@ -112,6 +112,9 @@ abstract final class AppStrings {
   static const String reminderNothingUpcoming =
       'Nothing to remind yet. Choose a date in the future.';
   static const String privacyLastUpdated = 'Last updated';
+  static const String legalOnThisPage = 'On this page';
+  static const String legalPrivacyHeadline = 'What Kichta keeps on this phone';
+  static const String legalTermsHeadline = 'How Kichta and Kichta Pro work';
   static const String privacyMinimalCollection =
       'We keep collection small. Analytics never receive amounts, merchants, or receipts.';
   static const String deleteMyData = 'Delete my data';
