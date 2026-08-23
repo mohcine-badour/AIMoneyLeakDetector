@@ -119,6 +119,15 @@ class _MonthlyHeroCardState extends State<MonthlyHeroCard>
             child: _SparkChart(values: summary.spark, now: widget.now),
           ),
           const SizedBox(height: 6),
+          Text(
+            AppStrings.spendEstimatedFromRecords,
+            style: TextStyle(
+              fontSize: 11,
+              height: 1.35,
+              color: tokens.textMuted,
+            ),
+          ),
+          const SizedBox(height: 6),
           Divider(height: 1, thickness: 0.5, color: tokens.border),
           const SizedBox(height: 10),
           Row(

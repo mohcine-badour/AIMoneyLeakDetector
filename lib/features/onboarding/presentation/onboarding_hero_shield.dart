@@ -22,6 +22,16 @@ class OnboardingHeroShield extends ConsumerWidget {
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         children: [
+          Text(
+            OnboardingPages.exampleNotification.toUpperCase(),
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w500,
+              letterSpacing: 0.5,
+              color: tokens.textMuted,
+            ),
+          ),
+          const SizedBox(height: 8),
           Container(
             width: 96,
             height: 96,

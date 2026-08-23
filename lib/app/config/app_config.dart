@@ -5,7 +5,6 @@
 abstract final class AppConfig {
   static const String defaultLanguageCode = 'en';
   static const bool analyticsEnabled = true;
-  static const bool monetizationEnabled = true;
   static const bool adsEnabled = false;
   static const bool allowCleartextTraffic = false;
   static const String privacyPolicyUrl = '';

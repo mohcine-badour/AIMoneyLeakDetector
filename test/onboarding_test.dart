@@ -95,7 +95,7 @@ void main() {
       expect(page.body.toLowerCase(), isNot(contains('one tap')));
       expect(page.body.toLowerCase(), isNot(contains('ai reviews')));
     }
-    expect(_awareness.ctaLabel, 'See mine');
+    expect(_awareness.ctaLabel, 'Next');
     expect(_capability.ctaLabel, 'Next');
     expect(_intelligence.ctaLabel, 'Next');
     expect(_safety.ctaLabel, "I'm in");
@@ -121,7 +121,7 @@ void main() {
     expect(find.text('What most think they spend'), findsOneWidget);
     expect(find.text('What they actually spend'), findsOneWidget);
     expect(find.textContaining('C+R Research, 2022'), findsOneWidget);
-    expect(find.text(_awareness.ctaLabel), findsOneWidget);
+    expect(find.text(_awareness.ctaLabel), findsWidgets);
     expect(find.text(OnboardingPages.skip), findsOneWidget);
     expect(find.text(OnboardingPages.swipeHint), findsOneWidget);
     expect(find.byKey(const Key('onboarding-back')), findsNothing);
@@ -165,6 +165,7 @@ void main() {
     await _advance(tester);
     expect(find.text('NEVER SURPRISED'), findsOneWidget);
     expect(find.text(_safety.ctaLabel), findsOneWidget);
+    expect(find.text(OnboardingPages.exampleNotification.toUpperCase()), findsOneWidget);
     expect(find.text(OnboardingPages.swipeHint), findsNothing);
 
     await _advance(tester);

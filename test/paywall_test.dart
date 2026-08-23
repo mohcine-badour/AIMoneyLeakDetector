@@ -38,6 +38,16 @@ void _largeScreen(WidgetTester tester) {
 }
 
 void main() {
+  testWidgets('paywall is closed while this version is free', (tester) async {
+    await pumpKichtaApp(
+      tester,
+      location: AppRoutes.paywall,
+      monetizationConfig: const MonetizationConfig(featureGatesEnabled: false),
+    );
+
+    expect(find.text(AppStrings.paywallHeadline), findsNothing);
+  });
+
   testWidgets('paywall shows conversion copy and configurable prices', (
     tester,
   ) async {

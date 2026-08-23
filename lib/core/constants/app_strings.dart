@@ -327,6 +327,8 @@ abstract final class AppStrings {
   static const String relativeYesterday = 'yesterday';
   static String daysAgo(int days) => '$days days ago';
   static const String thisMonth = 'This month';
+  static const String spendEstimatedFromRecords =
+      'Estimated from subscriptions you added.';
   static const String perYearLabel = 'Per year';
   static const String activeLabel = 'Active';
   static const String highestLabel = 'Highest';

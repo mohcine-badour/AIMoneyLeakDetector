@@ -128,7 +128,11 @@ class _HomeBody extends ConsumerWidget {
             onPressed: () => PaywallNavigation.addSubscription(context, ref),
           )
         else ...[
-          RenewingSoonSection(subscriptions: split.soon, now: now),
+          RenewingSoonSection(
+            subscriptions: split.soon,
+            now: now,
+            onSeeAll: () => context.push(AppRoutes.upcoming),
+          ),
           if (insight != null) HomeInsightCard(insight: insight),
           AllSubscriptionsSection(
             subscriptions: split.remaining,

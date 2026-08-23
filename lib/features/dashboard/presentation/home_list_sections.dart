@@ -9,11 +9,13 @@ class RenewingSoonSection extends StatelessWidget {
   const RenewingSoonSection({
     required this.subscriptions,
     required this.now,
+    this.onSeeAll,
     super.key,
   });
 
   final List<Subscription> subscriptions;
   final DateTime now;
+  final VoidCallback? onSeeAll;
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +39,18 @@ class RenewingSoonSection extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(
-                AppStrings.next7Days,
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
-                  color: tokens.textSecondary,
+              InkWell(
+                key: onSeeAll == null ? null : const Key('home-upcoming'),
+                onTap: onSeeAll,
+                child: Text(
+                  onSeeAll == null
+                      ? AppStrings.next7Days
+                      : AppStrings.viewAll,
+                  style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w500,
+                    color: tokens.textSecondary,
+                  ),
                 ),
               ),
             ],

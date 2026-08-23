@@ -91,8 +91,12 @@ Future<(GoRouter, SharedPreferences, AppDatabase)> pumpKichtaApp(
           anonymousAuthProvider.overrideWithValue(anonymousAuth),
         if (entitlement != null)
           entitlementProvider.overrideWithValue(entitlement),
-        if (monetizationConfig != null)
-          monetizationConfigProvider.overrideWithValue(monetizationConfig),
+        monetizationConfigProvider.overrideWithValue(
+          monetizationConfig ??
+              (location.startsWith(AppRoutes.paywall)
+                  ? const MonetizationConfig(featureGatesEnabled: true)
+                  : const MonetizationConfig()),
+        ),
         if (adConfig != null) adConfigProvider.overrideWithValue(adConfig),
         adServiceProvider.overrideWithValue(
           adService ?? const DisabledAdService(),

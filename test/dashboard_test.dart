@@ -85,11 +85,17 @@ void main() {
     expect(find.text('Adobe'), findsOneWidget);
     expect(find.text(AppStrings.categoryProductivity), findsOneWidget);
     expect(find.text(AppStrings.renewingSoon), findsOneWidget);
+    expect(find.byKey(const Key('home-upcoming')), findsOneWidget);
+    expect(find.text(AppStrings.spendEstimatedFromRecords), findsOneWidget);
     expect(find.text(AppStrings.allSubscriptions), findsOneWidget);
     expect(find.text(AppStrings.addSubscriptionCta), findsNothing);
     expect(find.byKey(const Key('dashboard-add-subscription')), findsNothing);
     expect(find.text(AppStrings.emptyLeaksMessage), findsNothing);
     expect(find.text(r'You could save $0.00/month'), findsNothing);
+
+    await tester.tap(find.byKey(const Key('home-upcoming')));
+    await tester.pumpAndSettle();
+    expect(find.text(AppStrings.upcomingPayments), findsOneWidget);
   });
 
   testWidgets('free users see an Unlock Pro banner that opens the paywall', (

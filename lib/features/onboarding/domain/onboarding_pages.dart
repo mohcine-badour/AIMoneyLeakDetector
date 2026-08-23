@@ -138,6 +138,7 @@ abstract final class OnboardingPages {
   static const String swipeHint = 'Swipe or tap to continue';
   static const String realityCheck = 'The reality check';
   static const String exampleInsight = 'Example insight';
+  static const String exampleNotification = 'Example notification';
   static const String now = 'Now';
   static const String review = 'Review';
   static const String dismiss = 'Dismiss';
@@ -177,7 +178,7 @@ abstract final class OnboardingPages {
       body:
           "That's ${MoneyFormat.short(1596)} a year on services people already forgot they had.",
       source: 'C+R Research, 2022',
-      ctaLabel: 'See mine',
+      ctaLabel: 'Next',
       ctaIcon: OnboardingIcon.arrowRight,
     ),
     OnboardingPage(
@@ -192,7 +193,7 @@ abstract final class OnboardingPages {
         moreCount: FeaturedBrands.otherCount,
       ),
       body:
-          'Netflix, Spotify, ChatGPT, iCloud — and more out of the box. Or add anything custom.',
+          'Netflix, Spotify, ChatGPT, iCloud — pick one from the catalog, or add anything custom.',
       ctaLabel: 'Next',
       ctaIcon: OnboardingIcon.arrowRight,
     ),

@@ -20,7 +20,9 @@ abstract final class BillingClientFactory {
     if (config.isStoreBillingConfigured) {
       return RevenueCatBillingClient(config: config);
     }
-    if (!isWeb && (platform ?? defaultTargetPlatform) == TargetPlatform.iOS) {
+    if (config.featureGatesEnabled &&
+        !isWeb &&
+        (platform ?? defaultTargetPlatform) == TargetPlatform.iOS) {
       return StoreKitBillingClient(config: config);
     }
     return const UnconfiguredBillingClient();

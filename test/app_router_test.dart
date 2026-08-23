@@ -24,7 +24,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('THE GAP'), findsOneWidget);
-    expect(find.text('See mine'), findsOneWidget);
+    expect(find.text('Next'), findsOneWidget);
 
     await tester.binding.handlePopRoute();
     await tester.pumpAndSettle();

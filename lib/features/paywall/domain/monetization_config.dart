@@ -40,8 +40,8 @@ class MonetizationConfig {
   final bool aiAnalysisRequiresPro;
   final bool trialProtectionRequiresPro;
 
-  /// Temporary. When false, every feature is available without Pro so the
-  /// product can be tested. Set back to true before shipping.
+  /// This free version keeps gates off so scan, trials, and unlimited
+  /// subscriptions stay open. Set true only when shipping a paid Pro offer.
   final bool featureGatesEnabled;
 
   /// Store-confirmed free trial length in days. Null or 0 means no trial copy.

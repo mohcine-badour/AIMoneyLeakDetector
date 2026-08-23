@@ -42,6 +42,10 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
       if (!mounted) {
         return;
       }
+      if (!ref.read(monetizationConfigProvider).featureGatesEnabled) {
+        _leave();
+        return;
+      }
       if (ref.read(entitlementProvider).isPro) {
         ScaffoldMessenger.of(
           context,
@@ -70,7 +74,8 @@ class _PaywallScreenState extends ConsumerState<PaywallScreen> {
     final action = ref.watch(paywallActionProvider);
     final now = ref.watch(appNowProvider);
 
-    if (ref.watch(entitlementProvider).isPro) {
+    if (!ref.watch(monetizationConfigProvider).featureGatesEnabled ||
+        ref.watch(entitlementProvider).isPro) {
       return ColoredBox(color: tokens.bgApp, child: const SizedBox.expand());
     }
 

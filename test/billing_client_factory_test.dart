@@ -20,9 +20,17 @@ void main() {
     expect(client, isA<UnconfiguredBillingClient>());
   });
 
-  test('uses StoreKit on iOS when RevenueCat is not configured', () {
+  test('skips StoreKit on iOS while feature gates are off', () {
     final client = BillingClientFactory.create(
       const MonetizationConfig(),
+      platform: TargetPlatform.iOS,
+    );
+    expect(client, isA<UnconfiguredBillingClient>());
+  });
+
+  test('uses StoreKit on iOS when feature gates are on', () {
+    final client = BillingClientFactory.create(
+      const MonetizationConfig(featureGatesEnabled: true),
       platform: TargetPlatform.iOS,
     );
     expect(client, isA<StoreKitBillingClient>());
