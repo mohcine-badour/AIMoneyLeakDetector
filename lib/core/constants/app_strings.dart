@@ -131,6 +131,14 @@ abstract final class AppStrings {
       'Deleting app data does not cancel an App Store subscription.';
   static const String deleteDataFailed =
       'Could not delete data on this device.';
+  static const String diagnosticsSection = 'Diagnostics';
+  static const String crashReportingToggle = 'Crash diagnostics';
+  static const String crashReportingExplanation =
+      'Off by default. When on, Kichta collects anonymized crash reports to help fix bugs. Receipts and money amounts are never included.';
+  static const String bootstrapErrorTitle = 'Kichta could not start';
+  static const String bootstrapErrorMessage =
+      'Something went wrong while starting the app. Your data is safe on this phone. Please try again.';
+  static const String bootstrapErrorRetry = 'Try again';
   static const String paywallTitle = 'Paywall';
 
   static const String placeholderBody = 'This screen is a placeholder.';

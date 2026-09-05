@@ -13,6 +13,7 @@ import '../../../core/widgets/app_button.dart';
 import '../../../core/widgets/app_scaffold.dart';
 import '../../../core/widgets/confirm_dialog.dart';
 import '../../cancellation/cancellation_providers.dart';
+import '../../crash_reporting/crash_reporting_providers.dart';
 import '../../notifications/notifications_providers.dart';
 import '../../paywall/domain/entitlement_copy.dart';
 import '../../paywall/domain/paywall_source.dart';
@@ -138,6 +139,26 @@ class SettingsScreen extends ConsumerWidget {
                 padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
                 child: Text(
                   AppStrings.privacyMinimalCollection,
+                  style: TextStyle(
+                    fontSize: 13,
+                    height: 1.4,
+                    color: tokens.textSecondary,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.xl),
+          _SectionLabel(AppStrings.diagnosticsSection),
+          const SizedBox(height: AppSpacing.sm),
+          _SettingsCard(
+            children: [
+              _CrashReportingToggle(),
+              Divider(height: 1, color: tokens.border),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(14, 12, 14, 14),
+                child: Text(
+                  AppStrings.crashReportingExplanation,
                   style: TextStyle(
                     fontSize: 13,
                     height: 1.4,
@@ -289,6 +310,57 @@ class _RemindersToggle extends ConsumerWidget {
               } else {
                 await ref.read(remindersEnabledProvider.notifier).disable();
               }
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CrashReportingToggle extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final tokens = AppTokens.of(context);
+    final enabled = ref.watch(crashReportingEnabledProvider);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Row(
+        children: [
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: tokens.bgMuted,
+              borderRadius: BorderRadius.circular(9),
+            ),
+            child: Icon(
+              AppIcons.shieldCheck,
+              size: 16,
+              color: tokens.textSecondary,
+            ),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              AppStrings.crashReportingToggle,
+              style: TextStyle(
+                fontSize: 14.5,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.15,
+                color: tokens.textPrimary,
+              ),
+            ),
+          ),
+          Switch.adaptive(
+            key: const Key('crash-reporting-toggle'),
+            value: enabled,
+            activeTrackColor: tokens.accent,
+            onChanged: (value) async {
+              HapticFeedback.selectionClick();
+              await ref
+                  .read(crashReportingEnabledProvider.notifier)
+                  .setEnabled(value);
             },
           ),
         ],
