@@ -1,0 +1,44 @@
+name: CI
+
+# Runs static analysis and the test suite on every change to main and on
+# every pull request, so regressions are caught before they land.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Cancel an in-progress run when a newer commit is pushed to the same ref.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze-and-test:
+    name: Analyze & test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Uses the "stable" channel to match .metadata. pubspec.lock requires
+      # Flutter >= 3.44.0, which stable satisfies. For fully reproducible runs,
+      # replace `channel: stable` with e.g. `flutter-version: 3.44.0` (your
+      # local `flutter --version`).
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
