@@ -56,8 +56,10 @@ class RevenueCatBillingClient implements BillingClient {
       if (products.isEmpty) {
         throw const BillingException(AppStrings.purchaseFailed);
       }
-      final info = await Purchases.purchaseStoreProduct(products.first);
-      _emit(_map(info));
+      final result = await Purchases.purchase(
+        PurchaseParams.storeProduct(products.first),
+      );
+      _emit(_map(result.customerInfo));
     } on BillingException {
       rethrow;
     } on PlatformException catch (error) {
