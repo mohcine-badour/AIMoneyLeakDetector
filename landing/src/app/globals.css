@@ -1,0 +1,147 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+/*
+ * Two worlds from the brand: the app icon (a glowing blue "K" on deep navy) for the
+ * hero and the closing call, and the app's own calm paper palette (lib/app/theme)
+ * for everything you read.
+ */
+@theme inline {
+  --color-night: #050812;
+  --color-night-2: #0b1124;
+  --color-night-line: rgb(255 255 255 / 0.09);
+  --color-glow: #4f7cff;
+  --color-glow-soft: #8fb0ff;
+  --color-violet: #8b7cf6;
+
+  --color-paper: #f7f5f0;
+  --color-card: #ffffff;
+  --color-subtle: #f1efe8;
+  --color-muted-bg: #ebe9e1;
+  --color-ink: #1a1a1a;
+  --color-ink-2: #5f5e5a;
+  --color-ink-3: #9c9c95;
+  --color-line: rgb(0 0 0 / 0.07);
+  --color-line-strong: rgb(0 0 0 / 0.11);
+
+  --color-pos: #27500a;
+  --color-pos-bg: #eaf3de;
+  --color-warn: #854f0b;
+  --color-warn-bg: #faeeda;
+  --color-danger: #a32d2d;
+  --color-danger-bg: #fcebeb;
+  --color-indigo: #3d348b;
+  --color-indigo-bg: #e8e6f8;
+
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background: var(--color-paper);
+}
+
+body {
+  overflow-x: clip;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgb(79 124 255 / 0.22);
+}
+
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: var(--color-ink);
+  color: #fff;
+  font-weight: 600;
+}
+.skip-link:focus {
+  top: 16px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-glow);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.container-page {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+@media (min-width: 768px) {
+  .container-page {
+    padding-inline: 32px;
+  }
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.serif-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Generic service tiles in the illustrations: no third-party brands. */
+.tile {
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  font-weight: 700;
+  color: #fff;
+  flex: none;
+}
+
+.store-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 22px 0 18px;
+  border-radius: 16px;
+  background: #000;
+  color: #fff;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.16) inset, 0 10px 30px -10px rgb(79 124 255 / 0.55);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.store-badge:hover {
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.28) inset, 0 16px 40px -10px rgb(79 124 255 / 0.75);
+}
+.store-badge.on-paper {
+  box-shadow: 0 10px 28px -12px rgb(0 0 0 / 0.45);
+}
+
+details.faq > summary {
+  list-style: none;
+  cursor: pointer;
+}
+details.faq > summary::-webkit-details-marker {
+  display: none;
+}
+details.faq[open] .faq-plus {
+  transform: rotate(45deg);
+}
