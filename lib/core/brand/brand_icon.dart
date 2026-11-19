@@ -32,8 +32,11 @@ class BrandIcon extends StatelessWidget {
     final brand = this.brand ?? BrandRegistry.getBrand(slug);
 
     if (brand == null) {
-      final initial = (fallbackInitial ?? (slug.isEmpty ? '?' : slug[0]))
-          .toUpperCase();
+      // One letter only: some callers pass the whole name.
+      final source = (fallbackInitial ?? slug).trim();
+      final initial = source.isEmpty
+          ? '?'
+          : source.characters.first.toUpperCase();
       return _Tile(
         size: size,
         radius: radius,
