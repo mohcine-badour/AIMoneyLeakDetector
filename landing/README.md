@@ -21,6 +21,9 @@ npm run lint
 - `src/components/reactbits/`: React Bits components copied from the registry
   (`https://reactbits.dev/r/<Name>-TS-TW.json`). Keep them unchanged so they can be updated.
 - `src/components/SmoothScroll.tsx`: Lenis, driven by the GSAP ticker.
+- `/privacy`, `/terms`, `/support`: `src/app/<page>/page.tsx`. Privacy and Terms render
+  `src/content/privacy.md` and `terms.md`, copies of `docs/PRIVACY.md` and `docs/TERMS.md` (the in-app
+  texts) without the repo-only lines. Copy them again when the app's texts change.
 
 Every animation is skipped with "Reduce motion" turned on.
 
@@ -32,4 +35,12 @@ Each product claim matches the app: reminder lead times and wording
 
 ## Deploying
 
-`out/` is a plain static site: Vercel, Netlify, GitHub Pages or any static host.
+Live at https://kichta-landing.vercel.app (Vercel project `kichta-landing`, personal team
+"mohcine's projects"). Deploys are made from this folder with the CLI; pushes to GitHub
+don't deploy on their own.
+
+```bash
+vercel deploy --prod --scope mohcines-projects-19346ce4
+```
+
+`out/` is also a plain static site that any static host can serve.

@@ -18,7 +18,7 @@ const instrumentSerif = Instrument_Serif({
 const TITLE = `${APP_NAME}: subscription tracker and renewal reminders`;
 
 export const metadata: Metadata = {
-  ...(SITE_URL ? { metadataBase: new URL(SITE_URL) } : {}),
+  ...(SITE_URL ? { metadataBase: new URL(SITE_URL), alternates: { canonical: "/" } } : {}),
   title: TITLE,
   description: SITE_DESCRIPTION,
   applicationName: APP_NAME,

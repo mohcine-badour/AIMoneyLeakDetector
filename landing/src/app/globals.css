@@ -145,3 +145,16 @@ details.faq > summary::-webkit-details-marker {
 details.faq[open] .faq-plus {
   transform: rotate(45deg);
 }
+
+/* Long-form text (privacy, terms, support) */
+.doc { color: var(--color-ink-2); font-size: 17px; line-height: 1.7; }
+.doc h2 { margin-top: 2.6rem; padding-top: 1.6rem; border-top: 1px solid var(--color-line-strong);
+  color: var(--color-ink); font-size: 1.5rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; scroll-margin-top: 96px; }
+.doc h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.doc h3 { margin-top: 1.6rem; color: var(--color-ink); font-size: 1.08rem; font-weight: 600; letter-spacing: -0.01em; }
+.doc p { margin-top: 0.9rem; }
+.doc ul { margin-top: 0.8rem; padding-left: 1.2rem; list-style: disc; }
+.doc li { margin-top: 0.35rem; }
+.doc a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-line-strong); text-underline-offset: 4px; }
+.doc a:hover { text-decoration-color: var(--color-ink); }
+.doc code { font-family: var(--font-mono); font-size: 0.9em; background: var(--color-subtle); padding: 0.1em 0.35em; border-radius: 6px; }

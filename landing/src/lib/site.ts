@@ -6,13 +6,13 @@ export const APP_NAME = "Kichta";
 /** The live App Store page (id 6804477920). */
 export const APP_STORE_URL = "https://apps.apple.com/app/id6804477920";
 
-/** Public origin of this site. Fill it once the site is deployed (used for canonical/OG URLs). */
-export const SITE_URL: string = "";
+/** Public origin of this site (Vercel project kichta-landing). Used for canonical and OG URLs. */
+export const SITE_URL: string = "https://kichta-landing.vercel.app";
 
-/** Hosted legal and support pages (GitHub Pages from docs/). */
-export const PRIVACY_URL = "https://mohcine-badour.github.io/AIMoneyLeakDetector/privacy.html";
-export const TERMS_URL = "https://mohcine-badour.github.io/AIMoneyLeakDetector/terms.html";
-export const SUPPORT_URL = "https://mohcine-badour.github.io/AIMoneyLeakDetector/support.html";
+/** Legal and support pages on this site (src/app/privacy, terms, support). */
+export const PRIVACY_URL = "/privacy/";
+export const TERMS_URL = "/terms/";
+export const SUPPORT_URL = "/support/";
 export const SUPPORT_EMAIL = "mohcinebadour@gmail.com";
 
 /** From the Xcode project: IPHONEOS_DEPLOYMENT_TARGET and TARGETED_DEVICE_FAMILY = 1,2. */
