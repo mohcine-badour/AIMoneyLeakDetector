@@ -9,6 +9,7 @@ import 'app/bootstrap_error_app.dart';
 import 'app/config/app_config.dart';
 import 'app/router/app_router.dart';
 import 'app/router/app_routes.dart';
+import 'app/store_screenshots.dart';
 import 'core/database/app_database.dart';
 import 'core/database/database_encryption.dart';
 import 'core/providers/app_database_provider.dart';
@@ -100,6 +101,8 @@ Future<void> _startApp(SharedPreferences prefs) async {
   }
 
   final onboarding = OnboardingRepository(prefs);
+  // Debug-only App Store screenshot mode (null in release builds).
+  final shotsLocation = await StoreScreenshots.prepare(prefs, database);
   final analytics = AnalyticsFactory.create(
     enabled: AppConfig.analyticsEnabled,
   );
@@ -113,6 +116,12 @@ Future<void> _startApp(SharedPreferences prefs) async {
   await _guard('billing', () => billing.initialize());
 
   await _guard('ads', () => AdMobBootstrap.initialize(AdConfig.defaults));
+
+  final router = AppRouter.create(
+    initialLocation:
+        shotsLocation ??
+        (onboarding.isCompleted ? AppRoutes.dashboard : AppRoutes.launch),
+  );
 
   runApp(
     ProviderScope(
@@ -129,15 +138,10 @@ Future<void> _startApp(SharedPreferences prefs) async {
         analyticsProvider.overrideWithValue(analytics),
         crashReporterProvider.overrideWithValue(_crashReporter),
       ],
-      child: KichtaApp(
-        router: AppRouter.create(
-          initialLocation: onboarding.isCompleted
-              ? AppRoutes.dashboard
-              : AppRoutes.launch,
-        ),
-      ),
+      child: KichtaApp(router: router),
     ),
   );
+  StoreScreenshots.afterStart(router);
 }
 
 /// Runs a best-effort init step, reporting failure without aborting startup.
